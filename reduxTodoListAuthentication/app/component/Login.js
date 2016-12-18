@@ -14,9 +14,6 @@ var Login = React.createClass({
   onSignIn: function(){
     var {dispatch, fields:{email, password}} = this.props
     dispatch(loginUser(email.value.toLowerCase(), password.value))
-    // var {email, password} = this.props.fields
-    // this.props.dispatch(addAlert('leti'))
-    // this.props.dispatch(authUser('leti'))
   },
   onSignUp: function(){
     var {dispatch, fields:{email, password}} = this.props
@@ -37,7 +34,7 @@ var Login = React.createClass({
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
-            To-Do
+            Lallana
           </Text>
         </View>
         <View style={styles.field}>
@@ -52,6 +49,7 @@ var Login = React.createClass({
         <View style={styles.field}>
           <TextInput
             {...password}
+            secureTextEntry = {true}
             style={styles.textInput}
             placeholder="Password"/>
           <View>

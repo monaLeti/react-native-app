@@ -18,6 +18,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import NavigatorLog from './NavigatorLog'
+
 var App = React.createClass({
   render(){
     var renderMainView = () =>{
@@ -27,7 +29,7 @@ var App = React.createClass({
         )
       }else{
         return (
-          <Login/>
+          <NavigatorLog/>
         );
       }
     }
