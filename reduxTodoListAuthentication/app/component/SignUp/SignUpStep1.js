@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
-// import {unauthUser} from '../actions'
+import {reduxForm} from 'redux-form'
+import {signUpStep1} from '../../actions'
 import {
   StyleSheet,
   Text,
@@ -12,12 +13,20 @@ import {
 
 var SignUpStep1 = React.createClass({
   onSubmit: function(){
+    var {dispatch} = this.props
     console.log('submit');
+    console.log(this.props);
+    var signUpField = {
+      name:this.props.fields.name.value,
+      lastName:this.props.fields.lastName.value
+    }
+    dispatch(signUpStep1(signUpField))
   },
   backRoute:function(){
     this.props.navigator.pop()
   },
   render(){
+    var {fields:{name, lastName}} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.navigator}>
@@ -36,13 +45,14 @@ var SignUpStep1 = React.createClass({
           <View style={styles.form}>
             <View style={styles.field}>
               <TextInput
-                value={name}
+                {...name}
                 style={styles.textInput}
                 placeholder="Nombre"
                 placeholderTextColor="#ddd"/>
             </View>
             <View style={styles.field}>
               <TextInput
+                {...lastName}
                 style={styles.textInput}
                 placeholder="Apellidos"
                 placeholderTextColor="#ddd"/>
@@ -115,5 +125,7 @@ const styles = StyleSheet.create({
     paddingLeft:10
   }
 });
-
-export default connect()(SignUpStep1)
+export default reduxForm({
+  form:'SignUpStep1',
+  fields:['name', 'lastName']
+}, null, null)(SignUpStep1)
