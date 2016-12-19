@@ -16,6 +16,9 @@ var NavigatorLog = React.createClass({
     return (
       <Navigator
         initialRoute={{id:'Login'}}
+        configureScene={(route)=>{
+          return Navigator.SceneConfigs.VerticalUpSwipeJump
+        }}
         renderScene={(route, navigator)=>
           {return this.renderScene(route, navigator)}
         }

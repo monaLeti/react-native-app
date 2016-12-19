@@ -16,8 +16,9 @@ var Login = React.createClass({
     dispatch(loginUser(email.value.toLowerCase(), password.value))
   },
   onSignUp: function(){
-    var {dispatch, fields:{email, password}} = this.props
-    dispatch(signupUser(email.value, password.value))
+    // var {dispatch, fields:{email, password}} = this.props
+    // dispatch(signupUser(email.value, password.value))
+    this.props.navigator.push({id:'SignUpStep1'})
   },
   render(){
     var {fields:{email, password}} = this.props;
