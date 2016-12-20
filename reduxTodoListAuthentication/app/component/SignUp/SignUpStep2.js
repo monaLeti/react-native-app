@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
-import {signUpStep1} from '../../actions'
+import {signUpStep2} from '../../actions'
 import {
   StyleSheet,
   Text,
@@ -11,23 +11,21 @@ import {
   TextInput
 } from 'react-native';
 
-var SignUpStep1 = React.createClass({
+var SignUpStep2 = React.createClass({
   onSubmit: function(){
     var {dispatch} = this.props
     console.log('submit');
-    console.log(this.props);
+    console.log(this.props.fields.location.value);
     var signUpField = {
-      name:this.props.fields.name.value,
-      lastName:this.props.fields.lastName.value
+      location:this.props.fields.location.value
     }
-    dispatch(signUpStep1(signUpField))
-    this.props.navigator.push({id:'SignUpStep2'})
+    dispatch(signUpStep2(signUpField))
   },
   backRoute:function(){
     this.props.navigator.pop()
   },
   render(){
-    var {fields:{name, lastName}} = this.props;
+    var {fields:{location}} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.navigator}>
@@ -40,22 +38,15 @@ var SignUpStep1 = React.createClass({
             style={styles.ImgElement}
             source={require('./common/img/baby.png')}>
             <Text style={styles.textImage}>
-              Me llamo...
+              Vivo en...
             </Text>
           </Image>
           <View style={styles.form}>
             <View style={styles.field}>
               <TextInput
-                {...name}
+                {...location}
                 style={styles.textInput}
-                placeholder="Nombre"
-                placeholderTextColor="#ddd"/>
-            </View>
-            <View style={styles.field}>
-              <TextInput
-                {...lastName}
-                style={styles.textInput}
-                placeholder="Apellidos"
+                placeholder="Ciudad"
                 placeholderTextColor="#ddd"/>
             </View>
             <View style={styles.buttonSubmit}>
@@ -132,6 +123,6 @@ const styles = StyleSheet.create({
   }
 });
 export default reduxForm({
-  form:'SignUpStep1',
-  fields:['name', 'lastName']
-}, null, null)(SignUpStep1)
+  form:'SignUpStep2',
+  fields:['location']
+}, null, null)(SignUpStep2)
