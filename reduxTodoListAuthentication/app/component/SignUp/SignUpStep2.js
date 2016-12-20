@@ -15,7 +15,7 @@ var SignUpStep2 = React.createClass({
   onSubmit: function(){
     var {dispatch} = this.props
     console.log('submit');
-    console.log(this.props.fields.location.value);
+    console.log(this.props);
     var signUpField = {
       location:this.props.fields.location.value
     }
@@ -122,7 +122,21 @@ const styles = StyleSheet.create({
     paddingTop:10
   }
 });
-export default reduxForm({
+
+SignUpStep2 = reduxForm({
   form:'SignUpStep2',
   fields:['location']
 }, null, null)(SignUpStep2)
+
+SignUpStep2 = connect(
+  state => {
+    return {
+      name: state.signUp.name,
+      lastName: state.signUp.lastName,
+      location: state.signUp.location,
+      sex:state.signUp.sex
+    }
+  }
+)(SignUpStep2)
+
+export default SignUpStep2

@@ -5,8 +5,6 @@ import {SIGNIN_URL, SIGNUP_URL} from '../api'
 import {addAlert} from './alertsActions'
 
 exports.loginUser = (email, password) => {
-  console.log('loginUser');
-  console.log(SIGNIN_URL);
   return function(dispatch){
     return axios.post(SIGNIN_URL, {email, password}).then((response)=>{
       var {user_id, token} = response.data
@@ -18,6 +16,7 @@ exports.loginUser = (email, password) => {
   }
 }
 
+// Remove once you have implemented signup
 exports.signupUser = (email, password) => {
   return function(dispatch){
     return axios.post(SIGNUP_URL, {email, password}).then((response)=>{
