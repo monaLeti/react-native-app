@@ -1,4 +1,6 @@
 var defaultState = {
+  email:undefined,
+  password:undefined,
   name: undefined,
   lastName:undefined,
   location:undefined,
@@ -14,6 +16,9 @@ module.exports = (state=defaultState, action) => {
       console.log(action.signUpField);
       var preObject = Object.assign({}, state, action.signUpField)
       console.log(preObject);
+      return preObject
+    case 'SIGN_UP_3':
+      console.log(action);
       return state
     default:
       return state

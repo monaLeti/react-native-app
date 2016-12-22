@@ -17,17 +17,17 @@ exports.loginUser = (email, password) => {
 }
 
 // Remove once you have implemented signup
-exports.signupUser = (email, password) => {
-  return function(dispatch){
-    return axios.post(SIGNUP_URL, {email, password}).then((response)=>{
-      var {user_id, token} = response.data
-      dispatch(addAlert(token))
-      dispatch(authUser(user_id))
-    }).catch((error)=>{
-      dispatch(addAlert('Could not signup'))
-    })
-  }
-}
+// exports.signupUser = (email, password) => {
+//   return function(dispatch){
+//     return axios.post(SIGNUP_URL, {email, password}).then((response)=>{
+//       var {user_id, token} = response.data
+//       dispatch(addAlert(token))
+//       dispatch(authUser(user_id))
+//     }).catch((error)=>{
+//       dispatch(addAlert('Could not signup'))
+//     })
+//   }
+// }
 
 authUser = (user_id) =>{
   return {

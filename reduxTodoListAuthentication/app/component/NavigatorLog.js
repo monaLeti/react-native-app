@@ -11,6 +11,7 @@ import Login from './Login.js'
 import Main from './Main.js'
 import SignUpStep1 from './SignUp/SignUpStep1'
 import SignUpStep2 from './SignUp/SignUpStep2'
+import SignUpStep3 from './SignUp/SignUpStep3'
 
 var NavigatorLog = React.createClass({
   render(){
@@ -36,6 +37,8 @@ var NavigatorLog = React.createClass({
         return <SignUpStep1 title={route.title} navigator={nav}/>
       case 'SignUpStep2':
         return <SignUpStep2 title={route.title} navigator={nav}/>
+      case 'SignUpStep3':
+        return <SignUpStep3 title={route.title} navigator={nav}/>
     }
   }
 

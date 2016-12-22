@@ -20,6 +20,7 @@ var SignUpStep2 = React.createClass({
       location:this.props.fields.location.value
     }
     dispatch(signUpStep2(signUpField))
+    this.props.navigator.push({id:'SignUpStep3'})
   },
   backRoute:function(){
     this.props.navigator.pop()
@@ -106,7 +107,8 @@ const styles = StyleSheet.create({
     paddingLeft:10
   },
   textInput:{
-    height:36
+    height:36,
+    color:"#fff"
   },
   buttonSubmit:{
     width:130,
@@ -127,16 +129,5 @@ SignUpStep2 = reduxForm({
   form:'SignUpStep2',
   fields:['location']
 }, null, null)(SignUpStep2)
-
-SignUpStep2 = connect(
-  state => {
-    return {
-      name: state.signUp.name,
-      lastName: state.signUp.lastName,
-      location: state.signUp.location,
-      sex:state.signUp.sex
-    }
-  }
-)(SignUpStep2)
 
 export default SignUpStep2

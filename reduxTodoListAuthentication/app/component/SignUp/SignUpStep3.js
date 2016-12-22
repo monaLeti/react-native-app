@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
-import {signUpStep1} from '../../actions'
+import {signupUser} from '../../actions'
 import {
   StyleSheet,
   Text,
@@ -11,23 +11,26 @@ import {
   TextInput
 } from 'react-native';
 
-var SignUpStep1 = React.createClass({
+var SignUpStep3 = React.createClass({
   onSubmit: function(){
     var {dispatch} = this.props
     console.log('submit');
     console.log(this.props);
     var signUpField = {
-      name:this.props.fields.name.value,
-      lastName:this.props.fields.lastName.value
+      email:this.props.fields.email.value,
+      password:this.props.fields.password.value,
+      name: this.props.name,
+      lastName:this.props.lastName,
+      location:this.props.location
     }
-    dispatch(signUpStep1(signUpField))
-    this.props.navigator.push({id:'SignUpStep2'})
+    console.log(signUpField);
+    dispatch(signupUser(signUpField))
   },
   backRoute:function(){
     this.props.navigator.pop()
   },
   render(){
-    var {fields:{name, lastName}} = this.props;
+    var {fields:{email, password}} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.navigator}>
@@ -40,22 +43,22 @@ var SignUpStep1 = React.createClass({
             style={styles.ImgElement}
             source={require('./common/img/baby.png')}>
             <Text style={styles.textImage}>
-              Me llamo...
+              Mi email y password son...
             </Text>
           </Image>
           <View style={styles.form}>
             <View style={styles.field}>
               <TextInput
-                {...name}
+                {...email}
                 style={styles.textInput}
-                placeholder="Nombre"
+                placeholder="Email"
                 placeholderTextColor="#ddd"/>
             </View>
             <View style={styles.field}>
               <TextInput
-                {...lastName}
+                {...password}
                 style={styles.textInput}
-                placeholder="Apellidos"
+                placeholder="Password"
                 placeholderTextColor="#ddd"/>
             </View>
             <View style={styles.buttonSubmit}>
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
   },
   textInput:{
     height:36,
-    color:'#fff'
+    color:'#FFF'
   },
   buttonSubmit:{
     width:130,
@@ -132,7 +135,21 @@ const styles = StyleSheet.create({
     paddingTop:10
   }
 });
-export default reduxForm({
-  form:'SignUpStep1',
-  fields:['name', 'lastName']
-}, null, null)(SignUpStep1)
+
+SignUpStep3 = reduxForm({
+  form:'SignUpStep3',
+  fields:['email','password']
+}, null, null)(SignUpStep3)
+
+SignUpStep3 = connect(
+  state => {
+    return {
+      name: state.signUp.name,
+      lastName: state.signUp.lastName,
+      location: state.signUp.location,
+      sex:state.signUp.sex
+    }
+  }
+)(SignUpStep3)
+
+export default SignUpStep3
