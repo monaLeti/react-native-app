@@ -6,7 +6,8 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Picker
 } from 'react-native';
 
 var Main = React.createClass({
@@ -16,16 +17,39 @@ var Main = React.createClass({
   render(){
     return (
       <View style={styles.container}>
-          <Text>
-            Welcome to Main
-          </Text>
-          <TouchableOpacity onPress={this.onLogout}>
-            <Text>
-              Log Out
-            </Text>
+        <View style={styles.menuBar}>
+          <TouchableOpacity style={styles.menuIcon}>
+            <Image source={require('./common/img/hamburger.png')}></Image>
+              <Picker style={styles.picker}>
+                <Picker.Item label="Java" value="java" />
+                <Picker.Item label="JavaScript" value="js" />
+              </Picker>
           </TouchableOpacity>
+          <View style={styles.menuCategory}>
+            <TouchableOpacity style={styles.menuCategory}>
+              <Text style={styles.menuText}>
+                Todas
+              </Text>
+              <Image source={require('./common/img/arrow.png')}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuCategory}>
+              <Text style={styles.menuText}>
+                Recientes
+              </Text>
+              <Image source={require('./common/img/arrow.png')}></Image>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.menuCategory}>
+            <TouchableOpacity style={styles.menuIcon}>
+              <Image source={require('./common/img/search.png')}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuIcon}>
+              <Image source={require('./common/img/more.png')}></Image>
+            </TouchableOpacity>
+          </View>
+        </View>
+        
       </View>
-
     );
   }
 });
@@ -33,9 +57,34 @@ var Main = React.createClass({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    paddingTop:20,
+    backgroundColor:'#ddd'
   },
+  menuBar:{
+    height:30,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  menuIcon:{
+    paddingLeft:10,
+    paddingRight:10
+  },
+  menuCategory:{
+    flexDirection: 'row',
+    paddingLeft:15
+  },
+  menuText:{
+    color:'white',
+    fontSize:16
+  },
+  content:{
+    backgroundColor:'blue'
+  },
+  picker:{
+    backgroundColor:'red'
+  }
 });
 
 export default connect()(Main)
