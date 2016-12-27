@@ -7,7 +7,7 @@ exports.signupUser = (signUpField) => {
   return function(dispatch){
     console.log('here',signUpField);
     return axios.post(SIGNUP_URL, signUpField).then((response)=>{
-      var {user_id, token} = response.data
+      var {user_id} = response.data
       console.log(response);
       // dispatch(addAlert(token))
       dispatch(signUpStep3(user_id))

@@ -20,10 +20,10 @@ var Main = React.createClass({
         <View style={styles.menuBar}>
           <TouchableOpacity style={styles.menuIcon}>
             <Image source={require('./common/img/hamburger.png')}></Image>
-              <Picker style={styles.picker}>
-                <Picker.Item label="Java" value="java" />
-                <Picker.Item label="JavaScript" value="js" />
-              </Picker>
+            <Picker style={styles.picker}>
+              <Picker.Item label="Java" value="java" />
+              <Picker.Item label="JavaScript" value="js" />
+            </Picker>
           </TouchableOpacity>
           <View style={styles.menuCategory}>
             <TouchableOpacity style={styles.menuCategory}>
@@ -48,7 +48,11 @@ var Main = React.createClass({
             </TouchableOpacity>
           </View>
         </View>
-        
+        <View style={styles.menuOverflow}>
+          <TouchableOpacity onPress={this.onLogout}>
+            <Text>LogOut</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -82,8 +86,10 @@ const styles = StyleSheet.create({
   content:{
     backgroundColor:'blue'
   },
-  picker:{
-    backgroundColor:'red'
+  menuOverflow:{
+    backgroundColor:'blue',
+    height:300,
+    width:170
   }
 });
 
