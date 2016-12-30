@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {connect} from 'react-redux'
 import {unauthUser} from '../actions'
 import {
@@ -7,30 +7,56 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Animated
+  Picker
 } from 'react-native';
 
-class Main extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      fadeAnim: new Animated.Value(0),
-    };
-  }
-  componentDidMount(){
-    Animated.timing(
-      this.state.fadeAnim,
-      {toValue:1}
-    ).start()
-  }
+var Main = React.createClass({
+  onLogout: function(){
+    this.props.dispatch(unauthUser)
+  },
   render(){
     return (
-      <Animated.View style={{opacity:this.state.fadeAnim}}>
-        <Text>Text</Text>
-      </Animated.View>
+      <View style={styles.container}>
+        <View style={styles.menuBar}>
+          <TouchableOpacity style={styles.menuIcon}>
+            <Image source={require('./common/img/hamburger.png')}></Image>
+            <Picker style={styles.picker}>
+              <Picker.Item label="Java" value="java" />
+              <Picker.Item label="JavaScript" value="js" />
+            </Picker>
+          </TouchableOpacity>
+          <View style={styles.menuCategory}>
+            <TouchableOpacity style={styles.menuCategory}>
+              <Text style={styles.menuText}>
+                Todas
+              </Text>
+              <Image source={require('./common/img/arrow.png')}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuCategory}>
+              <Text style={styles.menuText}>
+                Recientes
+              </Text>
+              <Image source={require('./common/img/arrow.png')}></Image>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.menuCategory}>
+            <TouchableOpacity style={styles.menuIcon}>
+              <Image source={require('./common/img/search.png')}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuIcon}>
+              <Image source={require('./common/img/more.png')}></Image>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.menuOverflow}>
+          <TouchableOpacity onPress={this.onLogout}>
+            <Text>LogOut</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -39,6 +65,31 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     paddingTop:20,
     backgroundColor:'#ddd'
+  },
+  menuBar:{
+    height:30,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  menuIcon:{
+    paddingLeft:10,
+    paddingRight:10
+  },
+  menuCategory:{
+    flexDirection: 'row',
+    paddingLeft:15
+  },
+  menuText:{
+    color:'white',
+    fontSize:16
+  },
+  content:{
+    backgroundColor:'blue'
+  },
+  menuOverflow:{
+    backgroundColor:'blue',
+    height:300,
+    width:170
   }
 });
 

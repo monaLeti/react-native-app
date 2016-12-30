@@ -6,16 +6,15 @@ import {
   Image,
 } from 'react-native';
 
-import SlideMenu from './SlideMenu'
-import Filters from './Filter'
-import Products from './Product'
-
-var Main = React.createClass({
+var Filter = React.createClass({
   render(){
+    console.log('FILTER');
     return (
-      <SlideMenu
-        renderLeftView = {<Filters/>}
-        renderCenterView = {<Products/>} />
+      <View style={styles.container}>
+          <Text style={styles.text}>
+            Hola Filter
+          </Text>
+      </View>
     );
   }
 });
@@ -26,6 +25,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  text:{
+    color:'black',
+    fontSize:18
+  }
 });
 
-export default Main
+export default Filter

@@ -57,6 +57,7 @@ var SignUpStep3 = React.createClass({
             <View style={styles.field}>
               <TextInput
                 {...password}
+                secureTextEntry = {true}
                 style={styles.textInput}
                 placeholder="Password"
                 placeholderTextColor="#ddd"/>
