@@ -6,13 +6,12 @@ import {
   Image,
 } from 'react-native';
 
-var Filter = React.createClass({
+var QuestionsList = React.createClass({
   render(){
-    console.log('FILTER');
     return (
       <View style={styles.container}>
-          <Text style={styles.text}>
-            Hola Filter
+          <Text>
+            QuestionsList
           </Text>
       </View>
     );
@@ -31,4 +30,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Filter
+export default QuestionsList

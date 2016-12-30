@@ -10,20 +10,16 @@ import {
   Picker
 } from 'react-native';
 
-var Main = React.createClass({
-  onLogout: function(){
-    this.props.dispatch(unauthUser)
-  },
+var MenuNavigator = React.createClass({
+  // onLogout: function(){
+  //   this.props.dispatch(unauthUser)
+  // },
   render(){
     return (
-      <View style={styles.container}>
+      <View>
         <View style={styles.menuBar}>
           <TouchableOpacity style={styles.menuIcon}>
             <Image source={require('./common/img/hamburger.png')}></Image>
-            <Picker style={styles.picker}>
-              <Picker.Item label="Java" value="java" />
-              <Picker.Item label="JavaScript" value="js" />
-            </Picker>
           </TouchableOpacity>
           <View style={styles.menuCategory}>
             <TouchableOpacity style={styles.menuCategory}>
@@ -48,24 +44,12 @@ var Main = React.createClass({
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.menuOverflow}>
-          <TouchableOpacity onPress={this.onLogout}>
-            <Text>LogOut</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   }
 });
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    paddingTop:20,
-    backgroundColor:'#ddd'
-  },
   menuBar:{
     height:30,
     flexDirection: 'row',
@@ -82,15 +66,7 @@ const styles = StyleSheet.create({
   menuText:{
     color:'white',
     fontSize:16
-  },
-  content:{
-    backgroundColor:'blue'
-  },
-  menuOverflow:{
-    backgroundColor:'blue',
-    height:300,
-    width:170
   }
 });
 
-export default connect()(Main)
+export default connect()(MenuNavigator)

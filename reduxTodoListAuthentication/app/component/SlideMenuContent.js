@@ -6,12 +6,13 @@ import {
   Image,
 } from 'react-native';
 
-var Product = React.createClass({
+var SlideMenuContent = React.createClass({
   render(){
+    console.log('FILTER');
     return (
       <View style={styles.container}>
-          <Text>
-            Hola Product
+          <Text style={styles.text}>
+            Hola SlideMenuContent
           </Text>
       </View>
     );
@@ -30,4 +31,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Product
+export default SlideMenuContent

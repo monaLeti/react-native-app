@@ -34,7 +34,6 @@ var SlideMenu = React.createClass({
     } else {
       this.left = left
     }
-
     this.center.setNativeProps({style:{left: this.offset + this.left}})
   },
 
