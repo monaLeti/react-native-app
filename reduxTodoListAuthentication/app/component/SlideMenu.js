@@ -1,6 +1,6 @@
 'use strict'
 
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {
   Animation,
@@ -12,7 +12,7 @@ import {
 var Dimensions = require('Dimensions')
 var screenWidth = Dimensions.get('window').width
 
-var SlideMenu = React.createClass({
+class SlideMenu extends Component{
   // componentWillMount: function (){
   //   this.offset = 0 //Contains the center view offset from the left edge
   //   this._panGesture = PanResponder.create({
@@ -27,14 +27,14 @@ var SlideMenu = React.createClass({
   //   })
   // },
 
-  componentDidUpdate: function () {
+  componentDidUpdate() {
     if(this.props.open){
       this.moveCenterView(screenWidth * 0.55)
     }else{
       this.moveFinished()
     }
-  },
-  moveCenterView: function(left){
+  }
+  moveCenterView(left){
     if (!this.center) return
 
     if ((this.offset + left) < 0) {
@@ -43,9 +43,9 @@ var SlideMenu = React.createClass({
       this.left = left
     }
     this.center.setNativeProps({style:{left: this.offset + this.left}})
-  },
+  }
 
-  moveFinished: function(){
+  moveFinished(){
     // if (!this.center) return
     //
     // var offset = this.offset + this.left
@@ -61,8 +61,8 @@ var SlideMenu = React.createClass({
 
     // Animation.startAnimation(this.center, 400, 0, 'easeInOut', {'anchorPoint.x':0, 'position.x':this.offset})
     this.center.setNativeProps({style:{left:0}})
-  },
-  render: function(){
+  }
+  render(){
     var centerView = this.props.renderCenterView ? this.props.renderCenterView : null
     var leftView = this.props.renderLeftView ? this.props.renderLeftView : null
     this.offset = 0
@@ -79,7 +79,8 @@ var SlideMenu = React.createClass({
       </View>
     )
   }
-})
+}
+
 var styles = StyleSheet.create({
   container: {
     flex: 1,

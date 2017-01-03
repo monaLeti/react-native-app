@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {unauthUser} from '../actions'
 import {
@@ -14,11 +14,11 @@ import SlideMenu from './SlideMenu'
 import SlideMenuContent from './SlideMenuContent'
 import QuestionsList from './QuestionsList'
 
-
-var Main = React.createClass({
-  onLogout: function(){
+class Main extends Component{
+  onLogout(){
     this.props.dispatch(unauthUser)
-  },
+  }
+  
   render(){
     return (
       <View style={styles.container}>
@@ -30,7 +30,7 @@ var Main = React.createClass({
 
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   container: {

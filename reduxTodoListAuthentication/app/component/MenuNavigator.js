@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {openSlideMenu, noOpenSlideMenu} from '../actions'
 import {
@@ -10,8 +10,12 @@ import {
   Picker
 } from 'react-native';
 
-var MenuNavigator = React.createClass({
-  showOrHideMenu:function(){
+class MenuNavigator extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   console.log(props);
+  // }
+  showOrHideMenu(){
     var {dispatch} = this.props
     var open = this.props.open
     if (open) {
@@ -19,14 +23,14 @@ var MenuNavigator = React.createClass({
     } else {
       dispatch(noOpenSlideMenu(open))
     }
-  },
+  }
   render(){
     return (
       <View>
         <View style={styles.menuBar}>
           <TouchableOpacity
             style={styles.menuIcon}
-            onPress={this.showOrHideMenu}>
+            onPress={()=>{this.showOrHideMenu()}}>
               <Image source={require('./common/img/hamburger.png')}></Image>
           </TouchableOpacity>
           <View style={styles.menuCategory}>
@@ -55,7 +59,7 @@ var MenuNavigator = React.createClass({
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   menuBar:{
