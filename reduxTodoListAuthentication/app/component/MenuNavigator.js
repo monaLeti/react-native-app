@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux'
-import {unauthUser} from '../actions'
+import {openSlideMenu, noOpenSlideMenu} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -11,15 +11,23 @@ import {
 } from 'react-native';
 
 var MenuNavigator = React.createClass({
-  // onLogout: function(){
-  //   this.props.dispatch(unauthUser)
-  // },
+  showOrHideMenu:function(){
+    var {dispatch} = this.props
+    var open = this.props.open
+    if (open) {
+      dispatch(openSlideMenu(open))
+    } else {
+      dispatch(noOpenSlideMenu(open))
+    }
+  },
   render(){
     return (
       <View>
         <View style={styles.menuBar}>
-          <TouchableOpacity style={styles.menuIcon}>
-            <Image source={require('./common/img/hamburger.png')}></Image>
+          <TouchableOpacity
+            style={styles.menuIcon}
+            onPress={this.showOrHideMenu}>
+              <Image source={require('./common/img/hamburger.png')}></Image>
           </TouchableOpacity>
           <View style={styles.menuCategory}>
             <TouchableOpacity style={styles.menuCategory}>
@@ -69,4 +77,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect()(MenuNavigator)
+var mapStateToProps = (state) =>{
+  return {
+    open: state.slideMenu.open
+  }
+}
+
+export default connect(mapStateToProps)(MenuNavigator)

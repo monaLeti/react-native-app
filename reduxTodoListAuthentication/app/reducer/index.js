@@ -3,10 +3,12 @@ import {reducer as formReducer} from 'redux-form'
 import authReducer from './authReducer'
 import alertsReducer from './alertReducer'
 import signUpReducer from './signUpReducer'
+import slideMenuReducer from './slideMenuReducer'
 
 module.exports = combineReducers({
   form: formReducer,
   auth: authReducer,
   alert: alertsReducer,
-  signUp: signUpReducer
+  signUp: signUpReducer,
+  slideMenu: slideMenuReducer
 })

@@ -13,13 +13,11 @@ module.exports = (state=defaultState, action) => {
       var preObject = Object.assign({}, state, action.signUpField)
       return preObject
     case 'SIGN_UP_2':
-      console.log(action.signUpField);
       var preObject = Object.assign({}, state, action.signUpField)
       console.log(preObject);
       return preObject
     case 'SIGN_UP_3':
-      console.log(action);
-      return state
+      return state //Set the last state as the default one
     default:
       return state
   }

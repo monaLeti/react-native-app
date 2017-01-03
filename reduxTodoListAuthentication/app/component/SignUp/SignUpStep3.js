@@ -14,8 +14,6 @@ import {
 var SignUpStep3 = React.createClass({
   onSubmit: function(){
     var {dispatch} = this.props
-    console.log('submit');
-    console.log(this.props);
     var signUpField = {
       email:this.props.fields.email.value,
       password:this.props.fields.password.value,
@@ -23,7 +21,6 @@ var SignUpStep3 = React.createClass({
       lastName:this.props.lastName,
       location:this.props.location
     }
-    console.log(signUpField);
     dispatch(signupUser(signUpField))
   },
   backRoute:function(){

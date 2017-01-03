@@ -1,6 +1,7 @@
 'use strict'
 
 import React from 'react';
+import {connect} from 'react-redux';
 import {
   Animation,
   PanResponder,
@@ -12,20 +13,27 @@ var Dimensions = require('Dimensions')
 var screenWidth = Dimensions.get('window').width
 
 var SlideMenu = React.createClass({
-  componentWillMount: function (){
-    this.offset = 0 //Contains the center view offset from the left edge
-    this._panGesture = PanResponder.create({
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        return Math.abs(gestureState.dx) >  Math.abs(gestureState.dy)
-          &&  Math.abs(gestureState.dx) > 10
-      },
-      onPanResponderGrant : (evt, gestureState) => this.left = 0, //he guesture has started.
-      onPanResponderMove : (evt, gestureState) => this.moveCenterView(gestureState.dx),
-      onPanResponderRelease : (evt, gestureState) => this.moveFinished,
-      onPanResponderTerminate : (evt, gestureState) => this.moveFinished
-    })
-  },
+  // componentWillMount: function (){
+  //   this.offset = 0 //Contains the center view offset from the left edge
+  //   this._panGesture = PanResponder.create({
+  //     onMoveShouldSetPanResponder: (evt, gestureState) => {
+  //       return Math.abs(gestureState.dx) >  Math.abs(gestureState.dy)
+  //         &&  Math.abs(gestureState.dx) > 10
+  //     },
+  //     onPanResponderGrant : (evt, gestureState) => this.left = 0, //he guesture has started.
+  //     onPanResponderMove : (evt, gestureState) => this.moveCenterView(gestureState.dx),
+  //     onPanResponderRelease : (evt, gestureState) => this.moveFinished,
+  //     onPanResponderTerminate : (evt, gestureState) => this.moveFinished
+  //   })
+  // },
 
+  componentDidUpdate: function () {
+    if(this.props.open){
+      this.moveCenterView(screenWidth * 0.55)
+    }else{
+      this.moveFinished()
+    }
+  },
   moveCenterView: function(left){
     if (!this.center) return
 
@@ -38,25 +46,26 @@ var SlideMenu = React.createClass({
   },
 
   moveFinished: function(){
-    if (!this.center) return
+    // if (!this.center) return
+    //
+    // var offset = this.offset + this.left
+    // if(this.offset === 0){
+    //   if(offset > screenWidth * 0.25){
+    //     this.offset = screenWidth * 0.75
+    //   }
+    // } else {
+    //   if( offset < screenWidth * 0.5){
+    //     this.offset = 0
+    //   }
+    // }
 
-    var offset = this.offset + this.left
-    if(this.offset === 0){
-      if(offset > screenWidth * 0.25){
-        this.offset = screenWidth * 0.75
-      }
-    } else {
-      if( offset < screenWidth * 0.5){
-        this.offset = 0
-      }
-    }
-
-    Animation.startAnimtion(this.center, 400, 0, 'easeInOut', {'anchorPoint.x':0, 'position.x':this.offset})
-    this.center.setNativeProps({left:this.offset})
+    // Animation.startAnimation(this.center, 400, 0, 'easeInOut', {'anchorPoint.x':0, 'position.x':this.offset})
+    this.center.setNativeProps({style:{left:0}})
   },
   render: function(){
     var centerView = this.props.renderCenterView ? this.props.renderCenterView : null
     var leftView = this.props.renderLeftView ? this.props.renderLeftView : null
+    this.offset = 0
     return(
       <View style={[styles.container, this.props.style]}>
         <View style={styles.left}>
@@ -64,8 +73,7 @@ var SlideMenu = React.createClass({
         </View>
         <View
           style={[styles.center, {left: this.offset}]}
-          ref={(center)=> this.center = center}
-          {...this._panGesture.panHandlers}>
+          ref={(center)=> this.center = center}>
           {centerView}
         </View>
       </View>
@@ -90,4 +98,10 @@ var styles = StyleSheet.create({
   },
 })
 
-export default SlideMenu
+var mapStateToProps = (state) =>{
+  return {
+    open: state.slideMenu.open
+  }
+}
+
+export default connect(mapStateToProps)(SlideMenu)

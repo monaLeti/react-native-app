@@ -6,8 +6,7 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity,
-  Picker
+  TouchableOpacity
 } from 'react-native';
 
 import MenuNavigator from './MenuNavigator'

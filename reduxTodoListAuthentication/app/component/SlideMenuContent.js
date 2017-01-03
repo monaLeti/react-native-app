@@ -8,7 +8,6 @@ import {
 
 var SlideMenuContent = React.createClass({
   render(){
-    console.log('FILTER');
     return (
       <View style={styles.container}>
           <Text style={styles.text}>
