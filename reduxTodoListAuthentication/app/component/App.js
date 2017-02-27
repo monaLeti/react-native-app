@@ -19,13 +19,14 @@ import {
 } from 'react-native';
 
 import NavigatorLog from './NavigatorLog'
+import NavigatorApp from './NavigatorApp'
 
 var App = React.createClass({
   render(){
     var renderMainView = () =>{
       if(this.props.user_id){
         return(
-          <Main/>
+          <NavigatorApp/>
         )
       }else{
         return (

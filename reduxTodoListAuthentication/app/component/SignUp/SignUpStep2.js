@@ -14,8 +14,6 @@ import {
 var SignUpStep2 = React.createClass({
   onSubmit: function(){
     var {dispatch} = this.props
-    console.log('submit');
-    console.log(this.props);
     var signUpField = {
       location:this.props.fields.location.value
     }

@@ -2,4 +2,5 @@
 export * from './authActions';
 export * from './alertsActions';
 export * from './signUpActions';
-export * from './slideMenuAction';
+export * from './questionAction';
+export * from './answerActions';
