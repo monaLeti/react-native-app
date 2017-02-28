@@ -20,17 +20,17 @@ class ViewModal extends Component{
 
   submitNewQuestion(){
     console.log('submitNewQuestion');
-    var {dispatch, user_id, fields:{title, category}} = this.props
+    var {dispatch, user_id, fields:{content, category}} = this.props
     this.props.closeModal()
 
-    dispatch(createQuestion(title, category, user_id))
+    dispatch(createQuestion(content, category, user_id))
     // Clean the form values
-    this.props.dispatch(change('addQuestion', 'title', ''))
+    this.props.dispatch(change('addQuestion', 'content', ''))
     this.props.dispatch(change('addQuestion', 'category', ''))
   }
 
   render(){
-    var {fields:{title, category}} = this.props
+    var {fields:{content, category}} = this.props
     return (
       <View style={styles.modalContainer}>
         <Text style={styles.text}>
@@ -38,7 +38,7 @@ class ViewModal extends Component{
         </Text>
         <View style={styles.field}>
           <TextInput
-            {...title}
+            {...content}
             placeholder="Pregunta"
             style={styles.textInput}/>
         </View>
@@ -93,7 +93,7 @@ var mapStateToProps = (state) => {
 // Decorate the form component
 ViewModal = reduxForm({
   form: 'addQuestion', // a unique name for this form
-  fields:['title','category']
+  fields:['content','category']
 }, null, null)(ViewModal);
 
 export default connect(mapStateToProps)(ViewModal);

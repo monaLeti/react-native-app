@@ -56,7 +56,8 @@ class Main extends Component{
     this.props.navigator.push({id:'AnswersPage'})
   }
   render(){
-    var {fields:{title, category}} = this.props
+    var {fields:{content, category}} = this.props
+    console.log(this.props);
     return (
       <View style={styles.container}>
       <TopBar
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
 });
 
 var mapStateToProps = (state) => {
+  console.log('mapStateToProps', state);
   return {
     questions:state.questions
   }
@@ -112,7 +114,7 @@ var mapStateToProps = (state) => {
 // Decorate the form component
 Main = reduxForm({
   form: 'addQuestion', // a unique name for this form
-  fields:['title','category']
+  fields:['content','category']
 }, null, null)(Main);
 
 export default connect(mapStateToProps)(Main);

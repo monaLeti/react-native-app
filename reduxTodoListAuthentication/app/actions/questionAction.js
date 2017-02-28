@@ -4,17 +4,17 @@ import axios from 'axios'
 //db.getCollection('questions').remove({})
 import {ADD_QUESTION, GET_QUESTION} from '../api'
 
-exports.createQuestion = (title, category, user_id) => {
+exports.createQuestion = (content, category, user_id) => {
   return function(dispatch){
     console.log(user_id);
     var newComment = {
       "category": category.value,
-      "content": title.value,
+      "content": content.value,
       "user": user_id
     }
     return axios.post(ADD_QUESTION, newComment).then((response) => {
-      console.log('respuesta',response.data, user_id);
-      dispatch(addQuestion(title, category))
+      console.log('respuesta',response.data.questions);
+      dispatch(addQuestion(response.data.questions))
     }).catch((error) => {
       console.log('error',error);
     })
@@ -23,19 +23,17 @@ exports.createQuestion = (title, category, user_id) => {
 
 exports.getQuestion = function(dispatch){
     return axios.get(GET_QUESTION).then((response) => {
-      console.log('respuesta',response.data);
-      dispatch(setQuestion(response.data))
+      dispatch(setQuestion(response.data.questions))
     }).catch((error) => {
       console.log('error',error);
     })
 }
 
 
-addQuestion = (title,category) => {
+addQuestion = (response) => {
   return {
     type:'ADD_QUESTION',
-    title,
-    category
+    response
   }
 }
 
