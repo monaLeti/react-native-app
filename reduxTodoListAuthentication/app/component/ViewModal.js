@@ -6,10 +6,10 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   TextInput
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 class ViewModal extends Component{
   constructor(props){
     super(props)
@@ -32,15 +32,14 @@ class ViewModal extends Component{
   render(){
     var {fields:{content, category}} = this.props
     return (
-      <View style={styles.modalContainer}>
-        <Text style={styles.text}>
-          Añade nueva pregunta
-        </Text>
-        <View style={styles.field}>
-          <TextInput
-            {...content}
-            placeholder="Pregunta"
-            style={styles.textInput}/>
+      <View>
+        <View style={styles.topBarModal}>
+          <TouchableOpacity onPress={this.props.closeModal}>
+            <Icon name='ios-arrow-round-back' size={30} color="white"/>
+          </TouchableOpacity>
+          <Text style={styles.textTop}>
+            Añade nueva pregunta
+          </Text>
         </View>
         <View style={styles.field}>
           <TextInput
@@ -48,13 +47,16 @@ class ViewModal extends Component{
             placeholder="Categoria"
             style={styles.textInput}/>
         </View>
-        <View>
-          <TouchableHighlight onPress={this.submitNewQuestion.bind(this)} underlayColor='transparent'>
-            <Text>Validar</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this.props.closeModal} underlayColor='transparent'>
-            <Text>Cancelar</Text>
-          </TouchableHighlight>
+        <View style={styles.fieldQuestion}>
+          <TextInput
+            {...content}
+            placeholder="Pregunta"
+            style={styles.textInput}/>
+        </View>
+        <View style={styles.submit}>
+          <TouchableOpacity onPress={this.submitNewQuestion.bind(this)}>
+            <Icon name='ios-add-circle' size={50} color="#35D0C1"/>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -66,20 +68,42 @@ const styles = StyleSheet.create({
     color:'black',
     fontSize:18
   },
-  modalContainer:{
-    marginTop:30,
-    height:300,
-    backgroundColor:"rgba(245,252,221,0.3)"
+  topBarModal:{
+    flexDirection:'row',
+    backgroundColor:"#35D0C1",
+    height:50,
+    paddingTop:15,
+    paddingLeft:15
+  },
+  textTop:{
+    color:'white',
+    fontSize:17,
+    marginLeft:20,
+    paddingTop:5
   },
   field: {
     borderRadius: 5,
     padding:5,
     paddingLeft:8,
     margin:7,
-    backgroundColor:'white'
+    borderWidth:1,
+    borderColor:'#D3D3D3',
+  },
+  fieldQuestion:{
+    height:200,
+    borderRadius: 5,
+    borderWidth:1,
+    borderColor:'#D3D3D3',
+    padding:5,
+    paddingLeft:8,
+    margin:7,
   },
   textInput: {
     height:26
+  },
+  submit:{
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

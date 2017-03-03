@@ -32,7 +32,6 @@ class Main extends Component{
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.questions)
     })
-
   }
   onLogout(){
     this.props.dispatch(unauthUser)

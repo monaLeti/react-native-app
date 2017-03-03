@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   TextInput,
   Dimensions,
-  KeyboardAvoidingView
+  ListView,
+  RefreshControl
 } from 'react-native';
 
 import TopBar from './common/TopBar'
@@ -17,10 +18,17 @@ import Icon from 'react-native-vector-icons/Ionicons';
 class AnswersPage extends Component{
   constructor(props){
     super(props)
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       text:"",
-      height: Dimensions.get('window').height - 35
+      height: Dimensions.get('window').height - 35,
+      dataSource: ds.cloneWithRows(props.questions),
     }
+  }
+  componentWillReceiveProps (props) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(props.questions)
+    })
   }
   addNewQuestion(){
     this.setState({
@@ -37,7 +45,6 @@ class AnswersPage extends Component{
   }
   render(){
     const {height, width} = Dimensions.get('window');
-    console.log('AnswersPage',typeof height);
     return (
       <View style={styles.container}>
         <TopBar
@@ -46,6 +53,11 @@ class AnswersPage extends Component{
             onPress:this.backToMain.bind(this)
           }}/>
         <Question rowData={this.props.activeQuestion} openQuestion={this.addNewQuestion.bind(this)}/>
+        <View style={styles.listViewAnswers}>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData) => <Question rowData={rowData} openQuestion={this.addNewQuestion.bind(this)}/>}/>
+        </View>
         <View style={[styles.addNewComment, {top:this.state.height}]}>
           <TextInput
             style={styles.inputComment}
@@ -78,13 +90,18 @@ const styles = StyleSheet.create({
   },
   inputComment:{
     flex:1,
-    height: 30,
-  }
+    height: 33,
+    backgroundColor:'white'
+  },
+  listViewAnswers:{
+    marginBottom:133
+  },
 });
 
 var mapStateToProps = (state) => {
   return {
-    activeQuestion:state.activeQuestion
+    activeQuestion:state.activeQuestion,
+    questions:state.questions
   }
 }
 
