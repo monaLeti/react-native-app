@@ -51,7 +51,8 @@ class ViewModal extends Component{
           <TextInput
             {...content}
             placeholder="Pregunta"
-            style={styles.textInput}/>
+            style={styles.textInput}
+            multiline={true}/>
         </View>
         <View style={styles.submit}>
           <TouchableOpacity onPress={this.submitNewQuestion.bind(this)}>

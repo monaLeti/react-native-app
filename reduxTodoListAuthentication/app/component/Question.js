@@ -32,7 +32,7 @@ class Question extends Component {
           <Icon style={styles.icon} name="person" size={26} color="#35D0C1"/>
         </View>
         <View style={styles.textProfile}>
-          <Text style={styles.userName}>{this.props.rowData.user_join[0].name} &#183; 21min </Text>
+          <Text style={styles.userName}>{this.props.rowData.user.name} &#183; 21min </Text>
             <Text style={styles.questionText}>{this.props.rowData.content}</Text>
             <Text style={styles.categoryText}>{this.props.rowData.category}</Text>
           <View style={styles.buttonsForReact}>

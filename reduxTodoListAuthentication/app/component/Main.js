@@ -51,7 +51,6 @@ class Main extends Component{
     })
   }
   openQuestion(){
-    console.log('openQuestion');
     this.props.navigator.push({id:'AnswersPage'})
   }
   render(){
@@ -103,7 +102,6 @@ const styles = StyleSheet.create({
 });
 
 var mapStateToProps = (state) => {
-  console.log('mapStateToProps', state);
   return {
     questions:state.questions
   }

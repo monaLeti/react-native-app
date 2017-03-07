@@ -26,6 +26,9 @@ module.exports = (state={},action) =>{
   switch (action.type) {
     case 'SELECT_ACTIVE_QUESTION':
       return action.question
+    case 'ADD_NEW_ANSWER':
+      console.log('ADD_NEW_ANSWER', action.question);
+      return action.question
     default:
       return state
   }
