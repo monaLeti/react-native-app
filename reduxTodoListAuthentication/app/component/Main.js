@@ -17,6 +17,8 @@ import {
 import TopBar from './common/TopBar'
 import ViewModal from './ViewModal'
 import Question from './Question'
+import CategoryList from './CategoryList'
+import FilterView from './FilterView'
 
 class Main extends Component{
   constructor(props){
@@ -26,6 +28,7 @@ class Main extends Component{
       modalVisible:false,
       dataSource: ds.cloneWithRows(props.questions),
       refreshing:false,
+      displayCategory:false
     };
   }
   componentWillReceiveProps (props) {
@@ -53,16 +56,21 @@ class Main extends Component{
   openQuestion(){
     this.props.navigator.push({id:'AnswersPage'})
   }
+  selectCategory(){
+    this.state.displayCategory ? this.setState({displayCategory:false}) : this.setState({displayCategory:true})
+  }
   render(){
     var {fields:{content, category}} = this.props
     console.log(this.props);
     return (
       <View style={styles.container}>
-      <TopBar
-        leftItem={{
-          icon:'ios-add-circle-outline',
-          onPress:this.addNewQuestion.bind(this)
-        }}/>
+        <TopBar
+          leftItem={{
+            icon:'ios-add-circle-outline',
+            onPress:this.addNewQuestion.bind(this)
+          }}/>
+        <FilterView onCategoryPress={this.selectCategory.bind(this)}/>
+        <CategoryList onDisplay={this.state.displayCategory}/>
         <Modal
           animationType={'slide'}
           transparent={false}
