@@ -1,4 +1,4 @@
-
+'use strict'
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 
@@ -12,7 +12,7 @@ import {
   Animated
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class CategoryList extends Component {
   constructor(props){
@@ -26,34 +26,31 @@ class CategoryList extends Component {
     Animated.spring(
         this.state.openComponent,
         {
-            toValue: 100,
+            toValue: 85,
             friction:2.5,
             tension:5
         }
     ).start();
   }
   render(){
+    let categories = this.props.values.map((value, index) => (
+      <View
+        style={styles.elementsContainer}
+        key={index}
+        value={value}>
+        <TouchableHighlight onPress={()=>{this.props.categorySelected(value.title)}} underlayColor='transparent' style={styles.containerText}>
+          <Icon name={value.icon} size={40} color="white"/>
+        </TouchableHighlight>
+        <Text style={styles.textElements}>{value.title}</Text>
+      </View>)
+    );
     if(this.props.onDisplay){
       return (
-        <Animated.View style={[styles.topNavBar, {height:this.state.openComponent}]}>
+        <Animated.View
+          style={[styles.topNavBar, {height:this.state.openComponent}]}>
           <ScrollView
             horizontal={true}>
-            <View style={styles.elementsContainer}>
-              <Icon name='ios-restaurant' size={50} color="white"/>
-              <Text style={styles.textElements}>Alimentación</Text>
-            </View>
-            <View style={styles.elementsContainer}>
-              <Icon name='ios-restaurant' size={50} color="white"/>
-              <Text style={styles.textElements}>Alimentación</Text>
-            </View>
-            <View style={styles.elementsContainer}>
-              <Icon name='ios-restaurant' size={50} color="white"/>
-              <Text style={styles.textElements}>Alimentación</Text>
-            </View>
-            <View style={styles.elementsContainer}>
-              <Icon name='ios-restaurant' size={50} color="white"/>
-              <Text style={styles.textElements}>Alimentación</Text>
-            </View>
+            {categories}
           </ScrollView>
         </Animated.View>
       )

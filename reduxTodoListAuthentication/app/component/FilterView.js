@@ -10,21 +10,43 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import CategoryList from './CategoryList'
 
 class FilterView extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      displayCategory:false,
+      categoryTitle:'Todos'
+    };
+  }
+  selectCategory(){
+    this.setState({
+       displayCategory : !this.state.displayCategory
+    });
+  }
+  categorySelected(text){
+    console.log('categorySelected',text);
+    this.setState({
+      displayCategory:true,
+      categoryTitle: text,
+    })
   }
   render(){
     return (
-      <View style={styles.topNavBar}>
-        <TouchableHighlight onPress={this.props.onCategoryPress} underlayColor='transparent' style={styles.containerText}>
-          <Text style={styles.textCategory}>Todos</Text>
-        </TouchableHighlight>
-        <TouchableHighlight style={styles.containerText}>
-          <Text style={styles.textCategory}>Todos</Text>
-        </TouchableHighlight>
+      <View>
+        <View style={styles.topNavBar}>
+          <TouchableHighlight onPress={this.selectCategory.bind(this)} underlayColor='transparent' style={styles.containerText}>
+            <Text style={styles.textCategory}>{this.state.categoryTitle}</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.containerText}>
+            <Text style={styles.textCategory}>Todos</Text>
+          </TouchableHighlight>
+        </View>
+        <CategoryList
+          onDisplay={this.state.displayCategory}
+          values={listOfCategories}
+          categorySelected={this.categorySelected.bind(this)}/>
       </View>
     )
   }
@@ -52,4 +74,30 @@ const styles = StyleSheet.create({
   },
 })
 
+const listOfCategories =[
+  {
+    title:"Embarazo",
+    icon:"human-pregnant"
+  },
+  {
+    title:"Bebes",
+    icon:"baby-buggy"
+  },
+  {
+    title:'Ocio',
+    icon:'beach'
+  },
+  {
+    title:'Alimentacion',
+    icon:'food-apple'
+  },
+  {
+    title:'Animales',
+    icon:"paw"
+  },
+  {
+    title:'Juegos',
+    icon:'puzzle'
+  }
+]
 export default FilterView
