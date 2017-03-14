@@ -8,7 +8,8 @@ import {
   Text,
   View,
   TouchableHighlight,
-  ScrollView
+  ScrollView,
+  Animated
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,11 +17,25 @@ import Icon from 'react-native-vector-icons/Ionicons';
 class CategoryList extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      openComponent: new Animated.Value()
+    }
+  }
+  componentWillReceiveProps(){
+    this.state.openComponent.setValue(0);
+    Animated.spring(
+        this.state.openComponent,
+        {
+            toValue: 100,
+            friction:2.5,
+            tension:5
+        }
+    ).start();
   }
   render(){
     if(this.props.onDisplay){
       return (
-        <View style={styles.topNavBar}>
+        <Animated.View style={[styles.topNavBar, {height:this.state.openComponent}]}>
           <ScrollView
             horizontal={true}>
             <View style={styles.elementsContainer}>
@@ -40,7 +55,7 @@ class CategoryList extends Component {
               <Text style={styles.textElements}>Alimentación</Text>
             </View>
           </ScrollView>
-        </View>
+        </Animated.View>
       )
     } else {
       return(<View></View>)
@@ -55,7 +70,7 @@ const styles = StyleSheet.create({
     paddingTop:10,
     paddingBottom:10,
     paddingLeft:10,
-    backgroundColor:'#8f959e'
+    backgroundColor:'#8f959e',
   },
   elementsContainer:{
     alignItems:'center',

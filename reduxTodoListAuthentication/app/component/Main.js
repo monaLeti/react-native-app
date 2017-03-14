@@ -57,7 +57,9 @@ class Main extends Component{
     this.props.navigator.push({id:'AnswersPage'})
   }
   selectCategory(){
-    this.state.displayCategory ? this.setState({displayCategory:false}) : this.setState({displayCategory:true})
+    this.setState({
+       displayCategory : !this.state.displayCategory
+    });
   }
   render(){
     var {fields:{content, category}} = this.props
