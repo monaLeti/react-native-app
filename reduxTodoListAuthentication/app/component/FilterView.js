@@ -17,19 +17,33 @@ class FilterView extends Component {
     super(props)
     this.state = {
       displayCategory:false,
-      categoryTitle:'Todos'
+      categoryTitle:'Todos',
+      displayFilter:false,
+      filterTitle:'Reciente'
     };
   }
   selectCategory(){
     this.setState({
-       displayCategory : !this.state.displayCategory
+       displayCategory : !this.state.displayCategory,
+       displayFilter: false
     });
   }
+  selectFilter(){
+    this.setState({
+      displayCategory: false,
+      displayFilter: !this.state.displayFilter
+    })
+  }
   categorySelected(text){
-    console.log('categorySelected',text);
     this.setState({
       displayCategory:true,
       categoryTitle: text,
+    })
+  }
+  filterSelected(text){
+    this.setState({
+      displayFilter:true,
+      filterTitle: text,
     })
   }
   render(){
@@ -39,14 +53,18 @@ class FilterView extends Component {
           <TouchableHighlight onPress={this.selectCategory.bind(this)} underlayColor='transparent' style={styles.containerText}>
             <Text style={styles.textCategory}>{this.state.categoryTitle}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.containerText}>
-            <Text style={styles.textCategory}>Todos</Text>
+          <TouchableHighlight onPress={this.selectFilter.bind(this)} underlayColor='transparent' style={styles.containerText}>
+            <Text style={styles.textCategory}>{this.state.filterTitle}</Text>
           </TouchableHighlight>
         </View>
         <CategoryList
           onDisplay={this.state.displayCategory}
           values={listOfCategories}
           categorySelected={this.categorySelected.bind(this)}/>
+        <CategoryList
+          onDisplay={this.state.displayFilter}
+          values={listOfFilter}
+          categorySelected={this.filterSelected.bind(this)}/>
       </View>
     )
   }
@@ -98,6 +116,16 @@ const listOfCategories =[
   {
     title:'Juegos',
     icon:'puzzle'
+  }
+]
+const listOfFilter =[
+  {
+    title:"Popular",
+    icon:"human-pregnant"
+  },
+  {
+    title:"Recientes",
+    icon:"baby-buggy"
   }
 ]
 export default FilterView

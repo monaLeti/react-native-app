@@ -18,11 +18,14 @@ class CategoryList extends Component {
   constructor(props){
     super(props)
     this.state = {
-      openComponent: new Animated.Value()
+      openComponent: new Animated.Value(0),
+      activeColor:'white'
     }
   }
   componentWillReceiveProps(){
-    this.state.openComponent.setValue(0);
+    if(!this.props.onDisplay){
+      this.state.openComponent.setValue(0);
+    }
     Animated.spring(
         this.state.openComponent,
         {
@@ -32,14 +35,19 @@ class CategoryList extends Component {
         }
     ).start();
   }
+  mineTry(){
+    this.setState({
+      activeColor:'white'
+    })
+  }
   render(){
     let categories = this.props.values.map((value, index) => (
       <View
         style={styles.elementsContainer}
         key={index}
         value={value}>
-        <TouchableHighlight onPress={()=>{this.props.categorySelected(value.title)}} underlayColor='transparent' style={styles.containerText}>
-          <Icon name={value.icon} size={40} color="white"/>
+        <TouchableHighlight onPress={()=>{this.mineTry.bind(this);this.props.categorySelected(value.title)}} underlayColor='transparent' style={styles.containerText}>
+          <Icon name={value.icon} size={40} color={this.state.activeColor}/>
         </TouchableHighlight>
         <Text style={styles.textElements}>{value.title}</Text>
       </View>)

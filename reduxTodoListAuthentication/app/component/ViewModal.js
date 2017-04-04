@@ -7,14 +7,22 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Picker,
+  Dimensions
 } from 'react-native';
+
 import Icon from 'react-native-vector-icons/Ionicons';
+
+const Item = Picker.Item
+
 class ViewModal extends Component{
   constructor(props){
     super(props)
     this.state = {
-      modalVisible:false
+      modalVisible:false,
+      category:'Embarazo',
+      displayPicker:false
     };
   }
 
@@ -28,9 +36,43 @@ class ViewModal extends Component{
     this.props.dispatch(change('addQuestion', 'content', ''))
     this.props.dispatch(change('addQuestion', 'category', ''))
   }
-
+  onPickerChange(key: string, value: string){
+    const newState = {}
+    newState[key] = value
+    newState['displayPicker'] = !this.state.displayPicker
+    this.setState(newState)
+  }
+  showPicker(){
+    this.setState({
+      displayPicker: !this.state.displayPicker
+    })
+  }
   render(){
     var {fields:{content, category}} = this.props
+    let pickerRender
+    let pickerSelection
+    if(this.state.displayPicker){
+      pickerRender = (
+        <Picker
+          style={styles.picker}
+          selectedValue={this.state.category}
+          onValueChange={this.onPickerChange.bind(this, 'category')}
+          itemStyle={styles.pickerText}>
+          <Item label='Embarazo' category="Embarazo" value="Embarazo"/>
+          <Item label='Bebes' category="Bebes" value="Bebes"/>
+          <Item label='Ocio' category="Ocio" value="Ocio"/>
+          <Item label='Alimentación' category="Alimentación" value="Alimentación"/>
+          <Item label='Animales' category="Animales" value="Animales"/>
+          <Item label='Juegos' category="Juegos" value="Juegos"/>
+        </Picker>
+      )
+    } else {
+      pickerSelection = (
+        <TouchableOpacity style={styles.field} onPress={this.showPicker.bind(this)}>
+          <Text {...category}>{this.state.category}</Text>
+        </TouchableOpacity>
+      )
+    }
     return (
       <View>
         <View style={styles.topBarModal}>
@@ -41,11 +83,9 @@ class ViewModal extends Component{
             Añade nueva pregunta
           </Text>
         </View>
-        <View style={styles.field}>
-          <TextInput
-            {...category}
-            placeholder="Categoria"
-            style={styles.textInput}/>
+        <View>
+          {pickerSelection}
+          {pickerRender}
         </View>
         <View style={styles.fieldQuestion}>
           <TextInput
@@ -81,6 +121,12 @@ const styles = StyleSheet.create({
     fontSize:17,
     marginLeft:20,
     paddingTop:5
+  },
+  picker:{
+    width:Dimensions.get('window').width,
+  },
+  pickerText:{
+    fontSize:17
   },
   field: {
     borderRadius: 5,
