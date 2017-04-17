@@ -30,7 +30,7 @@ var NavigatorLog = React.createClass({
   renderScene: function(route, nav){
     switch (route.id) {
       case 'Login':
-        return <Login title={route.title} navigator={nav}/>
+        return <Login title={route.title} navigator={nav} />
       case 'Main':
         return <Main title={route.title} navigator={nav}/>
       case 'SignUpStep1':
