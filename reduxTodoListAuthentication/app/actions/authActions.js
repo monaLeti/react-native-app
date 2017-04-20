@@ -13,7 +13,7 @@ exports.loginUser = (email, password) => {
       dispatch(authUser(user_id))
     }).catch((error)=>{
       console.log(error);
-      dispatch(addAlert('Could not login'))
+      dispatch(addAlert('Error al entrar.'))
     })
   }
 }

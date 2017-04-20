@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, createQuestion, getQuestion} from '../actions'
+import {unauthUser, createQuestion, getQuestion, addAlert, removeAlert} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import AlertContainer from './alerts/AlertContainer'
 
 const Item = Picker.Item
 
@@ -21,20 +22,30 @@ class ViewModal extends Component{
     super(props)
     this.state = {
       modalVisible:false,
-      category:'Embarazo',
-      displayPicker:false
+      category:'Elige una categoria',
+      displayPicker:false,
+      content:''
     };
   }
-
+  removeAlerts(){
+    let {dispatch, alerts} = this.props
+    alerts.forEach((item, index)=>{
+      if(item.text === 'Necesita rellenar ambos campos'){
+        dispatch(removeAlert(item.id))
+      }
+    })
+  }
   submitNewQuestion(){
-    console.log('submitNewQuestion');
-    var {dispatch, user_id, fields:{content, category}} = this.props
-    this.props.closeModal()
-
-    dispatch(createQuestion(content, category, user_id))
-    // Clean the form values
-    this.props.dispatch(change('addQuestion', 'content', ''))
-    this.props.dispatch(change('addQuestion', 'category', ''))
+    let {dispatch, user_id} = this.props
+    if(this.state.content ==='' || this.state.category === 'Elige una categoria'){
+      dispatch(addAlert('Necesita rellenar ambos campos'))
+    } else {
+      this.props.closeModal()
+      dispatch(createQuestion(this.state.content, this.state.category, user_id))
+      // Clean the form values
+      this.props.dispatch(change('addQuestion', 'content', ''))
+      this.props.dispatch(change('addQuestion', 'category', ''))
+    }
   }
   onPickerChange(key: string, value: string){
     const newState = {}
@@ -46,18 +57,18 @@ class ViewModal extends Component{
     this.setState({
       displayPicker: !this.state.displayPicker
     })
+    this.removeAlerts()
   }
   render(){
-    var {fields:{content, category}} = this.props
     let pickerRender
     let pickerSelection
     if(this.state.displayPicker){
       pickerRender = (
         <Picker
-          style={styles.picker}
           selectedValue={this.state.category}
           onValueChange={this.onPickerChange.bind(this, 'category')}
           itemStyle={styles.pickerText}>
+          <Item label='Elige una categoria' category="Elige una categoria" value="Elige una categoria"/>
           <Item label='Embarazo' category="Embarazo" value="Embarazo"/>
           <Item label='Bebes' category="Bebes" value="Bebes"/>
           <Item label='Ocio' category="Ocio" value="Ocio"/>
@@ -69,7 +80,7 @@ class ViewModal extends Component{
     } else {
       pickerSelection = (
         <TouchableOpacity style={styles.field} onPress={this.showPicker.bind(this)}>
-          <Text {...category}>{this.state.category}</Text>
+          <Text>{this.state.category}</Text>
         </TouchableOpacity>
       )
     }
@@ -89,15 +100,20 @@ class ViewModal extends Component{
         </View>
         <View style={styles.fieldQuestion}>
           <TextInput
-            {...content}
             placeholder="Pregunta"
             style={styles.textInput}
-            multiline={true}/>
+            multiline={true}
+            onChangeText={(newText)=>{this.setState({content:newText})}}
+            onSubmitEditing={this.submitNewQuestion.bind(this)}
+            onFocus={this.removeAlerts.bind(this)}/>
         </View>
         <View style={styles.submit}>
           <TouchableOpacity onPress={this.submitNewQuestion.bind(this)}>
             <Icon name='ios-add-circle' size={50} color="#35D0C1"/>
           </TouchableOpacity>
+        </View>
+        <View style={styles.alertContainer}>
+          <AlertContainer/>
         </View>
       </View>
     );
@@ -122,11 +138,11 @@ const styles = StyleSheet.create({
     marginLeft:20,
     paddingTop:5
   },
-  picker:{
-    width:Dimensions.get('window').width,
-  },
   pickerText:{
     fontSize:17
+  },
+  pickerDefault:{
+    backgroundColor:'red'
   },
   field: {
     borderRadius: 5,
@@ -146,25 +162,24 @@ const styles = StyleSheet.create({
     margin:7,
   },
   textInput: {
-    height:26
+    height:200,
+    fontSize:15
   },
   submit:{
     justifyContent: 'center',
     alignItems: 'center',
   },
+  alertContainer:{
+    position:'relative',
+    top:Dimensions.get('window').height - 362
+  },
 });
 
 var mapStateToProps = (state) => {
   return {
-    user_id:state.auth.user_id
+    user_id:state.auth.user_id,
+    alerts:state.alert
   }
 }
-//PUEDES PONER UN VALIDATE FUNCTION PARA QUE COMPRUEBE COSAS
-
-// Decorate the form component
-ViewModal = reduxForm({
-  form: 'addQuestion', // a unique name for this form
-  fields:['content','category']
-}, null, null)(ViewModal);
 
 export default connect(mapStateToProps)(ViewModal);

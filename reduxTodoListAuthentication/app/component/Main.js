@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, createQuestion, getQuestion} from '../actions'
+import {unauthUser, createQuestion, getQuestion, removeAlert} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -29,11 +29,13 @@ class Main extends Component{
       refreshing:false,
     };
   }
+
   componentWillReceiveProps (props) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.questions)
     })
   }
+
   onLogout(){
     this.props.dispatch(unauthUser)
   }
@@ -44,19 +46,31 @@ class Main extends Component{
 
   closeModal(){
     this.setState({modalVisible:false})
+    this.removeAlerts()
   }
+
   _onRefresh(){
     this.setState({refreshing:true})
     this.props.dispatch(getQuestion).then(() => {
       this.setState({refreshing:false})
     })
   }
+
   openQuestion(){
     this.props.navigator.push({id:'AnswersPage'})
   }
+
+  removeAlerts(){
+    let {dispatch, alerts} = this.props
+    alerts.forEach((item, index)=>{
+      if(item.text === 'Necesita rellenar ambos campos'){
+        dispatch(removeAlert(item.id))
+      }
+    })
+  }
+
   render(){
     var {fields:{content, category}} = this.props
-    console.log(this.props);
     return (
       <View style={styles.container}>
         <TopBar
@@ -105,7 +119,8 @@ const styles = StyleSheet.create({
 
 var mapStateToProps = (state) => {
   return {
-    questions:state.questions
+    questions:state.questions,
+    alerts:state.alert,
   }
 }
 //PUEDES PONER UN VALIDATE FUNCTION PARA QUE COMPRUEBE COSAS

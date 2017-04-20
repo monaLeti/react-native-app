@@ -6,10 +6,9 @@ import {ADD_QUESTION, GET_QUESTION} from '../api'
 
 exports.createQuestion = (content, category, user_id) => {
   return function(dispatch){
-    console.log(user_id);
     var newComment = {
-      "category": category.value,
-      "content": content.value,
+      "category": category,
+      "content": content,
       "user": user_id
     }
     return axios.post(ADD_QUESTION, newComment).then((response) => {
