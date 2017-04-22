@@ -2,7 +2,7 @@ import axios from 'axios'
 //We need to take the user authorization token for that with
 //keychainfrom react-nativekeychain
 //db.getCollection('questions').remove({})
-import {ADD_QUESTION, GET_QUESTION} from '../api'
+import {ADD_QUESTION, GET_QUESTION, GET_QUESTION_BY_CATEGORY} from '../api'
 
 exports.createQuestion = (content, category, user_id) => {
   return function(dispatch){
@@ -20,6 +20,7 @@ exports.createQuestion = (content, category, user_id) => {
   }
 }
 
+// Get all the questions
 exports.getQuestion = function(dispatch){
     return axios.get(GET_QUESTION).then((response) => {
       dispatch(setQuestion(response.data.questions))
@@ -28,6 +29,17 @@ exports.getQuestion = function(dispatch){
     })
 }
 
+// Get questions filer by category
+exports.getQuestionByCategory = (category) =>{
+  return function(dispatch){
+    return axios.get(GET_QUESTION_BY_CATEGORY + category).then((response)=>{
+      dispatch(setQuestion(response.data.questions))
+    }).catch((err)=>{
+      console.log(err);
+
+    })
+  }
+}
 
 addQuestion = (response) => {
   return {

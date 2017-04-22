@@ -1,6 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
+import {getQuestionByCategory} from '../actions'
 
 import {
   AppRegistry,
@@ -35,10 +36,13 @@ class CategoryList extends Component {
         }
     ).start();
   }
-  mineTry(){
-    this.setState({
-      activeColor:'white'
-    })
+  changeCategory(categorySelected){
+    console.log('changeCategory',categorySelected);
+    // this.setState({
+    //   activeColor:'red'
+    // })
+    this.props.categorySelected(categorySelected)
+    this.props.dispatch(getQuestionByCategory(categorySelected))
   }
   render(){
     let categories = this.props.values.map((value, index) => (
@@ -46,7 +50,7 @@ class CategoryList extends Component {
         style={styles.elementsContainer}
         key={index}
         value={value}>
-        <TouchableHighlight onPress={()=>{this.mineTry.bind(this);this.props.categorySelected(value.title)}} underlayColor='transparent' style={styles.containerText}>
+        <TouchableHighlight onPress={this.changeCategory.bind(this, value.title)} underlayColor='transparent' style={styles.containerText}>
           <Icon name={value.icon} size={40} color={this.state.activeColor}/>
         </TouchableHighlight>
         <Text style={styles.textElements}>{value.title}</Text>
@@ -86,4 +90,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CategoryList
+export default connect()(CategoryList)
