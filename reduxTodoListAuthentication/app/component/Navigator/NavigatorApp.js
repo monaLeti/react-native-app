@@ -7,8 +7,8 @@ import {
   Navigator
 } from 'react-native';
 
-import Main from './Main.js'
-import AnswersPage from './AnswersPage.js'
+import Main from '../Main.js'
+import AnswersPage from '../AnswersPage.js'
 
 class NavigatorApp extends Component {
   renderScene(route, nav){

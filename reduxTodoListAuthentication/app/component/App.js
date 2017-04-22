@@ -18,26 +18,41 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import NavigatorLog from './NavigatorLog'
-import NavigatorApp from './NavigatorApp'
+import NavigatorLog from './Navigator/NavigatorLog'
+import NavigatorApp from './Navigator/NavigatorApp'
+import BottomTabNavigator from './BottomTabNavigator/Tab'
 
 var App = React.createClass({
+  renderViewApp(){
+    switch (this.props.view) {
+      case 'Main':
+        return <NavigatorApp/>
+      case 'Profile':
+        return <NavigatorApp/>
+    }
+  },
   render(){
     var renderMainView = () =>{
       if(this.props.user_id){
-        return(
-          <NavigatorApp/>
-        )
+        return this.renderViewApp()
       }else{
         return (
           <NavigatorLog/>
         );
       }
     }
+    var renderBottomView = () =>{
+      if(this.props.user_id){
+        return(
+          <BottomTabNavigator/>
+        )
+      }
+    }
     return(
       <View style={{flex:1}}>
         {renderMainView()}
         <AlertContainer/>
+        {renderBottomView()}
       </View>
     )
   }
@@ -54,7 +69,8 @@ const styles = StyleSheet.create({
 
 var mapStateToProps = (state) => {
   return {
-    user_id:state.auth.user_id
+    user_id:state.auth.user_id,
+    view:state.view
   }
 }
 

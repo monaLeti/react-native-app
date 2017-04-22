@@ -5,6 +5,8 @@ import alertsReducer from './alertReducer'
 import signUpReducer from './signUpReducer'
 import addQuestion from './addQuestion'
 import answerReducer from './answerReducer'
+import filterReducer from './filterReducer'
+import viewReducer from './viewReducer'
 
 module.exports = combineReducers({
   form: formReducer,
@@ -12,5 +14,7 @@ module.exports = combineReducers({
   alert: alertsReducer,
   signUp: signUpReducer,
   questions: addQuestion,
-  activeQuestion: answerReducer
+  activeQuestion: answerReducer,
+  filter: filterReducer,
+  view:viewReducer,
 })

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {SIGNIN_URL, SIGNUP_URL} from '../api'
+import {SIGNIN_URL} from '../api'
 
 import {addAlert} from './alertsActions'
 

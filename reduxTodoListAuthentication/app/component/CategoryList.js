@@ -1,7 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {getQuestionByCategory} from '../actions'
+
 
 import {
   AppRegistry,
@@ -20,7 +20,7 @@ class CategoryList extends Component {
     super(props)
     this.state = {
       openComponent: new Animated.Value(0),
-      activeColor:'white'
+      elementSelected:this.props.elementSelected,
     }
   }
   componentWillReceiveProps(){
@@ -36,13 +36,28 @@ class CategoryList extends Component {
         }
     ).start();
   }
+  colorIconChange(value){
+    if (value.title === this.state.elementSelected) {
+      return '#35D0C1'
+    }else{
+      return 'white'
+    }
+  }
+  colorTextChange(value){
+    if (value.title === this.state.elementSelected) {
+      return {color:'#35D0C1'}
+    }else{
+      return {color:'white'}
+    }
+  }
   changeCategory(categorySelected){
-    console.log('changeCategory',categorySelected);
-    // this.setState({
-    //   activeColor:'red'
-    // })
+    this.setState({
+      elementSelected:categorySelected
+    })
     this.props.categorySelected(categorySelected)
-    this.props.dispatch(getQuestionByCategory(categorySelected))
+  }
+  colorChange(value){
+    return this.state.activeColor
   }
   render(){
     let categories = this.props.values.map((value, index) => (
@@ -51,9 +66,9 @@ class CategoryList extends Component {
         key={index}
         value={value}>
         <TouchableHighlight onPress={this.changeCategory.bind(this, value.title)} underlayColor='transparent' style={styles.containerText}>
-          <Icon name={value.icon} size={40} color={this.state.activeColor}/>
+          <Icon name={value.icon} size={40} color={this.colorIconChange(value)}/>
         </TouchableHighlight>
-        <Text style={styles.textElements}>{value.title}</Text>
+        <Text style={this.colorTextChange(value)}>{value.title}</Text>
       </View>)
     );
     if(this.props.onDisplay){
@@ -85,9 +100,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     marginRight:20
   },
-  textElements:{
-    color:'white'
-  }
 })
 
-export default connect()(CategoryList)
+
+export default CategoryList

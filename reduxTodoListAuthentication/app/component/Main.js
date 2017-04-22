@@ -17,7 +17,7 @@ import {
 import TopBar from './common/TopBar'
 import ViewModal from './ViewModal'
 import Question from './Question'
-import FilterView from './FilterView'
+import SearchView from './SearchView'
 
 class Main extends Component{
   constructor(props){
@@ -78,7 +78,7 @@ class Main extends Component{
             icon:'ios-add-circle-outline',
             onPress:this.addNewQuestion.bind(this)
           }}/>
-        <FilterView/>
+        <SearchView/>
         <Modal
           animationType={'slide'}
           transparent={false}

@@ -7,11 +7,11 @@ import {
   Navigator
 } from 'react-native';
 
-import Login from './Login.js'
-import Main from './Main.js'
-import SignUpStep1 from './SignUp/SignUpStep1'
-import SignUpStep2 from './SignUp/SignUpStep2'
-import SignUpStep3 from './SignUp/SignUpStep3'
+import Login from '../Login.js'
+import Main from '../Main.js'
+import SignUpStep1 from '../SignUp/SignUpStep1'
+import SignUpStep2 from '../SignUp/SignUpStep2'
+import SignUpStep3 from '../SignUp/SignUpStep3'
 
 var NavigatorLog = React.createClass({
   render(){

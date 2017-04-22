@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
+import {getQuestion, getQuestionByCategory, setCategorySelected, setSortSelected} from '../actions'
 
 import {
   AppRegistry,
@@ -12,14 +13,13 @@ import {
 
 import CategoryList from './CategoryList'
 
-class FilterView extends Component {
+class SearchView extends Component {
   constructor(props){
     super(props)
+    console.log(props);
     this.state = {
       displayCategory:false,
-      categoryTitle:'Todos',
       displayFilter:false,
-      filterTitle:'Reciente'
     };
   }
   selectCategory(){
@@ -37,31 +37,43 @@ class FilterView extends Component {
   categorySelected(text){
     this.setState({
       displayCategory:true,
-      categoryTitle: text,
     })
+    this.props.dispatch(setCategorySelected(text))
+    if(text.indexOf('Todos') === -1){
+      this.props.dispatch(getQuestionByCategory(text))
+    }else{
+      this.props.dispatch(getQuestion)
+    }
   }
   filterSelected(text){
     this.setState({
       displayFilter:true,
-      filterTitle: text,
     })
+    this.props.dispatch(setSortSelected(text))
+    // if(text.indexOf('Todos') === -1){
+    //   this.props.dispatch(getQuestionByCategory(text))
+    // }else{
+    //   this.props.dispatch(getQuestion)
+    // }
   }
   render(){
     return (
       <View>
         <View style={styles.topNavBar}>
           <TouchableHighlight onPress={this.selectCategory.bind(this)} underlayColor='transparent' style={styles.containerText}>
-            <Text style={styles.textCategory}>{this.state.categoryTitle}</Text>
+            <Text style={styles.textCategory}>{this.props.filter.categorySelected}</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={this.selectFilter.bind(this)} underlayColor='transparent' style={styles.containerText}>
-            <Text style={styles.textCategory}>{this.state.filterTitle}</Text>
+            <Text style={styles.textCategory}>{this.props.filter.sortSelected}</Text>
           </TouchableHighlight>
         </View>
         <CategoryList
+          elementSelected = {this.props.filter.categorySelected}
           onDisplay={this.state.displayCategory}
           values={listOfCategories}
           categorySelected={this.categorySelected.bind(this)}/>
         <CategoryList
+          elementSelected = {this.props.filter.sortSelected}
           onDisplay={this.state.displayFilter}
           values={listOfFilter}
           categorySelected={this.filterSelected.bind(this)}/>
@@ -94,6 +106,10 @@ const styles = StyleSheet.create({
 
 const listOfCategories =[
   {
+    title:"Todos",
+    icon:"home-variant"
+  },
+  {
     title:"Embarazo",
     icon:"human-pregnant"
   },
@@ -106,7 +122,7 @@ const listOfCategories =[
     icon:'beach'
   },
   {
-    title:'Alimentacion',
+    title:'Alimentación',
     icon:'food-apple'
   },
   {
@@ -128,4 +144,11 @@ const listOfFilter =[
     icon:"baby-buggy"
   }
 ]
-export default FilterView
+
+var mapStateToProps = (state) => {
+  return {
+    filter:state.filter,
+  }
+}
+
+export default connect(mapStateToProps)(SearchView)
