@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AlertContainer from './alerts/AlertContainer'
 
 const Item = Picker.Item
-
+const maxNumberOfCharacters = 200
 class ViewModal extends Component{
   constructor(props){
     super(props)
@@ -24,9 +24,11 @@ class ViewModal extends Component{
       modalVisible:false,
       category:'Elige una categoria',
       displayPicker:false,
-      content:''
+      content:'',
+      maxCharacters:maxNumberOfCharacters,
     };
   }
+
   removeAlerts(){
     let {dispatch, alerts} = this.props
     alerts.forEach((item, index)=>{
@@ -35,6 +37,7 @@ class ViewModal extends Component{
       }
     })
   }
+
   submitNewQuestion(){
     let {dispatch, user_id} = this.props
     if(this.state.content ==='' || this.state.category === 'Elige una categoria'){
@@ -47,17 +50,39 @@ class ViewModal extends Component{
       this.props.dispatch(change('addQuestion', 'category', ''))
     }
   }
+
   onPickerChange(key: string, value: string){
     const newState = {}
     newState[key] = value
     newState['displayPicker'] = !this.state.displayPicker
     this.setState(newState)
   }
+
   showPicker(){
     this.setState({
       displayPicker: !this.state.displayPicker
     })
     this.removeAlerts()
+  }
+  textInputChange(newText){
+    let numberOfCharacteres = maxNumberOfCharacters - newText.length
+    if (numberOfCharacteres >= 0) {
+      this.setState({
+        content:newText,
+        maxCharacters:numberOfCharacteres
+      })
+    }
+  }
+  changeCharacterColor(character){
+    if(character < 50){
+      return{
+        color:'#FF9999'
+      }
+    } else{
+      return {
+        color:'#C4C4C4'
+      }
+    }
   }
   render(){
     let pickerRender
@@ -103,9 +128,11 @@ class ViewModal extends Component{
             placeholder="Pregunta"
             style={styles.textInput}
             multiline={true}
-            onChangeText={(newText)=>{this.setState({content:newText})}}
+            onChangeText={this.textInputChange.bind(this)}
+            value={this.state.content}
             onSubmitEditing={this.submitNewQuestion.bind(this)}
             onFocus={this.removeAlerts.bind(this)}/>
+          <Text style={[styles.maxCharacters, this.changeCharacterColor(this.state.maxCharacters)]}>{this.state.maxCharacters}</Text>
         </View>
         <View style={styles.submit}>
           <TouchableOpacity onPress={this.submitNewQuestion.bind(this)}>
@@ -162,7 +189,7 @@ const styles = StyleSheet.create({
     margin:7,
   },
   textInput: {
-    height:200,
+    height:170,
     fontSize:15
   },
   submit:{
@@ -172,6 +199,10 @@ const styles = StyleSheet.create({
   alertContainer:{
     position:'relative',
     top:Dimensions.get('window').height - 362
+  },
+  maxCharacters:{
+    width:30,
+    left:Dimensions.get('window').width - 60
   },
 });
 
