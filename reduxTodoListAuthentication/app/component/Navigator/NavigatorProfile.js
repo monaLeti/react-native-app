@@ -3,26 +3,22 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   Navigator
 } from 'react-native';
 
-import Main from '../Main.js'
-import AnswersPage from '../AnswersPage.js'
+import Profile from '../Profile'
 
-class NavigatorApp extends Component {
+class NavigatorProfile extends Component {
   renderScene(route, nav){
     switch (route.id) {
-      case 'Main':
-        return <Main navigator={nav}/>
-      case 'AnswersPage':
-        return <AnswersPage navigator={nav}/>
+      case 'Profile':
+        return <Profile navigator={nav}/>
     }
   }
   render(){
     return (
       <Navigator
-        initialRoute={{id:'Main'}}
+        initialRoute={{id:'Profile'}}
         configureScene={(route)=>{
           return Navigator.SceneConfigs.FloatFromRight
         }}
@@ -43,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NavigatorApp
+export default NavigatorProfile

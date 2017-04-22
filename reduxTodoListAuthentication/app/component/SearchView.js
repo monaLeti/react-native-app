@@ -16,7 +16,6 @@ import CategoryList from './CategoryList'
 class SearchView extends Component {
   constructor(props){
     super(props)
-    console.log(props);
     this.state = {
       displayCategory:false,
       displayFilter:false,

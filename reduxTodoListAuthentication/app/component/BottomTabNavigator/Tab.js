@@ -1,7 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-
+import {setViewApp} from '../../actions'
 
 import {
   AppRegistry,
@@ -17,16 +17,14 @@ class Tab extends Component {
   constructor(props){
     super(props)
     this.state = {
-      elementSelected:'Main'
+      elementSelected:this.props.view
     }
-  }
-  componentWillReceiveProps(){
-
   }
   changeView(value){
     this.setState({
       elementSelected:value.view
     })
+    this.props.dispatch(setViewApp(value.view))
   }
   colorIconChange(value){
     if (value.view === this.state.elementSelected) {
@@ -89,5 +87,10 @@ const elements = [
     icon:'account-circle'
   },
 ]
+var mapStateToProps = (state) => {
+  return {
+    view:state.view
+  }
+}
 
-export default Tab
+export default connect(mapStateToProps)(Tab)

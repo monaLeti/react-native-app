@@ -19,16 +19,17 @@ import {
 } from 'react-native';
 
 import NavigatorLog from './Navigator/NavigatorLog'
-import NavigatorApp from './Navigator/NavigatorApp'
+import NavigatorMain from './Navigator/NavigatorMain'
+import NavigatorProfile from './Navigator/NavigatorProfile'
 import BottomTabNavigator from './BottomTabNavigator/Tab'
 
 var App = React.createClass({
   renderViewApp(){
     switch (this.props.view) {
       case 'Main':
-        return <NavigatorApp/>
+        return <NavigatorMain/>
       case 'Profile':
-        return <NavigatorApp/>
+        return <NavigatorProfile/>
     }
   },
   render(){
