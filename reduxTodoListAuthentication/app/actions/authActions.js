@@ -25,6 +25,8 @@ authUser = (user_id) =>{
   }
 }
 
-exports.unauthUser = {
-  type:'UNAUTH_USER'
+exports.unauthUser = ()=>{
+  return {
+    type:'UNAUTH_USER'
+  }
 }
