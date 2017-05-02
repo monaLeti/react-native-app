@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "axios": "^0.15.2",
+    "lottie-ios": "^1.5.2",
+    "lottie-react-native": "^1.1.1",
     "react": "15.3.2",
     "react-addons-update": "^15.3.0",
     "react-native": "0.37.0",

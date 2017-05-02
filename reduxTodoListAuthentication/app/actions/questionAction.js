@@ -12,7 +12,6 @@ exports.createQuestion = (content, category, user_id) => {
       "user": user_id
     }
     return axios.post(ADD_QUESTION, newComment).then((response) => {
-      console.log('respuesta',response.data.questions);
       dispatch(addQuestion(response.data.questions))
     }).catch((error) => {
       console.log('error',error);

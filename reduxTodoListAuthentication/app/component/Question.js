@@ -29,12 +29,20 @@ import {selectActiveQuestion} from '../actions'
 class Question extends Component {
   constructor(props){
     super(props)
+    console.log('constructor',this.props);
     this.state = {
       likeComment:false,
       noLikeComment:false,
       numberLikeComment:this.props.rowData.nPositiveVotes || 0,
       numberNoLikeComment:this.props.rowData.nNegativeVotes || 0
     }
+  }
+
+  componentWillReceiveProps (props) {
+    this.setState({
+      numberLikeComment:props.rowData.nPositiveVotes || 0,
+      numberNoLikeComment:props.rowData.nNegativeVotes || 0
+    })
   }
 
   showAnswers(){
