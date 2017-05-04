@@ -22,7 +22,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		286BFE8FA37146FB8AF7FE57 /* libLottie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053FFE0B1F5E4A58B51FA993 /* libLottie.a */; };
 		3DB7811B1E6007E7009152B3 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DB781111E6007E7009152B3 /* Entypo.ttf */; };
 		3DB7811C1E6007E7009152B3 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DB781121E6007E7009152B3 /* EvilIcons.ttf */; };
 		3DB7811D1E6007E7009152B3 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DB781131E6007E7009152B3 /* FontAwesome.ttf */; };
@@ -33,9 +32,7 @@
 		3DB781221E6007E7009152B3 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DB781181E6007E7009152B3 /* Octicons.ttf */; };
 		3DB781231E6007E7009152B3 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DB781191E6007E7009152B3 /* SimpleLineIcons.ttf */; };
 		3DB781241E6007E7009152B3 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DB7811A1E6007E7009152B3 /* Zocial.ttf */; };
-		3DEA88E91EB84F1A0088D038 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEA88D21EB84F030088D038 /* Lottie.framework */; };
 		3DEA88EA1EB84F1A0088D038 /* Lottie.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEA88D21EB84F030088D038 /* Lottie.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		74C1008E1A064563B11D9BD2 /* libLottieReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D234CC8ACD64B8E8A2B8D7A /* libLottieReactNative.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -227,7 +224,6 @@
 		00E356EE1AD99517003FC87E /* reduxTodoListAuthenticationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = reduxTodoListAuthenticationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* reduxTodoListAuthenticationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = reduxTodoListAuthenticationTests.m; sourceTree = "<group>"; };
-		053FFE0B1F5E4A58B51FA993 /* libLottie.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLottie.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* reduxTodoListAuthentication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reduxTodoListAuthentication.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,7 +246,6 @@
 		3DB781191E6007E7009152B3 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		3DB7811A1E6007E7009152B3 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
-		7D234CC8ACD64B8E8A2B8D7A /* libLottieReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libLottieReactNative.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		EC1EFC46D30D4FD486F6C6C8 /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = LottieReactNative.xcodeproj; path = "../node_modules/lottie-react-native/lib/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,14 +268,11 @@
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
-				3DEA88E91EB84F1A0088D038 /* Lottie.framework in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				74C1008E1A064563B11D9BD2 /* libLottieReactNative.a in Frameworks */,
-				286BFE8FA37146FB8AF7FE57 /* libLottie.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

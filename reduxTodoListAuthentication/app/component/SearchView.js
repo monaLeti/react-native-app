@@ -33,27 +33,35 @@ class SearchView extends Component {
       displayFilter: !this.state.displayFilter
     })
   }
+  getFilterQuestions(category, sort){
+    if(category.indexOf('Todos') === -1){
+      this.props.dispatch(getQuestionByCategory(category, sort))
+    }else{
+      this.props.dispatch(getQuestion(sort))
+    }
+  }
   categorySelected(text){
+    let fileterByPopularity = false
+    if(this.props.filter.sortSelected.indexOf('Popular') !== -1){
+      fileterByPopularity = true
+    }
     this.setState({
       displayCategory:true,
     })
     this.props.dispatch(setCategorySelected(text))
-    if(text.indexOf('Todos') === -1){
-      this.props.dispatch(getQuestionByCategory(text))
-    }else{
-      this.props.dispatch(getQuestion)
-    }
+    this.getFilterQuestions(text, fileterByPopularity)
+
   }
   filterSelected(text){
+    let fileterByPopularity = false
+    if(text.indexOf('Popular') !== -1){
+      fileterByPopularity = true
+    }
     this.setState({
       displayFilter:true,
     })
     this.props.dispatch(setSortSelected(text))
-    // if(text.indexOf('Todos') === -1){
-    //   this.props.dispatch(getQuestionByCategory(text))
-    // }else{
-    //   this.props.dispatch(getQuestion)
-    // }
+    this.getFilterQuestions(this.props.filter.categorySelected, fileterByPopularity)
   }
   render(){
     return (
@@ -136,10 +144,14 @@ const listOfCategories =[
 const listOfFilter =[
   {
     title:"Popular",
-    icon:"human-pregnant"
+    icon:"heart"
   },
   {
     title:"Recientes",
+    icon:"alarm"
+  },
+  {
+    title:"Proximidad",
     icon:"baby-buggy"
   }
 ]

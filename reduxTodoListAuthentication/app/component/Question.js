@@ -29,7 +29,6 @@ import {selectActiveQuestion} from '../actions'
 class Question extends Component {
   constructor(props){
     super(props)
-    console.log('constructor',this.props);
     this.state = {
       likeComment:false,
       noLikeComment:false,

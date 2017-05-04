@@ -50,8 +50,12 @@ class Main extends Component{
   }
 
   _onRefresh(){
+    let fileterByPopularity = false
+    if(this.props.filter.sortSelected.indexOf('Popular') !== -1){
+      fileterByPopularity = true
+    }
     this.setState({refreshing:true})
-    this.props.dispatch(getQuestion).then(() => {
+    this.props.dispatch(getQuestion(fileterByPopularity)).then(() => {
       this.setState({refreshing:false})
     })
   }
@@ -121,6 +125,7 @@ var mapStateToProps = (state) => {
   return {
     questions:state.questions,
     alerts:state.alert,
+    filter:state.filter,
   }
 }
 //PUEDES PONER UN VALIDATE FUNCTION PARA QUE COMPRUEBE COSAS
