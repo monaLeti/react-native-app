@@ -36,7 +36,23 @@ class Question extends Component {
       numberNoLikeComment:this.props.rowData.nNegativeVotes || 0
     }
   }
-
+  componentWillMount(){
+    console.log('componentWillMount',this.props);
+    let positiveVotesArray = this.props.rowData.positiveVotes
+    let negativeVotes = this.props.rowData.negativeVotes
+    if (positiveVotesArray.indexOf(this.props.user_id) !== -1) {
+      console.log('tiene al usuario el positivo');
+      this.setState({
+        likeComment:true
+      })
+    }
+    if (negativeVotes.indexOf(this.props.user_id) !== -1) {
+      console.log('tiene al usuario el negativo');
+      this.setState({
+        noLikeComment:true
+      })
+    }
+  }
   componentWillReceiveProps (props) {
     this.setState({
       numberLikeComment:props.rowData.nPositiveVotes || 0,
@@ -87,7 +103,8 @@ class Question extends Component {
     }
     let reactionObject = {
       nPositiveVotes: newNumberOfLikes,
-      nNegativeVotes: newNumberOfNoLikes
+      nNegativeVotes: newNumberOfNoLikes,
+      user:this.props.user_id
     }
     this.updateComment(questionId, reactionObject)
   }
@@ -120,7 +137,8 @@ class Question extends Component {
 
     let reactionObject = {
       nPositiveVotes: newNumberOfLikes,
-      nNegativeVotes: newNumberOfNoLikes
+      nNegativeVotes: newNumberOfNoLikes,
+      user:this.props.user_id
     }
     this.updateComment(questionId, reactionObject)
   }
@@ -227,4 +245,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect()(Question)
+var mapStateToProps = (state) => {
+  return {
+    user_id:state.auth.user_id
+  }
+}
+
+export default connect(mapStateToProps)(Question);
