@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, createQuestion, getQuestion, removeAlert} from '../actions'
+import {unauthUser, createQuestion, getQuestion, getQuestionByCategory, removeAlert} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -51,13 +51,19 @@ class Main extends Component{
 
   _onRefresh(){
     let fileterByPopularity = false
+    this.setState({refreshing:true})
     if(this.props.filter.sortSelected.indexOf('Popular') !== -1){
       fileterByPopularity = true
     }
-    this.setState({refreshing:true})
-    this.props.dispatch(getQuestion(fileterByPopularity)).then(() => {
-      this.setState({refreshing:false})
-    })
+    if(this.props.filter.categorySelected.indexOf('Todos') !== -1){
+      this.props.dispatch(getQuestion(fileterByPopularity)).then(() => {
+        this.setState({refreshing:false})
+      })
+    } else {
+      this.props.dispatch(getQuestionByCategory(this.props.filter.categorySelected, fileterByPopularity)).then(()=>{
+        this.setState({refreshing:false})
+      })
+    }
   }
 
   openQuestion(){

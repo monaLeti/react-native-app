@@ -1,8 +1,3 @@
-// ios-paper
-// fa-pencil-square-o font-awesome
-//<Text style={styles.questionText}>{this.props.rowData.content}</Text>
-//<Text style={styles.categoryText}>{this.props.rowData.category}</Text>
-//ios-heart-outline
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
@@ -37,29 +32,33 @@ class Question extends Component {
     }
   }
   componentWillMount(){
-    console.log('componentWillMount',this.props);
-    let positiveVotesArray = this.props.rowData.positiveVotes
-    let negativeVotes = this.props.rowData.negativeVotes
-    if (positiveVotesArray.indexOf(this.props.user_id) !== -1) {
-      console.log('tiene al usuario el positivo');
+    this.renderUserAction(this.props)
+  }
+  componentWillReceiveProps (props) {
+    this.setState({
+      likeComment:false,
+      noLikeComment:false,
+      numberLikeComment:props.rowData.nPositiveVotes || 0,
+      numberNoLikeComment:props.rowData.nNegativeVotes || 0
+    })
+    this.renderUserAction(props)
+  }
+  // Function to display if the user has liked/unliked the comment
+  renderUserAction(props){
+    console.log('renderUserAction',props.rowData);
+    let positiveVotesArray = props.rowData.positiveVotes
+    let negativeVotes = props.rowData.negativeVotes
+    if (positiveVotesArray.indexOf(props.user_id) !== -1) {
       this.setState({
         likeComment:true
       })
     }
     if (negativeVotes.indexOf(this.props.user_id) !== -1) {
-      console.log('tiene al usuario el negativo');
       this.setState({
         noLikeComment:true
       })
     }
   }
-  componentWillReceiveProps (props) {
-    this.setState({
-      numberLikeComment:props.rowData.nPositiveVotes || 0,
-      numberNoLikeComment:props.rowData.nNegativeVotes || 0
-    })
-  }
-
   showAnswers(){
     this.props.openQuestion()
     this.props.dispatch(selectActiveQuestion(this.props.rowData))
@@ -75,7 +74,7 @@ class Question extends Component {
       console.log('after UPDATE_QUESTION err',err);
     })
   }
-
+// Function called when the user clicks like
   likeComment(questionId){
     let newNumberOfLikes = 0
     let newNumberOfNoLikes = 0
@@ -108,6 +107,7 @@ class Question extends Component {
     }
     this.updateComment(questionId, reactionObject)
   }
+  // Function called when the user clicks unlike
   noLikeComment(questionId){
     let newNumberOfLikes = 0
     let newNumberOfNoLikes = 0
@@ -133,8 +133,6 @@ class Question extends Component {
       })
       newNumberOfNoLikes = -1
     }
-
-
     let reactionObject = {
       nPositiveVotes: newNumberOfLikes,
       nNegativeVotes: newNumberOfNoLikes,
@@ -142,6 +140,7 @@ class Question extends Component {
     }
     this.updateComment(questionId, reactionObject)
   }
+  // Function to display if the user has clicked in the icon
   setLikeIconsColor(activateIcon){
     if(activateIcon){
       return '#35D0C1'
@@ -188,7 +187,6 @@ class Question extends Component {
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   container:{

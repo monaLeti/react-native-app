@@ -29,7 +29,6 @@ class AnswersPage extends Component{
     }
   }
   componentWillReceiveProps (props) {
-    console.log(props.activeQuestion.answers);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.activeQuestion.answers)
     })
@@ -40,7 +39,6 @@ class AnswersPage extends Component{
     })
   }
   onSubmitComment(){
-    console.log(this.props.activeQuestion);
     this.props.dispatch(createAnswer(this.state.text, this.props.user_id, this.props.activeQuestion._id))
     Keyboard.dismiss();
     this.setState({
