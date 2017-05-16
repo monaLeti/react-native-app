@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
-import {UPDATE_QUESTION} from '../api'
+import {UPDATE_MODEL} from '../api'
 
 import {
   AppRegistry,
@@ -45,7 +45,7 @@ class Question extends Component {
   }
   // Function to display if the user has liked/unliked the comment
   renderUserAction(props){
-    console.log('renderUserAction',props.rowData);
+    console.log('renderUserAction',props.rowData.negativeVotes.length, props.rowData);
     let positiveVotesArray = props.rowData.positiveVotes
     let negativeVotes = props.rowData.negativeVotes
     if (positiveVotesArray.indexOf(props.user_id) !== -1) {
@@ -65,13 +65,15 @@ class Question extends Component {
   }
 
   updateComment(question, reactionObject){
-    console.log('updateComment', reactionObject, UPDATE_QUESTION + question);
-    axios.put(UPDATE_QUESTION + question, reactionObject)
+    axios.put(UPDATE_MODEL + question, reactionObject)
     .then(response => {
-      console.log('AFTER UPDATE_QUESTION',response);
+      console.log('AFTER UPDATE_MODEL',response);
+      if (this.props.updateModel) {
+        this.props.updateModel()
+      }
     })
     .catch(err =>{
-      console.log('after UPDATE_QUESTION err',err);
+      console.log('after UPDATE_MODEL err',err);
     })
   }
 // Function called when the user clicks like
@@ -94,9 +96,10 @@ class Question extends Component {
       })
       newNumberOfLikes = 1
     } else {
+      newNumberOfLikes = this.state.numberLikeComment - 1
       this.setState({
         likeComment: !this.state.likeComment,
-        numberLikeComment:this.state.numberLikeComment - 1
+        numberLikeComment:newNumberOfLikes
       })
       newNumberOfLikes = -1
     }

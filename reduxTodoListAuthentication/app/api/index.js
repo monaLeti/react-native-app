@@ -5,6 +5,6 @@ exports.SIGNUP_URL = `${API_URL}/signup`
 exports.ADD_QUESTION = `${API_URL}/createQuestion`
 exports.GET_QUESTION = `${API_URL}/findAllQuestion`
 exports.GET_QUESTION_BY_CATEGORY = `${API_URL}/findQuestionByCategory/`
-exports.UPDATE_QUESTION = `${API_URL}/updateReaction/`
+exports.UPDATE_MODEL = `${API_URL}/updateReaction/`
 exports.ADD_ANSWER = `${API_URL}/createAnswer/`
 exports.GET_ANSWERS = `${API_URL}/findAnswers/`

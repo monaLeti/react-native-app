@@ -50,8 +50,12 @@ class Main extends Component{
   }
 
   _onRefresh(){
-    let fileterByPopularity = false
     this.setState({refreshing:true})
+    this.updateQuestions()
+  }
+
+  updateQuestions(){
+    let fileterByPopularity = false
     if(this.props.filter.sortSelected.indexOf('Popular') !== -1){
       fileterByPopularity = true
     }
@@ -99,7 +103,7 @@ class Main extends Component{
         <View style={styles.listView}>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <Question rowData={rowData} openQuestion={this.openQuestion.bind(this)}/>}
+            renderRow={(rowData) => <Question rowData={rowData} openQuestion={this.openQuestion.bind(this)} updateModel={this.updateQuestions.bind(this)}/>}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
