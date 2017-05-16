@@ -24,6 +24,7 @@ class AnswersPage extends Component{
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       text:"",
+      heightInput:0,
       height: Dimensions.get('window').height - 35,
       dataSource: ds.cloneWithRows(props.activeQuestion.answers),
     }
@@ -69,11 +70,18 @@ class AnswersPage extends Component{
         </View>
         <View style={[styles.addNewComment, {top:this.state.height}]}>
           <TextInput
-            style={styles.inputComment}
+            style={[styles.inputComment, {height: Math.max(33, this.state.heightInput)}]}
             onFocus={this.addNewQuestion.bind(this)}
-            onChangeText={(newText)=>{this.setState({text:newText})}}
+            onChange={(event)=>{
+              console.log(event);
+              this.setState({
+                text:event.nativeEvent.text,
+                heightInput: event.nativeEvent.contentSize.height
+              })
+            }}
             onSubmitEditing={this.onSubmitComment.bind(this)}
             value={this.state.text}
+            multiline={true}
             placeholder='Añade un comentario'/>
           <TouchableOpacity onPress={this.onSubmitComment.bind(this)}>
             <Icon name='ios-add-circle' size={30} color="#35D0C1"/>
@@ -105,7 +113,7 @@ const styles = StyleSheet.create({
   },
   inputComment:{
     flex:1,
-    height: 33,
+    fontSize:15,
     backgroundColor:'white'
   },
   listViewAnswers:{

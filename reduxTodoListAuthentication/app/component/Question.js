@@ -45,7 +45,6 @@ class Question extends Component {
   }
   // Function to display if the user has liked/unliked the comment
   renderUserAction(props){
-    console.log('renderUserAction',props.rowData.negativeVotes.length, props.rowData);
     let positiveVotesArray = props.rowData.positiveVotes
     let negativeVotes = props.rowData.negativeVotes
     if (positiveVotesArray.indexOf(props.user_id) !== -1) {
