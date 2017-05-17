@@ -73,7 +73,6 @@ class AnswersPage extends Component{
             style={[styles.inputComment, {height: Math.max(33, this.state.heightInput)}]}
             onFocus={this.addNewQuestion.bind(this)}
             onChange={(event)=>{
-              console.log(event);
               this.setState({
                 text:event.nativeEvent.text,
                 heightInput: event.nativeEvent.contentSize.height

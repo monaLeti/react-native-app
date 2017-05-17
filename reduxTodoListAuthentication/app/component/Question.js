@@ -2,6 +2,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import moment from 'moment'
+import moment_precise_range from 'moment-precise-range'
+import esLocale from 'moment/locale/es'
+
 
 import {UPDATE_MODEL} from '../api'
 
@@ -28,12 +32,14 @@ class Question extends Component {
       likeComment:false,
       noLikeComment:false,
       numberLikeComment:this.props.rowData.nPositiveVotes || 0,
-      numberNoLikeComment:this.props.rowData.nNegativeVotes || 0
+      numberNoLikeComment:this.props.rowData.nNegativeVotes || 0,
+      timePass:''
     }
   }
   componentWillMount(){
     this.renderUserAction(this.props)
   }
+
   componentWillReceiveProps (props) {
     this.setState({
       likeComment:false,
@@ -43,8 +49,10 @@ class Question extends Component {
     })
     this.renderUserAction(props)
   }
+
   // Function to display if the user has liked/unliked the comment
   renderUserAction(props){
+    this.calculateTimePassed(props)
     let positiveVotesArray = props.rowData.positiveVotes
     let negativeVotes = props.rowData.negativeVotes
     if (positiveVotesArray.indexOf(props.user_id) !== -1) {
@@ -58,6 +66,7 @@ class Question extends Component {
       })
     }
   }
+
   showAnswers(){
     this.props.openQuestion()
     this.props.dispatch(selectActiveQuestion(this.props.rowData))
@@ -66,7 +75,6 @@ class Question extends Component {
   updateComment(question, reactionObject){
     axios.put(UPDATE_MODEL + question, reactionObject)
     .then(response => {
-      console.log('AFTER UPDATE_MODEL',response);
       if (this.props.updateModel) {
         this.props.updateModel()
       }
@@ -75,6 +83,7 @@ class Question extends Component {
       console.log('after UPDATE_MODEL err',err);
     })
   }
+
 // Function called when the user clicks like
   likeComment(questionId){
     let newNumberOfLikes = 0
@@ -142,6 +151,7 @@ class Question extends Component {
     }
     this.updateComment(questionId, reactionObject)
   }
+
   // Function to display if the user has clicked in the icon
   setLikeIconsColor(activateIcon){
     if(activateIcon){
@@ -150,6 +160,15 @@ class Question extends Component {
       return '#d6f5f2'
     }
   }
+  //Calculate the time that has passed since the question was created
+  calculateTimePassed(props){
+    moment.locale('es', esLocale)
+    var diff = moment.duration(moment().diff(props.rowData.date)).humanize();
+    console.log('calculateTimePassed', diff)
+    this.setState({
+      timePass: diff
+    })
+  }
   render(){
     return (
       <View style={styles.container}>
@@ -157,7 +176,7 @@ class Question extends Component {
           <Icon style={styles.icon} name="person" size={26} color="#35D0C1"/>
         </View>
         <View style={styles.textProfile}>
-          <Text style={styles.userName}>{this.props.rowData.user.name} &#183; 21min </Text>
+          <Text style={styles.userName}>{this.props.rowData.user.name} &#183; {this.state.timePass} </Text>
             <Text style={styles.questionText}>{this.props.rowData.content}</Text>
             <Text style={styles.categoryText}>{this.props.rowData.category}</Text>
           <View style={styles.buttonsForReact}>
