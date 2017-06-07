@@ -1,6 +1,6 @@
 import React from 'react';
 import {reduxForm} from 'redux-form'
-import {loginUser, signupUser, addAlert} from '../actions'
+import {loginUser, loginUserWithFacebook,  signupUser, addAlert} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -15,9 +15,13 @@ var Login = React.createClass({
     var {dispatch, fields:{email, password}} = this.props
     dispatch(loginUser(email.value.toLowerCase(), password.value))
   },
+  onSignInWithFacebook: function(){
+    console.log('onSignInWithFacebook');
+    var {dispatch} = this.props
+    dispatch(loginUserWithFacebook())
+    console.log('onSignInWithFacebook2');
+  },
   onSignUp: function(){
-    // var {dispatch, fields:{email, password}} = this.props
-    // dispatch(signupUser(email.value, password.value))
     this.props.navigator.push({id:'SignUpStep1'})
   },
   render(){
@@ -38,34 +42,38 @@ var Login = React.createClass({
             Lallana
           </Text>
         </View>
-        <View style={styles.field}>
-          <TextInput
-            {...email}
-            style={styles.textInput}
-            placeholder="Email"/>
-          <View>
-            {renderError(email)}
+        <View style={styles.fieldPlace}>
+          <View style={styles.field}>
+            <TextInput
+              {...email}
+              style={styles.textInput}
+              placeholder="Email"/>
+            <View>
+              {renderError(email)}
+            </View>
           </View>
-        </View>
-        <View style={styles.field}>
-          <TextInput
-            {...password}
-            secureTextEntry = {true}
-            style={styles.textInput}
-            placeholder="Password"/>
-          <View>
-            {renderError(password)}
+          <View style={styles.field}>
+            <TextInput
+              {...password}
+              secureTextEntry = {true}
+              style={styles.textInput}
+              placeholder="Contraseña"/>
+            <View>
+              {renderError(password)}
+            </View>
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={this.onSignIn}>
+          <TouchableOpacity onPress={this.onSignIn} style={styles.wrapperButton}>
             <Text style={styles.button}>
-              Sign In
+              Iniciar Sesión
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.onSignUp}>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={this.onSignInWithFacebook} style={styles.wrapperButton}>
             <Text style={styles.button}>
-              Sign Up
+              Usa Facebook Para Entrar
             </Text>
           </TouchableOpacity>
         </View>
@@ -80,11 +88,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     paddingTop:20,
-    backgroundColor:"#ddd"
+    backgroundColor:"#35D0C1"
   },
   titleContainer: {
     padding: 10,
-
+    alignItems: 'center',
+  },
+  fieldPlace:{
+    marginTop:20
   },
   title: {
     color:"white",
@@ -107,9 +118,15 @@ const styles = StyleSheet.create({
     justifyContent:'space-around',
     alignItems:'center'
   },
+  wrapperButton:{
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius:13,
+    padding: 10,
+  },
   button:{
-    fontSize:30,
-    color: 'white'
+    fontSize:20,
+    color: 'white',
   },
   formError: {
     color: 'red'

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {SIGNIN_URL} from '../api'
+import {SIGNIN_URL, SIGNIN_URL_WITH_FACEBOOK} from '../api'
 
 import {addAlert} from './alertsActions'
 
@@ -13,6 +13,19 @@ exports.loginUser = (email, password) => {
       dispatch(authUser(user_id))
     }).catch((error)=>{
       console.log(error);
+      dispatch(addAlert('Error al entrar.'))
+    })
+  }
+}
+
+exports.loginUserWithFacebook = () => {
+  console.log('loginUserWithFacebook');
+  return function(dispatch){
+    return axios.get(SIGNIN_URL_WITH_FACEBOOK).then((response)=>{
+      console.log('response loginUserWithFacebook', response.data);
+      dispatch(authUser('1234'))
+    }).catch((error)=>{
+      console.log('error loginUserWithFacebook',error);
       dispatch(addAlert('Error al entrar.'))
     })
   }
