@@ -18,10 +18,10 @@ exports.loginUser = (email, password) => {
   }
 }
 
-exports.loginUserWithFacebook = () => {
-  console.log('loginUserWithFacebook');
+exports.loginUserWithFacebook = (token) => {
+  console.log('loginUserWithFacebook', token);
   return function(dispatch){
-    return axios.get(SIGNIN_URL_WITH_FACEBOOK).then((response)=>{
+    return axios.post(SIGNIN_URL_WITH_FACEBOOK, {token}).then((response)=>{
       console.log('response loginUserWithFacebook', response.data);
       dispatch(authUser('1234'))
     }).catch((error)=>{

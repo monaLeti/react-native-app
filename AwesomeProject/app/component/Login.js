@@ -10,7 +10,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import FBSDK, { LoginManager } from 'react-native-fbsdk'
+import FBSDK, { LoginManager, AccessToken } from 'react-native-fbsdk'
 
 var Login = React.createClass({
 
@@ -19,12 +19,18 @@ var Login = React.createClass({
     dispatch(loginUser(email.value.toLowerCase(), password.value))
   },
   onSignInWithFacebook(){
+    var {dispatch} = this.props
     LoginManager.logInWithReadPermissions(['public_profile']).then(function(result){
       if(result.isCancelled){
         console.log('Login cancelled');
       }else{
         console.log('Login success with permissions: '
         +result.grantedPermissions.toString());
+        AccessToken.getCurrentAccessToken().then(
+          (data) => {
+            console.log(data.accessToken.toString())
+            dispatch(loginUserWithFacebook(data.accessToken.toString()))
+          })
       }
     },
     function(err){
