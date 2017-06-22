@@ -164,7 +164,6 @@ class Question extends Component {
   calculateTimePassed(props){
     moment.locale('es', esLocale)
     var diff = moment.duration(moment().diff(props.rowData.date)).humanize();
-    console.log('calculateTimePassed', diff)
     this.setState({
       timePass: diff
     })

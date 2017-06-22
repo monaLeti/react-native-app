@@ -36,27 +36,20 @@ var SignUpStep1 = React.createClass({
           </TouchableOpacity>
         </View>
         <View style={styles.content}>
-          <Image
-            style={styles.ImgElement}
-            source={require('./common/img/baby.png')}>
-            <Text style={styles.textImage}>
-              Me llamo...
-            </Text>
-          </Image>
           <View style={styles.form}>
             <View style={styles.field}>
               <TextInput
                 {...name}
                 style={styles.textInput}
                 placeholder="Nombre"
-                placeholderTextColor="#ddd"/>
+                placeholderTextColor="white"/>
             </View>
             <View style={styles.field}>
               <TextInput
                 {...lastName}
                 style={styles.textInput}
                 placeholder="Apellidos"
-                placeholderTextColor="#ddd"/>
+                placeholderTextColor="white"/>
             </View>
             <View style={styles.buttonSubmit}>
               <TouchableOpacity
@@ -80,7 +73,7 @@ const styles = StyleSheet.create({
   },
   navigator: {
     flex:0,
-    backgroundColor:'#5382AA',
+    backgroundColor:'#35D0C1',
     paddingTop:30,
     paddingBottom:15,
     paddingLeft:10
@@ -100,7 +93,7 @@ const styles = StyleSheet.create({
     left:150,
     fontSize:30,
     fontWeight: 'bold',
-    color:'#5382AA'
+    color:'#35D0C1'
   },
   form:{
     flex:2,
@@ -109,7 +102,7 @@ const styles = StyleSheet.create({
     paddingRight:30
   },
   field:{
-    backgroundColor:'#5382AA',
+    backgroundColor:'#35D0C1',
     borderRadius:10,
     marginTop:20,
     paddingLeft:10
@@ -127,7 +120,7 @@ const styles = StyleSheet.create({
     height:46,
     fontSize:20,
     color:'white',
-    backgroundColor:'#5382AA',
+    backgroundColor:'#35D0C1',
     paddingLeft:23,
     paddingTop:10
   }

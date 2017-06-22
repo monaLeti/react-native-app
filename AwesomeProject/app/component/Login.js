@@ -93,6 +93,14 @@ var Login = React.createClass({
             </Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.buttonRegister}>
+            <Text style={styles.textRegisterPrevious}>
+              ¿No tiene una cuenta?
+            </Text>
+            <TouchableOpacity onPress={this.onSignUp}>
+            <Text style={styles.textRegister}> Regístrese</Text>
+            </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -146,7 +154,19 @@ const styles = StyleSheet.create({
   },
   formError: {
     color: 'red'
-  }
+  },
+  textRegisterPrevious:{
+    color:'white',
+  },
+  textRegister:{
+    color:'white',
+    textDecorationLine:'underline',
+  },
+  buttonRegister:{
+    flexDirection: 'row',
+    justifyContent:'center',
+    alignItems:'center'
+  },
 });
 
 var validate = (formProps) => {

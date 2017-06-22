@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
-import {signUpStep2} from '../../actions'
+import {signupUser} from '../../actions'
 import {
   StyleSheet,
   Text,
@@ -15,16 +15,19 @@ var SignUpStep2 = React.createClass({
   onSubmit: function(){
     var {dispatch} = this.props
     var signUpField = {
-      location:this.props.fields.location.value
+      email:this.props.fields.email.value,
+      password:this.props.fields.password.value,
+      name: this.props.name,
+      lastName:this.props.lastName,
+      location:this.props.location
     }
-    dispatch(signUpStep2(signUpField))
-    this.props.navigator.push({id:'SignUpStep3'})
+    dispatch(signupUser(signUpField))
   },
   backRoute:function(){
     this.props.navigator.pop()
   },
   render(){
-    var {fields:{location}} = this.props;
+    var {fields:{email, password}} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.navigator}>
@@ -33,20 +36,21 @@ var SignUpStep2 = React.createClass({
           </TouchableOpacity>
         </View>
         <View style={styles.content}>
-          <Image
-            style={styles.ImgElement}
-            source={require('./common/img/baby.png')}>
-            <Text style={styles.textImage}>
-              Vivo en...
-            </Text>
-          </Image>
           <View style={styles.form}>
             <View style={styles.field}>
               <TextInput
-                {...location}
+                {...email}
                 style={styles.textInput}
-                placeholder="Ciudad"
-                placeholderTextColor="#ddd"/>
+                placeholder="Email"
+                placeholderTextColor="white"/>
+            </View>
+            <View style={styles.field}>
+              <TextInput
+                {...password}
+                secureTextEntry = {true}
+                style={styles.textInput}
+                placeholder="Password"
+                placeholderTextColor="white"/>
             </View>
             <View style={styles.buttonSubmit}>
               <TouchableOpacity
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
   },
   navigator: {
     flex:0,
-    backgroundColor:'#5382AA',
+    backgroundColor:'#35D0C1',
     paddingTop:30,
     paddingBottom:15,
     paddingLeft:10
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     left:150,
     fontSize:30,
     fontWeight: 'bold',
-    color:'#5382AA'
+    color:'#35D0C1'
   },
   form:{
     flex:2,
@@ -99,14 +103,14 @@ const styles = StyleSheet.create({
     paddingRight:30
   },
   field:{
-    backgroundColor:'#5382AA',
+    backgroundColor:'#35D0C1',
     borderRadius:10,
     marginTop:20,
     paddingLeft:10
   },
   textInput:{
     height:36,
-    color:"#fff"
+    color:'#FFF'
   },
   buttonSubmit:{
     width:130,
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
     height:46,
     fontSize:20,
     color:'white',
-    backgroundColor:'#5382AA',
+    backgroundColor:'#35D0C1',
     paddingLeft:23,
     paddingTop:10
   }
@@ -125,7 +129,18 @@ const styles = StyleSheet.create({
 
 SignUpStep2 = reduxForm({
   form:'SignUpStep2',
-  fields:['location']
+  fields:['email','password']
 }, null, null)(SignUpStep2)
+
+SignUpStep2 = connect(
+  state => {
+    return {
+      name: state.signUp.name,
+      lastName: state.signUp.lastName,
+      location: state.signUp.location,
+      sex:state.signUp.sex
+    }
+  }
+)(SignUpStep2)
 
 export default SignUpStep2

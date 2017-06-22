@@ -22,8 +22,8 @@ exports.loginUserWithFacebook = (token) => {
   console.log('loginUserWithFacebook', token);
   return function(dispatch){
     return axios.post(SIGNIN_URL_WITH_FACEBOOK, {token}).then((response)=>{
-      console.log('response loginUserWithFacebook', response.data);
-      dispatch(authUser('1234'))
+      console.log('response loginUserWithFacebook', response.data._id);
+      dispatch(authUser(response.data._id))
     }).catch((error)=>{
       console.log('error loginUserWithFacebook',error);
       dispatch(addAlert('Error al entrar.'))
