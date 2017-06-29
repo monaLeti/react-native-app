@@ -7,8 +7,9 @@ import {addAlert} from './alertsActions'
 exports.loginUser = (email, password) => {
   return function(dispatch){
     return axios.post(SIGNIN_URL, {email, password}).then((response)=>{
+      console.log(response.data.user_id._id);
       var {user_id} = response.data
-      console.log(response.data);
+
       // dispatch(addAlert(token))
       dispatch(authUser(user_id))
     }).catch((error)=>{
@@ -22,7 +23,7 @@ exports.loginUserWithFacebook = (token) => {
   console.log('loginUserWithFacebook', token);
   return function(dispatch){
     return axios.post(SIGNIN_URL_WITH_FACEBOOK, {token}).then((response)=>{
-      console.log('response loginUserWithFacebook', response.data._id);
+      console.log('response loginUserWithFacebook', response.data);
       dispatch(authUser(response.data._id))
     }).catch((error)=>{
       console.log('error loginUserWithFacebook',error);

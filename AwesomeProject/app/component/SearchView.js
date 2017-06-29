@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {getQuestion, getQuestionByCategory, setCategorySelected, setSortSelected} from '../actions'
+import {getQuestion, getQuestionByCategory, setCategorySelected, setSortSelected, getQuestionByLocation} from '../actions'
 
 import {
   AppRegistry,
@@ -34,7 +34,9 @@ class SearchView extends Component {
     })
   }
   getFilterQuestions(category, sort){
-    if(category.indexOf('Todos') === -1){
+    if(this.props.filter.categorySelected.indexOf('Proximidad') !== -1){
+      this.props.dispatch(getQuestionByLocation(category))
+    }else if(category.indexOf('Todos') === -1){
       this.props.dispatch(getQuestionByCategory(category, sort))
     }else{
       this.props.dispatch(getQuestion(sort))
@@ -152,7 +154,7 @@ const listOfFilter =[
   },
   {
     title:"Proximidad",
-    icon:"baby-buggy"
+    icon:"map-marker-multiple"
   }
 ]
 

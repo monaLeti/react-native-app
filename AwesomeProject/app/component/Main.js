@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, createQuestion, getQuestion, getQuestionByCategory, removeAlert} from '../actions'
+import {unauthUser, getQuestion, getQuestionByCategory, removeAlert} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -31,10 +31,12 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
+    console.log('componentWillReceiveProps',props.questions);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.questions)
     })
   }
+
   onLogout(){
     this.props.dispatch(unauthUser)
   }

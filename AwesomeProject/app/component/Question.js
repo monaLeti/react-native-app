@@ -33,6 +33,7 @@ class Question extends Component {
       noLikeComment:false,
       numberLikeComment:this.props.rowData.nPositiveVotes || 0,
       numberNoLikeComment:this.props.rowData.nNegativeVotes || 0,
+      userName:this.props.rowData.user || '',
       timePass:''
     }
   }
@@ -55,12 +56,12 @@ class Question extends Component {
     this.calculateTimePassed(props)
     let positiveVotesArray = props.rowData.positiveVotes
     let negativeVotes = props.rowData.negativeVotes
-    if (positiveVotesArray.indexOf(props.user_id) !== -1) {
+    if (positiveVotesArray.indexOf(props.user_id._id) !== -1) {
       this.setState({
         likeComment:true
       })
     }
-    if (negativeVotes.indexOf(this.props.user_id) !== -1) {
+    if (negativeVotes.indexOf(this.props.user_id._id) !== -1) {
       this.setState({
         noLikeComment:true
       })
@@ -114,7 +115,7 @@ class Question extends Component {
     let reactionObject = {
       nPositiveVotes: newNumberOfLikes,
       nNegativeVotes: newNumberOfNoLikes,
-      user:this.props.user_id
+      user:this.props.user_id._id
     }
     this.updateComment(questionId, reactionObject)
   }
@@ -147,7 +148,7 @@ class Question extends Component {
     let reactionObject = {
       nPositiveVotes: newNumberOfLikes,
       nNegativeVotes: newNumberOfNoLikes,
-      user:this.props.user_id
+      user:this.props.user_id._id
     }
     this.updateComment(questionId, reactionObject)
   }
@@ -175,7 +176,7 @@ class Question extends Component {
           <Icon style={styles.icon} name="person" size={26} color="#35D0C1"/>
         </View>
         <View style={styles.textProfile}>
-          <Text style={styles.userName}>{this.props.rowData.user.name} &#183; {this.state.timePass} </Text>
+          <Text style={styles.userName}> {this.state.userName.name} &#183; {this.state.timePass} </Text>
             <Text style={styles.questionText}>{this.props.rowData.content}</Text>
             <Text style={styles.categoryText}>{this.props.rowData.category}</Text>
           <View style={styles.buttonsForReact}>

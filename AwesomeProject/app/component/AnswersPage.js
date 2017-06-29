@@ -40,7 +40,7 @@ class AnswersPage extends Component{
     })
   }
   onSubmitComment(){
-    this.props.dispatch(createAnswer(this.state.text, this.props.user_id, this.props.activeQuestion._id))
+    this.props.dispatch(createAnswer(this.state.text, this.props.user_id._id, this.props.activeQuestion._id))
     Keyboard.dismiss();
     this.setState({
       height: Dimensions.get('window').height - 35,

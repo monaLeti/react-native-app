@@ -44,7 +44,7 @@ class ViewModal extends Component{
       dispatch(addAlert('Necesita rellenar ambos campos'))
     } else {
       this.props.closeModal()
-      dispatch(createQuestion(this.state.content, this.state.category, user_id))
+      dispatch(createQuestion(this.state.content, this.state.category, user_id._id))
       // Clean the form values
       this.props.dispatch(change('addQuestion', 'content', ''))
       this.props.dispatch(change('addQuestion', 'category', ''))
