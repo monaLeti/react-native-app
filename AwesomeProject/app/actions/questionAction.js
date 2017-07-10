@@ -2,7 +2,7 @@ import axios from 'axios'
 //We need to take the user authorization token for that with
 //keychainfrom react-nativekeychain
 //db.getCollection('questions').remove({})
-import {ADD_QUESTION, GET_QUESTION, GET_QUESTION_BY_CATEGORY, GET_QUESTION_BY_LOCATION} from '../api'
+import {ADD_QUESTION, GET_QUESTION, GET_QUESTION_BY_CATEGORY, GET_QUESTION_BY_LOCATION, SEARCH_QUESTION} from '../api'
 
 exports.createQuestion = (content, category, user_id) => {
   return function(dispatch){
@@ -63,6 +63,19 @@ exports.getQuestionByCategory = (category, filterByPopularity) =>{
 
 //Get questions by Localization
 exports.getQuestionByLocation = (category) => {
+
+}
+
+//Search Question By Word
+exports.searchByWord = (searchWord) => {
+  return function(dispatch){
+    return axios.get(SEARCH_QUESTION + searchWord).then((response)=>{
+      console.log('After searchByWord', response);
+      dispatch(setQuestion(response.data.questions))
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
 
 }
 

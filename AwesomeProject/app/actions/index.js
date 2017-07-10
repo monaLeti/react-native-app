@@ -5,4 +5,3 @@ export * from './signUpActions';
 export * from './questionAction';
 export * from './answerActions';
 export * from './filterAction';
-export * from './viewAction';

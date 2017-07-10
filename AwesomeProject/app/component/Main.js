@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, getQuestion, getQuestionByCategory, removeAlert} from '../actions'
+import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, searchByWord} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -14,10 +14,12 @@ import {
   RefreshControl
 } from 'react-native';
 
-import TopBar from './common/TopBar'
+import NavigationTabs from './common/NavigationTabs'
+import SearchNavigation from './common/SearchNavigation'
 import ViewModal from './ViewModal'
 import Question from './Question'
-import SearchView from './SearchView'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconIonic from 'react-native-vector-icons/Ionicons';
 
 class Main extends Component{
   constructor(props){
@@ -31,7 +33,6 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps',props.questions);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.questions)
     })
@@ -83,17 +84,12 @@ class Main extends Component{
       }
     })
   }
-
   render(){
     var {fields:{content, category}} = this.props
     return (
       <View style={styles.container}>
-        <TopBar
-          leftItem={{
-            icon:'ios-add-circle-outline',
-            onPress:this.addNewQuestion.bind(this)
-          }}/>
-        <SearchView/>
+        <NavigationTabs/>
+        <SearchNavigation/>
         <Modal
           animationType={'slide'}
           transparent={false}
@@ -111,6 +107,12 @@ class Main extends Component{
                 onRefresh={this._onRefresh.bind(this)}/>}
                 enableEmptySections={true}/>
         </View>
+        <View>
+          <TouchableHighlight style={styles.addButton}
+              underlayColor='#35D0C1' onPress={this.addNewQuestion.bind(this)}>
+              <Icon name="plus" size={40} color='white' style={styles.plusBtn}/>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor:'white'
+    backgroundColor:'rgb(231,235,238)'
   },
   text:{
     color:'black',
@@ -130,6 +132,30 @@ const styles = StyleSheet.create({
   listView:{
     flex: 1,
   },
+  addButton:{
+    backgroundColor: '#35D0C1',
+    borderColor: '#35D0C1',
+    borderWidth: 1,
+    height: 75,
+    width: 75,
+    borderRadius: 37,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 20,
+    right:20,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    },
+  },
+  plusBtn:{
+    marginTop:5,
+    marginLeft:2
+  }
 });
 
 var mapStateToProps = (state) => {

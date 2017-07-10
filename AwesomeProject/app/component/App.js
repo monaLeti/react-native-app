@@ -20,7 +20,6 @@ import {
 import NavigatorLog from './Navigator/NavigatorLog'
 import NavigatorMain from './Navigator/NavigatorMain'
 import NavigatorProfile from './Navigator/NavigatorProfile'
-import BottomTabNavigator from './BottomTabNavigator/Tab'
 
 class App extends Component{
   constructor(props){
@@ -67,18 +66,10 @@ class App extends Component{
         );
       }
     }
-    var renderBottomView = () =>{
-      if(this.props.user_id){
-        return(
-          <BottomTabNavigator/>
-        )
-      }
-    }
     return(
       <View style={{flex:1}}>
         {renderMainView()}
         <AlertContainer/>
-        {renderBottomView()}
       </View>
     )
   }
