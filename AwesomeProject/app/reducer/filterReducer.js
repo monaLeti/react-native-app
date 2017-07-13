@@ -1,14 +1,13 @@
 var defaultState = {
-  categorySelected:'Todos',
-  sortSelected:'Reciente'
+  categorySelected:[]
 }
 
 module.exports = (state=defaultState, action) => {
   switch (action.type) {
     case 'SELECT_CATEGORY_SELECTED':
+      console.log('SELECT_CATEGORY_SELECTED',action.category);
       return {
-        categorySelected:action.category,
-        sortSelected:state.sortSelected
+        categorySelected:action.category
       }
     case 'SELECT_SORT_SELECTED':
       return {

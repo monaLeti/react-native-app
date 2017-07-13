@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, searchByWord} from '../actions'
+import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -57,19 +57,10 @@ class Main extends Component{
   }
 
   updateQuestions(){
-    let fileterByPopularity = false
-    if(this.props.filter.sortSelected.indexOf('Popular') !== -1){
-      fileterByPopularity = true
-    }
-    if(this.props.filter.categorySelected.indexOf('Todos') !== -1){
-      this.props.dispatch(getQuestion(fileterByPopularity)).then(() => {
-        this.setState({refreshing:false})
-      })
-    } else {
-      this.props.dispatch(getQuestionByCategory(this.props.filter.categorySelected, fileterByPopularity)).then(()=>{
-        this.setState({refreshing:false})
-      })
-    }
+    this.props.dispatch(getQuestion(false)).then(() => {
+      this.setState({refreshing:false})
+      this.props.dispatch(setCategorySelected([]))
+    })
   }
 
   openQuestion(){

@@ -41,17 +41,16 @@ exports.getQuestion = (filterByPopularity) =>{
 
 // Get questions filer by category
 exports.getQuestionByCategory = (category, filterByPopularity) =>{
+  let categoriesToSearch = category.join(',')
   return function(dispatch){
     if(filterByPopularity){
-      return axios.get(GET_QUESTION_BY_CATEGORY + category + '?popular=-1').then((response)=>{
-        console.log('getQuestionByCategory',response.data);
+      return axios.get(GET_QUESTION_BY_CATEGORY + categoriesToSearch + '?popular=-1').then((response)=>{
         dispatch(setQuestion(response.data.questions))
       }).catch((err)=>{
         console.log(err);
       })
     } else {
-      return axios.get(GET_QUESTION_BY_CATEGORY + category).then((response)=>{
-        console.log('getQuestionByCategory',response.data);
+      return axios.get(GET_QUESTION_BY_CATEGORY + categoriesToSearch).then((response)=>{
         dispatch(setQuestion(response.data.questions))
       }).catch((err)=>{
         console.log(err);
@@ -70,7 +69,6 @@ exports.getQuestionByLocation = (category) => {
 exports.searchByWord = (searchWord) => {
   return function(dispatch){
     return axios.get(SEARCH_QUESTION + searchWord).then((response)=>{
-      console.log('After searchByWord', response);
       dispatch(setQuestion(response.data.questions))
     }).catch((err)=>{
       console.log(err);
