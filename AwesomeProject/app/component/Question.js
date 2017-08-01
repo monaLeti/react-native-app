@@ -37,6 +37,7 @@ class Question extends Component {
     }
   }
   componentWillMount(){
+    console.log('this.props',this.props.rowData);
     this.renderUserAction(this.props)
   }
 
@@ -45,6 +46,7 @@ class Question extends Component {
       likeComment:false,
       numberLikeComment:props.rowData.likes.length || 0,
       category:props.rowData.category.join(),
+      userName:props.rowData.user || '',
     })
     this.renderUserAction(props)
   }
@@ -122,7 +124,7 @@ class Question extends Component {
           <Icon style={styles.icon} name="person" size={26} color="#35D0C1"/>
         </View>
         <View style={styles.textProfile}>
-          <Text style={styles.userName}> {this.state.userName.name} &#183; {this.state.timePass} </Text>
+          <Text style={styles.userName}>{this.state.userName.name} &#183; {this.state.timePass} </Text>
             <Text style={styles.questionText}>{this.props.rowData.content}</Text>
             <Text style={styles.categoryText}>{this.state.category}</Text>
           <View style={styles.buttonsForReact}>
