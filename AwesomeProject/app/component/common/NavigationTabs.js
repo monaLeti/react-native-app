@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 
+import {unauthUser} from '../../actions'
+
 import {
   AppRegistry,
   StyleSheet,
@@ -17,11 +19,16 @@ class NavigationTabs extends Component {
   constructor(props){
     super(props)
   }
+  logOutUser(){
+    this.props.dispatch(unauthUser())
+  }
   render(){
     return (
       <View style={styles.topNavigation}>
         <View>
-          <Icon name="face" size={45} color='white'/>
+          <TouchableHighlight onPress={this.logOutUser.bind(this)} underlayColor='transparent'>
+            <Icon name="face" size={45} color='white'/>
+          </TouchableHighlight>
         </View>
         <View>
           <Icon name="account-multiple" size={45} color='white'/>
@@ -48,5 +55,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#35D0C1',
   },
 })
-
-export default NavigationTabs
+export default connect()(NavigationTabs)

@@ -33,6 +33,7 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
+    console.log('componentWillReceiveProps', props.questions);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.questions)
     })

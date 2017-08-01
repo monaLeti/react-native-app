@@ -30,11 +30,10 @@ class Question extends Component {
     super(props)
     this.state = {
       likeComment:false,
-      noLikeComment:false,
-      numberLikeComment:this.props.rowData.nPositiveVotes || 0,
-      numberNoLikeComment:this.props.rowData.nNegativeVotes || 0,
+      numberLikeComment:this.props.rowData.likes.length || 0,
       userName:this.props.rowData.user || '',
-      timePass:''
+      timePass:'',
+      category:this.props.rowData.category.join(),
     }
   }
   componentWillMount(){
@@ -44,9 +43,8 @@ class Question extends Component {
   componentWillReceiveProps (props) {
     this.setState({
       likeComment:false,
-      noLikeComment:false,
-      numberLikeComment:props.rowData.nPositiveVotes || 0,
-      numberNoLikeComment:props.rowData.nNegativeVotes || 0
+      numberLikeComment:props.rowData.likes.length || 0,
+      category:props.rowData.category.join(),
     })
     this.renderUserAction(props)
   }
@@ -54,16 +52,10 @@ class Question extends Component {
   // Function to display if the user has liked/unliked the comment
   renderUserAction(props){
     this.calculateTimePassed(props)
-    let positiveVotesArray = props.rowData.positiveVotes
-    let negativeVotes = props.rowData.negativeVotes
-    if (positiveVotesArray.indexOf(props.user_id._id) !== -1) {
+    let positiveVotesArray = props.rowData.likes
+    if (positiveVotesArray.indexOf(props.user_id) !== -1) {
       this.setState({
         likeComment:true
-      })
-    }
-    if (negativeVotes.indexOf(this.props.user_id._id) !== -1) {
-      this.setState({
-        noLikeComment:true
       })
     }
   }
@@ -87,72 +79,26 @@ class Question extends Component {
 
 // Function called when the user clicks like
   likeComment(questionId){
+
     let newNumberOfLikes = 0
-    let newNumberOfNoLikes = 0
-    if(this.state.noLikeComment){
-      newNumberOfNoLikes = this.state.numberNoLikeComment - 1
-      this.setState({
-        noLikeComment:!this.state.noLikeComment,
-        numberNoLikeComment: newNumberOfNoLikes
-      })
-      newNumberOfNoLikes = -1
-    }
-    if(!this.state.likeComment){
-      newNumberOfLikes = this.state.numberLikeComment + 1
-      this.setState({
-        likeComment: !this.state.likeComment,
-        numberLikeComment:newNumberOfLikes
-      })
-      newNumberOfLikes = 1
-    } else {
-      newNumberOfLikes = this.state.numberLikeComment - 1
-      this.setState({
-        likeComment: !this.state.likeComment,
-        numberLikeComment:newNumberOfLikes
-      })
-      newNumberOfLikes = -1
-    }
-    let reactionObject = {
-      nPositiveVotes: newNumberOfLikes,
-      nNegativeVotes: newNumberOfNoLikes,
-      user:this.props.user_id._id
-    }
-    this.updateComment(questionId, reactionObject)
-  }
-  // Function called when the user clicks unlike
-  noLikeComment(questionId){
-    let newNumberOfLikes = 0
-    let newNumberOfNoLikes = 0
+    let like = 0
     if(this.state.likeComment){
       newNumberOfLikes = this.state.numberLikeComment - 1
-      this.setState({
-        likeComment:!this.state.likeComment,
-        numberLikeComment: newNumberOfLikes
-      })
-      newNumberOfLikes = -1
-    }
-    if(!this.state.noLikeComment){
-      newNumberOfNoLikes = this.state.numberNoLikeComment + 1
-      this.setState({
-        noLikeComment: !this.state.noLikeComment,
-        numberNoLikeComment:newNumberOfNoLikes
-      })
-      newNumberOfNoLikes = 1
+      like = -1
     } else {
-      this.setState({
-        noLikeComment: !this.state.noLikeComment,
-        numberNoLikeComment:this.state.numberNoLikeComment - 1
-      })
-      newNumberOfNoLikes = -1
+      newNumberOfLikes = this.state.numberLikeComment + 1
+      like = 1
     }
+    this.setState({
+      likeComment: !this.state.likeComment,
+      numberLikeComment:newNumberOfLikes
+    })
     let reactionObject = {
-      nPositiveVotes: newNumberOfLikes,
-      nNegativeVotes: newNumberOfNoLikes,
-      user:this.props.user_id._id
+      like: like,
+      user:this.props.user_id
     }
     this.updateComment(questionId, reactionObject)
   }
-
   // Function to display if the user has clicked in the icon
   setLikeIconsColor(activateIcon){
     if(activateIcon){
@@ -178,7 +124,7 @@ class Question extends Component {
         <View style={styles.textProfile}>
           <Text style={styles.userName}> {this.state.userName.name} &#183; {this.state.timePass} </Text>
             <Text style={styles.questionText}>{this.props.rowData.content}</Text>
-            <Text style={styles.categoryText}>{this.props.rowData.category}</Text>
+            <Text style={styles.categoryText}>{this.state.category}</Text>
           <View style={styles.buttonsForReact}>
             <View style={styles.iconLike}>
               <View style={styles.iconLike}>
@@ -186,12 +132,6 @@ class Question extends Component {
                   <IconIonic name="ios-heart" size={26} color={this.setLikeIconsColor(this.state.likeComment)}/>
                 </TouchableOpacity>
                 <Text style={styles.likeText}>{this.state.numberLikeComment}</Text>
-              </View>
-              <View style={styles.iconLike}>
-                <TouchableOpacity onPress={this.noLikeComment.bind(this, this.props.rowData._id)}>
-                  <IconComunity name="heart-broken" size={26} color={this.setLikeIconsColor(this.state.noLikeComment)}/>
-                </TouchableOpacity>
-                <Text style={styles.likeText}>{this.state.numberNoLikeComment}</Text>
               </View>
             </View>
             <TouchableOpacity onPress={this.showAnswers.bind(this)}>

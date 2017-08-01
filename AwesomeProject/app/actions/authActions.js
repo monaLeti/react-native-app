@@ -5,13 +5,14 @@ import {SIGNIN_URL, SIGNIN_URL_WITH_FACEBOOK} from '../api'
 import {addAlert} from './alertsActions'
 
 exports.loginUser = (email, password) => {
+  console.log('loginUser',{email, password});
   return function(dispatch){
     return axios.post(SIGNIN_URL, {email, password}).then((response)=>{
       console.log(response.data.user_id._id);
       var {user_id} = response.data
 
       // dispatch(addAlert(token))
-      dispatch(authUser(user_id))
+      dispatch(authUser(user_id._id))
     }).catch((error)=>{
       console.log(error);
       dispatch(addAlert('Error al entrar.'))

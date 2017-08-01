@@ -10,7 +10,7 @@ exports.signupUser = (signUpField) => {
       var {user_id} = response.data
       console.log(response);
       // dispatch(addAlert(token))
-      dispatch(signUpStep3(user_id))
+      dispatch(signUpStep3(user_id._id))
     }).catch((error)=>{
       console.log(error);
       // dispatch(addAlert('Could not signup'))
