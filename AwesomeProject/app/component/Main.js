@@ -7,16 +7,17 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight,
   Modal,
   TextInput,
   ListView,
-  RefreshControl
+  RefreshControl,
+  TouchableHighlight
 } from 'react-native';
 
 import NavigationTabs from './common/NavigationTabs'
 import SearchNavigation from './common/SearchNavigation'
 import ViewModal from './ViewModal'
+import ViewModalAnswer from './ViewModalAnswer'
 import Question from './Question'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconIonic from 'react-native-vector-icons/Ionicons';
@@ -28,6 +29,7 @@ class Main extends Component{
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       modalVisible:false,
+      modalAnswerVisible:false,
       dataSource: ds.cloneWithRows(props.questions),
       refreshing:false,
     };
@@ -47,8 +49,17 @@ class Main extends Component{
     this.setState({modalVisible:true})
   }
 
+  addNewAnswer(){
+    this.setState({modalAnswerVisible:true})
+  }
+
   closeModal(){
     this.setState({modalVisible:false})
+    this.removeAlerts()
+  }
+
+  closeModalAnswer(){
+    this.setState({modalAnswerVisible:false})
     this.removeAlerts()
   }
 
@@ -87,12 +98,21 @@ class Main extends Component{
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {alert('Modal has been close')}}>
-          <ViewModal closeModal={this.closeModal.bind(this)} Model='Question'/>
+          <ViewModal closeModal={this.closeModal.bind(this)}/>
+        </Modal>
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.modalAnswerVisible}
+          onRequestClose={() => {alert('Modal has been close')}}>
+          <ViewModalAnswer closeModal={this.closeModalAnswer.bind(this)}/>
         </Modal>
         <View style={styles.listView}>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <Question rowData={rowData} openQuestion={this.openQuestion.bind(this)} updateModel={this.updateQuestions.bind(this)}/>}
+            renderRow={(rowData) => <TouchableHighlight onPress={this.openQuestion.bind(this)}>
+              <View><Question rowData={rowData} openQuestion={this.addNewAnswer.bind(this)} updateModel={this.updateQuestions.bind(this)}/></View>
+            </TouchableHighlight>}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}

@@ -2,11 +2,11 @@ import axios from 'axios'
 import {ADD_ANSWER, GET_ANSWERS} from '../api'
 
 //Create a new answer
-exports.createAnswer = (answer, user_id, questionId) => {
-  console.log('createAnswer', answer, user_id);
+exports.createAnswer = (answer, category, user_id, questionId) => {
   var newObject = {
     "user":user_id,
-    "content":answer
+    "content":answer,
+    "category":category
   }
   return function(dispatch){
     return axios.post(ADD_ANSWER + questionId, newObject).then((response)=>{

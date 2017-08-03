@@ -34,10 +34,9 @@ class Question extends Component {
       numberAnswers:0,
       userName:this.props.rowData.user || '',
       timePass:'',
-      category:'',
+      category:this.props.rowData.category.join(),
     }
     if(this.props.rowData.answers){
-      obj.category = this.props.rowData.category.join()
       obj.numberAnswers = this.props.rowData.answers.length
     }
     this.state = obj
@@ -47,15 +46,14 @@ class Question extends Component {
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps', props, this.props);
     let obj = {
       likeComment:false,
       numberLikeComment:props.rowData.likes.length || 0,
       userName:props.rowData.user || '',
+      category:props.rowData.category.join(),
     }
     if(props.rowData.answers){
       obj.numberAnswers = props.rowData.answers.length
-      obj.category = props.rowData.category.join()
     }
     this.setState(obj)
     this.renderUserAction(props)
@@ -128,7 +126,6 @@ class Question extends Component {
     })
   }
   render(){
-    console.log('render', this.props.rowData, this.state);
     var commentBtnInfo = () =>{
       if(this.props.rowData.answers){
         return <View style={styles.iconLike}><Icon name="note" size={20} color="#d6f5f2"/><Text style={styles.likeText}>{this.state.numberAnswers}</Text></View>

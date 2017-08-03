@@ -15,7 +15,7 @@ import {
 import TopBar from './common/TopBar'
 import Question from './Question'
 import FloatingBtn from './common/FloatingBtn'
-import ViewModal from './ViewModal'
+import ViewModal from './ViewModalAnswer'
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {createAnswer, removeAlert} from '../actions'
