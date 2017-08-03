@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, createQuestion, getQuestion, addAlert, removeAlert} from '../actions'
+import {unauthUser, createAnswer,  addAlert, removeAlert} from '../actions'
 import {
   StyleSheet,
   Text,
@@ -16,7 +16,7 @@ import AlertContainer from './alerts/AlertContainer'
 import CategoryList from './CategoryList'
 
 const maxNumberOfCharacters = 200
-class ViewModal extends Component{
+class ViewModalAnswer extends Component{
   constructor(props){
     super(props)
     this.state = {
@@ -43,7 +43,7 @@ class ViewModal extends Component{
       dispatch(addAlert('Necesita rellenar ambos campos'))
     } else {
       this.props.closeModal()
-      dispatch(createQuestion(this.state.content, this.state.category, user_id))
+      dispatch(createAnswer(this.state.content, user_id, this.props.activeQuestion._id))
       // Clean the form values
       // this.props.dispatch(change('addQuestion', 'content', ''))
       // this.props.dispatch(change('addQuestion', 'category', ''))
@@ -86,7 +86,7 @@ class ViewModal extends Component{
             <Icon name='ios-arrow-round-back' size={30} color="white"/>
           </TouchableOpacity>
           <Text style={styles.textTop}>
-            Añade nueva pregunta
+            Añade nueva respuesta
           </Text>
         </View>
         <View>
@@ -101,7 +101,7 @@ class ViewModal extends Component{
           categorySelected={this.categorySelected}/>
         <View style={styles.fieldQuestion}>
           <TextInput
-            placeholder="Pregunta"
+            placeholder="Responde"
             style={styles.textInput}
             multiline={true}
             onChangeText={this.textInputChange.bind(this)}
@@ -244,9 +244,10 @@ const listOfCategories = {
 
 var mapStateToProps = (state) => {
   return {
+    activeQuestion:state.activeQuestion,
     user_id:state.auth.user_id,
     alerts:state.alert
   }
 }
 
-export default connect(mapStateToProps)(ViewModal);
+export default connect(mapStateToProps)(ViewModalAnswer);

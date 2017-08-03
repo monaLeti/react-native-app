@@ -9,47 +9,56 @@ import {
   Dimensions,
   ListView,
   RefreshControl,
-  Keyboard
+  Modal,
 } from 'react-native';
 
 import TopBar from './common/TopBar'
 import Question from './Question'
+import FloatingBtn from './common/FloatingBtn'
+import ViewModal from './ViewModal'
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {createAnswer} from '../actions'
+import {createAnswer, removeAlert} from '../actions'
 
 class AnswersPage extends Component{
   constructor(props){
     super(props)
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      text:"",
-      heightInput:0,
-      height: Dimensions.get('window').height - 35,
+      modalVisible:false,
       dataSource: ds.cloneWithRows(props.activeQuestion.answers),
     }
   }
   componentWillReceiveProps (props) {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(props.activeQuestion.answers)
-    })
-  }
-  addNewQuestion(){
-    this.setState({
-      height: Dimensions.get('window').height - 250
+      dataSource: this.state.dataSource.cloneWithRows(props.activeQuestion.answers),
     })
   }
   onSubmitComment(){
-    this.props.dispatch(createAnswer(this.state.text, this.props.user_id._id, this.props.activeQuestion._id))
-    Keyboard.dismiss();
-    this.setState({
-      height: Dimensions.get('window').height - 35,
-      text:''
-    })
+    console.log('onSubmitComment');
+    // this.props.dispatch(createAnswer(this.state.text, this.props.user_id, this.props.activeQuestion._id))
   }
   backToMain(){
     this.props.navigator.pop()
   }
+  addNewQuestion(){
+    this.setState({modalVisible:true})
+  }
+
+  closeModal(){
+    this.setState({modalVisible:false})
+    this.removeAlerts()
+  }
+
+  removeAlerts(){
+    let {dispatch, alerts} = this.props
+    alerts.forEach((item, index)=>{
+      if(item.text === 'Necesita rellenar ambos campos'){
+        dispatch(removeAlert(item.id))
+      }
+    })
+  }
+
   render(){
     const {height, width} = Dimensions.get('window');
     return (
@@ -59,33 +68,23 @@ class AnswersPage extends Component{
             icon:'ios-arrow-round-back-outline',
             onPress:this.backToMain.bind(this)
           }}/>
-        <View style={styles.question}>
-          <Question rowData={this.props.activeQuestion} openQuestion={this.addNewQuestion.bind(this)}/>
-        </View>
-        <View style={styles.listViewAnswers}>
-          <ListView
-            dataSource={this.state.dataSource}
-            enableEmptySections={true}
-            renderRow={(rowData) => <Question rowData={rowData} openQuestion={this.addNewQuestion.bind(this)}/>}/>
-        </View>
-        <View style={[styles.addNewComment, {top:this.state.height}]}>
-          <TextInput
-            style={[styles.inputComment, {height: Math.max(33, this.state.heightInput)}]}
-            onFocus={this.addNewQuestion.bind(this)}
-            onChange={(event)=>{
-              this.setState({
-                text:event.nativeEvent.text,
-                heightInput: event.nativeEvent.contentSize.height
-              })
-            }}
-            onSubmitEditing={this.onSubmitComment.bind(this)}
-            value={this.state.text}
-            multiline={true}
-            placeholder='Añade un comentario'/>
-          <TouchableOpacity onPress={this.onSubmitComment.bind(this)}>
-            <Icon name='ios-add-circle' size={30} color="#35D0C1"/>
-          </TouchableOpacity>
-        </View>
+          <Modal
+            animationType={'slide'}
+            transparent={false}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {alert('Modal has been close')}}>
+            <ViewModal closeModal={this.closeModal.bind(this)} Model='Answer'/>
+          </Modal>
+          <View style={styles.question}>
+            <Question rowData={this.props.activeQuestion} openQuestion={this.addNewQuestion.bind(this)}/>
+          </View>
+          <View style={styles.listViewAnswers}>
+            <ListView
+              dataSource={this.state.dataSource}
+              enableEmptySections={true}
+              renderRow={(rowData) => <Question rowData={rowData}/>}/>
+          </View>
+        <FloatingBtn onPress={this.addNewQuestion.bind(this)}/>
       </View>
     );
   }
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white'
   },
   listViewAnswers:{
-    marginBottom:193
+    flex: 1,
   },
 });
 
@@ -124,6 +123,7 @@ var mapStateToProps = (state) => {
   return {
     activeQuestion:state.activeQuestion,
     user_id:state.auth.user_id,
+    alerts:state.alert,
   }
 }
 

@@ -28,7 +28,6 @@ class CategoryList extends Component {
     }
   }
   componentWillReceiveProps(props){
-    console.log('componentWillReceiveProps',props.elementSelected);
     this.setState({
       elementSelected:props.elementSelected
     })

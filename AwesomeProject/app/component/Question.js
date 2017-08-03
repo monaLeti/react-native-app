@@ -28,26 +28,36 @@ import {selectActiveQuestion} from '../actions'
 class Question extends Component {
   constructor(props){
     super(props)
-    this.state = {
+    let obj = {
       likeComment:false,
       numberLikeComment:this.props.rowData.likes.length || 0,
+      numberAnswers:0,
       userName:this.props.rowData.user || '',
       timePass:'',
-      category:this.props.rowData.category.join(),
+      category:'',
     }
+    if(this.props.rowData.answers){
+      obj.category = this.props.rowData.category.join()
+      obj.numberAnswers = this.props.rowData.answers.length
+    }
+    this.state = obj
   }
   componentWillMount(){
-    console.log('this.props',this.props.rowData);
     this.renderUserAction(this.props)
   }
 
   componentWillReceiveProps (props) {
-    this.setState({
+    console.log('componentWillReceiveProps', props, this.props);
+    let obj = {
       likeComment:false,
       numberLikeComment:props.rowData.likes.length || 0,
-      category:props.rowData.category.join(),
       userName:props.rowData.user || '',
-    })
+    }
+    if(props.rowData.answers){
+      obj.numberAnswers = props.rowData.answers.length
+      obj.category = props.rowData.category.join()
+    }
+    this.setState(obj)
     this.renderUserAction(props)
   }
 
@@ -118,6 +128,25 @@ class Question extends Component {
     })
   }
   render(){
+    console.log('render', this.props.rowData, this.state);
+    var commentBtnInfo = () =>{
+      if(this.props.rowData.answers){
+        return <View style={styles.iconLike}><Icon name="note" size={20} color="#d6f5f2"/><Text style={styles.likeText}>{this.state.numberAnswers}</Text></View>
+      }
+      else{
+        return <View></View>
+      }
+    }
+    var commentBtn = () =>{
+      if(this.props.rowData.answers){
+        return <View><TouchableOpacity onPress={this.showAnswers.bind(this)}>
+          <Icon name="note" size={26} color="#35D0C1"/>
+        </TouchableOpacity></View>
+      }
+      else{
+        return <View></View>
+      }
+    }
     return (
       <View style={styles.container}>
         <View style={styles.iconView}>
@@ -130,15 +159,19 @@ class Question extends Component {
           <View style={styles.buttonsForReact}>
             <View style={styles.iconLike}>
               <View style={styles.iconLike}>
+                <IconIonic name="ios-heart" size={20} color='#d6f5f2'/>
+                <Text style={styles.likeText}>{this.state.numberLikeComment}</Text>
+              </View>
+              {commentBtnInfo()}
+            </View>
+            <View style={styles.iconLike}>
+              <View style={styles.iconLike}>
                 <TouchableOpacity onPress={this.likeComment.bind(this, this.props.rowData._id)}>
                   <IconIonic name="ios-heart" size={26} color={this.setLikeIconsColor(this.state.likeComment)}/>
                 </TouchableOpacity>
-                <Text style={styles.likeText}>{this.state.numberLikeComment}</Text>
               </View>
+              {commentBtn()}
             </View>
-            <TouchableOpacity onPress={this.showAnswers.bind(this)}>
-              <Icon name="note" size={26} color="#35D0C1"/>
-            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.moreIcon}>

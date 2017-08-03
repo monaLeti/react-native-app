@@ -20,6 +20,7 @@ import ViewModal from './ViewModal'
 import Question from './Question'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconIonic from 'react-native-vector-icons/Ionicons';
+import FloatingBtn from './common/FloatingBtn'
 
 class Main extends Component{
   constructor(props){
@@ -33,7 +34,6 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps', props.questions);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.questions)
     })
@@ -87,7 +87,7 @@ class Main extends Component{
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {alert('Modal has been close')}}>
-          <ViewModal closeModal={this.closeModal.bind(this)}/>
+          <ViewModal closeModal={this.closeModal.bind(this)} Model='Question'/>
         </Modal>
         <View style={styles.listView}>
           <ListView
@@ -99,12 +99,7 @@ class Main extends Component{
                 onRefresh={this._onRefresh.bind(this)}/>}
                 enableEmptySections={true}/>
         </View>
-        <View>
-          <TouchableHighlight style={styles.addButton}
-              underlayColor='#35D0C1' onPress={this.addNewQuestion.bind(this)}>
-              <Icon name="plus" size={40} color='white' style={styles.plusBtn}/>
-          </TouchableHighlight>
-        </View>
+        <FloatingBtn onPress={this.addNewQuestion.bind(this)}/>
       </View>
     );
   }
