@@ -30,6 +30,7 @@ class AnswersPage extends Component{
     }
   }
   componentWillReceiveProps (props) {
+    console.log('componentWillReceiveProps answer', props);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.activeQuestion.answers),
     })
