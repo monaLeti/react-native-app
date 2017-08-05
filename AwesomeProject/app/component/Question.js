@@ -7,7 +7,7 @@ import moment_precise_range from 'moment-precise-range'
 import esLocale from 'moment/locale/es'
 
 
-import {UPDATE_MODEL, UPDATE_FAVOURITE_MODE} from '../api'
+import {UPDATE_MODEL, UPDATE_FAVOURITE_MODE, UPDATE_FAVOURITE_ANSWER_MODE} from '../api'
 
 import {
   AppRegistry,
@@ -49,9 +49,12 @@ class Question extends Component {
   }
 
   componentWillReceiveProps (props) {
+    console.log('componentWillReceiveProps',props);
     let obj = {
       likeComment:false,
+      favouritesComment:false,
       numberLikeComment:props.rowData.likes.length || 0,
+      numberFavouritesComment:props.rowData.favorites.length || 0,
       userName:props.rowData.user || '',
       category:props.rowData.category.join(),
     }
@@ -97,8 +100,14 @@ class Question extends Component {
   }
 
   updateFavouriteComment(question, reactionObject){
-    axios.put(UPDATE_FAVOURITE_MODE + question, reactionObject)
+    console.log('updateFavouriteComment',question);
+    let api = UPDATE_FAVOURITE_MODE
+    if(!question.answers){
+      api = UPDATE_FAVOURITE_ANSWER_MODE
+    }
+    axios.put(api + question._id, reactionObject)
     .then(response => {
+      console.log('response',response);
       if (this.props.updateModel) {
         this.props.updateModel()
       }
@@ -142,8 +151,8 @@ class Question extends Component {
       favourite = 1
     }
     this.setState({
-      favouriteComment: !this.state.favouritesComment,
-      numberLikeComment:newNumberOfFavourites
+      favouritesComment: !this.state.favouritesComment,
+      numberFavouritesComment:newNumberOfFavourites
     })
     let reactionObject = {
       favourite: favourite,
@@ -210,7 +219,7 @@ class Question extends Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.iconLike}>
-                <TouchableOpacity onPress={this.favouriteComment.bind(this, this.props.rowData._id)}>
+                <TouchableOpacity onPress={this.favouriteComment.bind(this, this.props.rowData)}>
                   <IconIonic name="ios-star" size={26} color={this.setLikeIconsColor(this.state.favouritesComment)}/>
                 </TouchableOpacity>
               </View>

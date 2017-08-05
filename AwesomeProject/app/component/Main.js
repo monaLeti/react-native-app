@@ -37,9 +37,11 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
+    console.log('componentWillReceiveProps');
     let oldQuestions = props.questions.slice()
     let result = oldQuestions.findIndex(this.findFunction.bind(this, props.activeQuestion))
     oldQuestions[result] = props.activeQuestion
+    console.log('componentWillReceiveProps',oldQuestions);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(oldQuestions)
     })
@@ -99,7 +101,6 @@ class Main extends Component{
     })
   }
   render(){
-    console.log('render main', this.props.questions);
     var {fields:{content, category}} = this.props
     return (
       <View style={styles.container}>
