@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected} from '../actions'
+import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion} from '../actions'
+
 import {
   StyleSheet,
   Text,
@@ -36,15 +37,18 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps Main',props);
     let oldQuestions = props.questions.slice()
-    console.log('oldQuestions', oldQuestions);
     let result = oldQuestions.findIndex(this.findFunction.bind(this, props.activeQuestion))
-    console.log('result', result);
     oldQuestions[result] = props.activeQuestion
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(oldQuestions)
     })
+  }
+
+  findFunction(activeQuestion, element){
+    if(element._id == activeQuestion._id){
+      return element
+    }
   }
 
   onLogout(){
@@ -63,13 +67,7 @@ class Main extends Component{
     this.setState({modalVisible:false})
     this.removeAlerts()
   }
-  findFunction(activeQuestion, element){
-    console.log('findFunction element',element);
-    console.log('findFunction activeQuestion', activeQuestion);
-    if(element._id == activeQuestion._id){
-      return element
-    }
-  }
+
   closeModalAnswer(){
     this.setState({modalAnswerVisible:false})
     this.removeAlerts()
@@ -87,8 +85,9 @@ class Main extends Component{
     })
   }
 
-  openQuestion(){
+  openQuestion(rowData){
     this.props.navigator.push({id:'AnswersPage'})
+    this.props.dispatch(selectActiveQuestion(rowData))
   }
 
   removeAlerts(){
@@ -100,7 +99,6 @@ class Main extends Component{
     })
   }
   render(){
-    console.log('render', this.state.dataSource);
     var {fields:{content, category}} = this.props
     return (
       <View style={styles.container}>
@@ -123,7 +121,7 @@ class Main extends Component{
         <View style={styles.listView}>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={(rowData) => <TouchableHighlight onPress={this.openQuestion.bind(this)}>
+            renderRow={(rowData) => <TouchableHighlight onPress={this.openQuestion.bind(this, rowData)}>
               <View><Question rowData={rowData} openQuestion={this.addNewAnswer.bind(this)} updateModel={this.updateQuestions.bind(this)}/></View>
             </TouchableHighlight>}
             refreshControl={
