@@ -99,6 +99,7 @@ class Main extends Component{
     })
   }
   render(){
+    console.log('render main', this.props.questions);
     var {fields:{content, category}} = this.props
     return (
       <View style={styles.container}>

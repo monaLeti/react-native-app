@@ -7,7 +7,7 @@ import moment_precise_range from 'moment-precise-range'
 import esLocale from 'moment/locale/es'
 
 
-import {UPDATE_MODEL} from '../api'
+import {UPDATE_MODEL, UPDATE_FAVOURITE_MODE} from '../api'
 
 import {
   AppRegistry,
@@ -28,9 +28,12 @@ import {selectActiveQuestion} from '../actions'
 class Question extends Component {
   constructor(props){
     super(props)
+    console.log('constructor Question',this.props.rowData);
     let obj = {
       likeComment:false,
+      favouritesComment:false,
       numberLikeComment:this.props.rowData.likes.length || 0,
+      numberFavouritesComment:this.props.rowData.favorites.length || 0,
       numberAnswers:0,
       userName:this.props.rowData.user || '',
       timePass:'',
@@ -59,13 +62,19 @@ class Question extends Component {
     this.renderUserAction(props)
   }
 
-  // Function to display if the user has liked/unliked the comment
+  // Function to display if the user has liked/unliked the comment and has select the question has favourite
   renderUserAction(props){
     this.calculateTimePassed(props)
     let positiveVotesArray = props.rowData.likes
+    let favouritesArray = props.rowData.favorites
     if (positiveVotesArray.indexOf(props.user_id) !== -1) {
       this.setState({
         likeComment:true
+      })
+    }
+    if (favouritesArray.indexOf(props.user_id) !== -1) {
+      this.setState({
+        favouritesComment:true
       })
     }
   }
@@ -87,9 +96,20 @@ class Question extends Component {
     })
   }
 
+  updateFavouriteComment(question, reactionObject){
+    axios.put(UPDATE_FAVOURITE_MODE + question, reactionObject)
+    .then(response => {
+      if (this.props.updateModel) {
+        this.props.updateModel()
+      }
+    })
+    .catch(err =>{
+      console.log('after UPDATE_MODEL err',err);
+    })
+  }
+
 // Function called when the user clicks like
   likeComment(questionId){
-
     let newNumberOfLikes = 0
     let like = 0
     if(this.state.likeComment){
@@ -108,6 +128,28 @@ class Question extends Component {
       user:this.props.user_id
     }
     this.updateComment(questionId, reactionObject)
+  }
+
+  // Function called when the user clicks favourite
+  favouriteComment(questionId){
+    let newNumberOfFavourites = 0
+    let favourite = 0
+    if(this.state.favouritesComment){
+      newNumberOfFavourites = this.state.numberFavouritesComment - 1
+      favourite = -1
+    } else {
+      newNumberOfFavourites = this.state.numberFavouritesComment + 1
+      favourite = 1
+    }
+    this.setState({
+      favouriteComment: !this.state.favouritesComment,
+      numberLikeComment:newNumberOfFavourites
+    })
+    let reactionObject = {
+      favourite: favourite,
+      user:this.props.user_id
+    }
+    this.updateFavouriteComment(questionId, reactionObject)
   }
   // Function to display if the user has clicked in the icon
   setLikeIconsColor(activateIcon){
@@ -165,6 +207,11 @@ class Question extends Component {
               <View style={styles.iconLike}>
                 <TouchableOpacity onPress={this.likeComment.bind(this, this.props.rowData._id)}>
                   <IconIonic name="ios-heart" size={26} color={this.setLikeIconsColor(this.state.likeComment)}/>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.iconLike}>
+                <TouchableOpacity onPress={this.favouriteComment.bind(this, this.props.rowData._id)}>
+                  <IconIonic name="ios-star" size={26} color={this.setLikeIconsColor(this.state.favouritesComment)}/>
                 </TouchableOpacity>
               </View>
               {commentBtn()}
