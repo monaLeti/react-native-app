@@ -28,7 +28,6 @@ import {selectActiveQuestion} from '../actions'
 class Question extends Component {
   constructor(props){
     super(props)
-    console.log('constructor Question',this.props.rowData);
     let obj = {
       likeComment:false,
       favouritesComment:false,

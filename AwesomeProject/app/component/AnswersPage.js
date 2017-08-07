@@ -22,6 +22,7 @@ import {createAnswer, removeAlert} from '../actions'
 
 class AnswersPage extends Component{
   constructor(props){
+    console.log('constructor answer',props);
     super(props)
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
@@ -30,7 +31,7 @@ class AnswersPage extends Component{
     }
   }
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps answer', props);
+    console.log('componentWillReceiveProps answer',props);
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(props.activeQuestion.answers),
     })
@@ -61,6 +62,7 @@ class AnswersPage extends Component{
   }
 
   render(){
+    console.log('render answer', this.props.activeQuestion);
     const {height, width} = Dimensions.get('window');
     return (
       <View style={styles.container}>

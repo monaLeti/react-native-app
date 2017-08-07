@@ -93,8 +93,7 @@ class Main extends Component{
   }
 
   openQuestion(rowData){
-    this.props.dispatch(selectActiveQuestion(rowData))
-    this.props.navigator.push({id:'AnswersPage'})
+    this.props.dispatch(selectActiveQuestion(rowData, this.props.navigator))
 
   }
 

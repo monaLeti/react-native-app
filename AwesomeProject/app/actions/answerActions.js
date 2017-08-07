@@ -20,10 +20,11 @@ exports.createAnswer = (answer, category, user_id, questionId) => {
 
 
 // Aqui llamamos al servidor para coger el get
-exports.selectActiveQuestion = (question) => {
+exports.selectActiveQuestion = (question, route) => {
   return function(dispatch){
     return axios.get(GET_ANSWERS + question._id).then((response)=>{
       dispatch(questionActive(response.data.question))
+      route.push({id:'AnswersPage'})
     }).catch((error)=>{
       console.log('selectActiveQuestion',error);
     })
