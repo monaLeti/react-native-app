@@ -77,20 +77,6 @@ exports.searchByWord = (searchWord) => {
 
 }
 
-// Aqui llamamos al servidor para coger las respuestas de esa pregunta
-exports.removeActiveQuestion = () => {
-  return function(dispatch){
-    dispatch(removeActiveQuestion(null))
-  }
-}
-
-removeActiveQuestion = (question) => {
-  return {
-    type:'SELECT_ACTIVE_QUESTION',
-    question
-  }
-}
-
 addQuestion = (response) => {
   return {
     type:'ADD_QUESTION',

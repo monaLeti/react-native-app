@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {getQuestion, getQuestionByCategory, searchByWord, setCategorySelected, removeActiveQuestion} from '../../actions'
+import {getQuestion, getQuestionByCategory, searchByWord, setCategorySelected} from '../../actions'
 import {
   AppRegistry,
   StyleSheet,
@@ -22,13 +22,11 @@ class SearchNavigation extends Component {
     }
   }
   searchInputSubmmit(){
-    this.props.dispatch(removeActiveQuestion())
     this.props.dispatch(searchByWord(this.state.searchText))
     this.setState({searchText:''})
   }
   showTodas(){
     console.log('showTodas', this.props.filter.categorySelected);
-    this.props.dispatch(removeActiveQuestion())
     if(this.props.filter.categorySelected.length > 0){
       this.props.dispatch(getQuestionByCategory(this.props.filter.categorySelected, false))
     }else{
@@ -37,7 +35,6 @@ class SearchNavigation extends Component {
 
   }
   showPopular(){
-    this.props.dispatch(removeActiveQuestion())
     if(this.props.filter.categorySelected.length > 0){
       this.props.dispatch(getQuestionByCategory(this.props.filter.categorySelected, true))
     } else {
@@ -45,7 +42,6 @@ class SearchNavigation extends Component {
     }
   }
   showPosition(){
-    this.props.dispatch(removeActiveQuestion())
     console.log('showPosition');
   }
   showCategory(){
@@ -56,7 +52,6 @@ class SearchNavigation extends Component {
   }
   categorySelected(category){
     console.log('categorySelected', category);
-    this.props.dispatch(removeActiveQuestion())
     if(category.length > 0){
       this.props.dispatch(getQuestionByCategory(category, false))
     }else{

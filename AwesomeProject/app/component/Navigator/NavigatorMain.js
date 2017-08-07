@@ -6,8 +6,8 @@ import {
   Image,
 } from 'react-native';
 
-import Main from '../Screen/Main.js'
-import AnswersPage from '../Screen/AnswersPage.js'
+import Main from '../Main.js'
+import AnswersPage from '../AnswersPage.js'
 import NavigationExperimental from 'react-native-deprecated-custom-components';
 class NavigatorMain extends Component {
   renderScene(route, nav){

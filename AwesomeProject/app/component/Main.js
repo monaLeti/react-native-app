@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion} from '../../actions'
+import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion} from '../actions'
 
 import {
   StyleSheet,
@@ -15,13 +15,14 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import SearchNavigation from './../common/SearchNavigation'
-import ViewModal from './../ViewModal'
-import ViewModalAnswer from './../ViewModalAnswer'
-import Question from './../Question'
+import NavigationTabs from './common/NavigationTabs'
+import SearchNavigation from './common/SearchNavigation'
+import ViewModal from './ViewModal'
+import ViewModalAnswer from './ViewModalAnswer'
+import Question from './Question'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconIonic from 'react-native-vector-icons/Ionicons';
-import FloatingBtn from './../common/FloatingBtn'
+import FloatingBtn from './common/FloatingBtn'
 
 class Main extends Component{
   constructor(props){
@@ -36,19 +37,14 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps',props);
-    if(props.activeQuestion){
-      let oldQuestions = props.questions.slice()
-      let result = oldQuestions.findIndex(this.findFunction.bind(this, props.activeQuestion))
-      oldQuestions[result] = props.activeQuestion
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(oldQuestions)
-      })
-    }else{
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(props.questions)
-      })
-    }
+    console.log('componentWillReceiveProps');
+    let oldQuestions = props.questions.slice()
+    let result = oldQuestions.findIndex(this.findFunction.bind(this, props.activeQuestion))
+    oldQuestions[result] = props.activeQuestion
+    console.log('componentWillReceiveProps',oldQuestions);
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(oldQuestions)
+    })
   }
 
   findFunction(activeQuestion, element){
@@ -92,8 +88,8 @@ class Main extends Component{
   }
 
   openQuestion(rowData){
+    this.props.navigator.push({id:'AnswersPage'})
     this.props.dispatch(selectActiveQuestion(rowData))
-    this.props.navigation.navigate('AnswersPage');
   }
 
   removeAlerts(){
@@ -108,6 +104,7 @@ class Main extends Component{
     var {fields:{content, category}} = this.props
     return (
       <View style={styles.container}>
+        <NavigationTabs/>
         <SearchNavigation/>
         <Modal
           animationType={'slide'}
