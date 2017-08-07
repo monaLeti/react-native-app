@@ -8,7 +8,7 @@ import {
 import NavigationExperimental from 'react-native-deprecated-custom-components';
 
 import Login from '../Login.js'
-import Main from '../Main.js'
+import Main from '../Screen/Main.js'
 import SignUpStep1 from '../SignUp/SignUpStep1'
 import SignUpStep2 from '../SignUp/SignUpStep2'
 

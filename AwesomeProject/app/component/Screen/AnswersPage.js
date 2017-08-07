@@ -12,13 +12,13 @@ import {
   Modal,
 } from 'react-native';
 
-import TopBar from './common/TopBar'
-import Question from './Question'
-import FloatingBtn from './common/FloatingBtn'
-import ViewModal from './ViewModalAnswer'
+import TopBar from './../common/TopBar'
+import Question from './../Question'
+import FloatingBtn from './../common/FloatingBtn'
+import ViewModal from './../ViewModalAnswer'
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {createAnswer, removeAlert} from '../actions'
+import {createAnswer, removeAlert} from '../../actions'
 
 class AnswersPage extends Component{
   constructor(props){
@@ -40,7 +40,7 @@ class AnswersPage extends Component{
     // this.props.dispatch(createAnswer(this.state.text, this.props.user_id, this.props.activeQuestion._id))
   }
   backToMain(){
-    this.props.navigator.pop()
+    this.props.navigation.goBack()
   }
   addNewQuestion(){
     this.setState({modalVisible:true})

@@ -28,7 +28,6 @@ import {selectActiveQuestion} from '../actions'
 class Question extends Component {
   constructor(props){
     super(props)
-    console.log('constructor Question',this.props.rowData);
     let obj = {
       likeComment:false,
       favouritesComment:false,
@@ -49,7 +48,6 @@ class Question extends Component {
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps',props);
     let obj = {
       likeComment:false,
       favouritesComment:false,
@@ -100,14 +98,12 @@ class Question extends Component {
   }
 
   updateFavouriteComment(question, reactionObject){
-    console.log('updateFavouriteComment',question);
     let api = UPDATE_FAVOURITE_MODE
     if(!question.answers){
       api = UPDATE_FAVOURITE_ANSWER_MODE
     }
     axios.put(api + question._id, reactionObject)
     .then(response => {
-      console.log('response',response);
       if (this.props.updateModel) {
         this.props.updateModel()
       }

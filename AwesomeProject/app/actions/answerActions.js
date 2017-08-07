@@ -13,14 +13,15 @@ exports.createAnswer = (answer, category, user_id, questionId) => {
       dispatch(addNewAnswer(response.data.question))
       console.log(response.data.question);
     }).catch((error)=>{
-      console.log('selectActiveQuestion',error);
+      console.log('createAnswer',error);
     })
   }
 }
 
 
-// Aqui llamamos al servidor para coger el get
+// Aqui llamamos al servidor para coger las respuestas de esa pregunta
 exports.selectActiveQuestion = (question) => {
+  console.log('selectActiveQuestion');
   return function(dispatch){
     return axios.get(GET_ANSWERS + question._id).then((response)=>{
       dispatch(questionActive(response.data.question))

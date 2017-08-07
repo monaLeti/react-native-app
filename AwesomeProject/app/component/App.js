@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {addTodo,deleteTodos} from '../actions'
 
 import Login from './Login'
-import Main from './Main'
+import Main from './Screen/Main'
 import AlertContainer from './alerts/AlertContainer'
 
 import {
@@ -20,6 +20,9 @@ import {
 import NavigatorLog from './Navigator/NavigatorLog'
 import NavigatorMain from './Navigator/NavigatorMain'
 import NavigatorProfile from './Navigator/NavigatorProfile'
+import NavigatorRoot from './Navigator/NavigatorRoot'
+
+import MainNavigation from './Navigator/MainNavigation'
 
 class App extends Component{
   constructor(props){
@@ -50,7 +53,7 @@ class App extends Component{
   renderViewApp(){
     switch (this.props.view) {
       case 'Main':
-        return <NavigatorMain/>
+        return <NavigatorRoot/>
       case 'Profile':
         return <NavigatorProfile/>
     }
@@ -67,7 +70,7 @@ class App extends Component{
       }
     }
     return(
-      <View style={{flex:1}}>
+      <View style={{flex:1, backgroundColor: '#35D0C1',}}>
         {renderMainView()}
         <AlertContainer/>
       </View>
@@ -75,14 +78,6 @@ class App extends Component{
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-  },
-
-});
 
 var mapStateToProps = (state) => {
   return {
