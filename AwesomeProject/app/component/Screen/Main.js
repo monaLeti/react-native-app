@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion} from '../actions'
+import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion} from '../../actions'
 
 import {
   StyleSheet,
@@ -15,14 +15,14 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import NavigationTabs from './common/NavigationTabs'
-import SearchNavigation from './common/SearchNavigation'
-import ViewModal from './ViewModal'
-import ViewModalAnswer from './ViewModalAnswer'
-import Question from './Question'
+import NavigationTabs from './../common/NavigationTabs'
+import SearchNavigation from './../common/SearchNavigation'
+import ViewModal from './../ViewModal'
+import ViewModalAnswer from './../ViewModalAnswer'
+import Question from './../Question'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconIonic from 'react-native-vector-icons/Ionicons';
-import FloatingBtn from './common/FloatingBtn'
+import FloatingBtn from './../common/FloatingBtn'
 
 class Main extends Component{
   constructor(props){

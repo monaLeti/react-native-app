@@ -6,7 +6,7 @@ import {
   Navigator
 } from 'react-native';
 
-import Profile from '../Profile'
+import Profile from '../Screen/Profile'
 import NavigationExperimental from 'react-native-deprecated-custom-components';
 class NavigatorProfile extends Component {
   renderScene(route, nav){

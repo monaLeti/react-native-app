@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {addTodo,deleteTodos} from '../actions'
 
 import Login from './Login'
-import Main from './Main'
+import Main from './Screen/Main'
 import AlertContainer from './alerts/AlertContainer'
 
 import {
