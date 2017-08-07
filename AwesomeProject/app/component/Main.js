@@ -37,14 +37,19 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps');
-    let oldQuestions = props.questions.slice()
-    let result = oldQuestions.findIndex(this.findFunction.bind(this, props.activeQuestion))
-    oldQuestions[result] = props.activeQuestion
-    console.log('componentWillReceiveProps',oldQuestions);
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(oldQuestions)
-    })
+    console.log('componentWillReceiveProps',props);
+    if(props.activeQuestion){
+      let oldQuestions = props.questions.slice()
+      let result = oldQuestions.findIndex(this.findFunction.bind(this, props.activeQuestion))
+      oldQuestions[result] = props.activeQuestion
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(oldQuestions)
+      })
+    }else{
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(props.questions)
+      })
+    }
   }
 
   findFunction(activeQuestion, element){
@@ -88,8 +93,9 @@ class Main extends Component{
   }
 
   openQuestion(rowData){
-    this.props.navigator.push({id:'AnswersPage'})
     this.props.dispatch(selectActiveQuestion(rowData))
+    this.props.navigator.push({id:'AnswersPage'})
+
   }
 
   removeAlerts(){
