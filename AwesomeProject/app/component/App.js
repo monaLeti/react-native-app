@@ -56,7 +56,7 @@ class App extends Component{
     }
   }
   render(){
-    console.log('Location', this.state.latitude, this.state.longitude, this.props.user_id);
+    console.log('Location', this.state.latitude, this.state.longitude, this.props);
     var renderMainView = () =>{
       if(this.props.user_id){
         return this.renderViewApp()

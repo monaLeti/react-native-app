@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 
-import {unauthUser} from '../../actions'
+import {unauthUser, setView} from '../../actions'
 
 import {
   AppRegistry,
@@ -19,25 +19,40 @@ class NavigationTabs extends Component {
   constructor(props){
     super(props)
   }
-  logOutUser(){
-    this.props.dispatch(unauthUser())
+  goToProfile(){
+    this.props.dispatch(setView('Profile'))
+  }
+  goToCommunity(){
+    this.props.dispatch(setView('Main'))
+  }
+  goToPromotions(){
+    console.log('goToPromotions');
+  }
+  goToNotifications(){
+    console.log('goToNotifications');
   }
   render(){
     return (
       <View style={styles.topNavigation}>
         <View>
-          <TouchableHighlight onPress={this.logOutUser.bind(this)} underlayColor='transparent'>
+          <TouchableHighlight onPress={this.goToProfile.bind(this)} underlayColor='transparent'>
             <Icon name="face" size={45} color='white'/>
           </TouchableHighlight>
         </View>
         <View>
-          <Icon name="account-multiple" size={45} color='white'/>
+          <TouchableHighlight onPress={this.goToCommunity.bind(this)} underlayColor='transparent'>
+            <Icon name="account-multiple" size={45} color='white'/>
+          </TouchableHighlight>
         </View>
         <View>
-          <IconIonic name="ios-megaphone" size={45} color='white'/>
+          <TouchableHighlight onPress={this.goToPromotions.bind(this)} underlayColor='transparent'>
+            <IconIonic name="ios-megaphone" size={45} color='white'/>
+          </TouchableHighlight>
         </View>
         <View>
-          <Icon name="bell-outline" size={45} color='white'/>
+          <TouchableHighlight onPress={this.goToNotifications.bind(this)} underlayColor='transparent'>
+            <Icon name="bell-outline" size={45} color='white'/>
+          </TouchableHighlight>
         </View>
       </View>
     )

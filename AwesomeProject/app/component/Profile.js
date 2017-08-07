@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import TopBar from './common/TopBar'
+import NavigationTabs from './common/NavigationTabs'
 
 class Profile extends Component{
   constructor(props){
@@ -24,11 +24,7 @@ class Profile extends Component{
   render(){
     return (
       <View style={styles.container}>
-        <TopBar
-          leftItem={{
-            icon:'ios-add-circle-outline',
-            onPress:this.backbutton
-          }}/>
+        <NavigationTabs/>
         <TouchableOpacity onPress={this.logOutUser.bind(this)}>
           <Text>Log out</Text>
         </TouchableOpacity>
