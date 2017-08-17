@@ -12,7 +12,7 @@ exports.loginUser = (email, password) => {
       var {user_id} = response.data
 
       // dispatch(addAlert(token))
-      dispatch(authUser(user_id._id))
+      dispatch(authUser(user_id))
     }).catch((error)=>{
       console.log(error);
       dispatch(addAlert('Error al entrar.'))
@@ -25,7 +25,7 @@ exports.loginUserWithFacebook = (token) => {
   return function(dispatch){
     return axios.post(SIGNIN_URL_WITH_FACEBOOK, {token}).then((response)=>{
       console.log('response loginUserWithFacebook', response.data);
-      dispatch(authUser(response.data._id))
+      dispatch(authUser(response.data))
     }).catch((error)=>{
       console.log('error loginUserWithFacebook',error);
       dispatch(addAlert('Error al entrar.'))

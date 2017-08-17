@@ -244,7 +244,7 @@ const listOfCategories = {
 
 var mapStateToProps = (state) => {
   return {
-    user_id:state.auth.user_id,
+    user_id:state.auth.user_id._id,
     alerts:state.alert
   }
 }

@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import ElevatedView from 'react-native-elevated-view'
 import axios from 'axios';
 import moment from 'moment'
 import moment_precise_range from 'moment-precise-range'
@@ -48,7 +49,6 @@ class Question extends Component {
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps',props);
     let obj = {
       likeComment:false,
       favouritesComment:false,
@@ -195,7 +195,7 @@ class Question extends Component {
       }
     }
     return (
-      <View style={styles.container}>
+      <ElevatedView elevation={2} style={styles.container}>
         <View style={styles.iconView}>
           <Icon style={styles.icon} name="person" size={26} color="#35D0C1"/>
         </View>
@@ -231,7 +231,7 @@ class Question extends Component {
             <IconIonic name="md-more" size={27} color="#35D0C1"/>
           </TouchableHighlight>
         </View>
-      </View>
+      </ElevatedView>
     )
   }
 }
@@ -244,7 +244,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom:10,
     borderBottomWidth:1,
-    borderBottomColor:'#e5e6e8'
+    borderBottomColor:'#e5e6e8',
+    margin:1,
   },
   textProfile:{
     flex:1,
@@ -293,7 +294,7 @@ const styles = StyleSheet.create({
 
 var mapStateToProps = (state) => {
   return {
-    user_id:state.auth.user_id
+    user_id:state.auth.user_id._id
   }
 }
 

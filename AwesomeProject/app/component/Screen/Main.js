@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
-import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion} from '../../actions'
+import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion, removeActiveQuestion} from '../../actions'
 
 import {
   StyleSheet,
@@ -37,7 +37,6 @@ class Main extends Component{
   }
 
   componentWillReceiveProps (props) {
-    console.log('componentWillReceiveProps',props);
     if(props.activeQuestion){
       let oldQuestions = props.questions.slice()
       let result = oldQuestions.findIndex(this.findFunction.bind(this, props.activeQuestion))
@@ -82,6 +81,7 @@ class Main extends Component{
 
   _onRefresh(){
     this.setState({refreshing:true})
+    this.props.dispatch(removeActiveQuestion())
     this.updateQuestions()
   }
 

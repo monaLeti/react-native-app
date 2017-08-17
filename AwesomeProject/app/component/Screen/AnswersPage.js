@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 var mapStateToProps = (state) => {
   return {
     activeQuestion:state.activeQuestion,
-    user_id:state.auth.user_id,
+    user_id:state.auth.user_id._id,
     alerts:state.alert,
   }
 }

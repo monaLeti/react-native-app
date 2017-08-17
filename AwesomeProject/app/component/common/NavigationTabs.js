@@ -68,6 +68,13 @@ const styles = StyleSheet.create({
     paddingLeft:20,
     paddingRight:20,
     backgroundColor: '#35D0C1',
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 3,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    },
   },
 })
 export default connect()(NavigationTabs)
