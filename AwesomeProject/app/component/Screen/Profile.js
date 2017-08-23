@@ -6,14 +6,23 @@ import {
   Text,
   View,
   TouchableOpacity,
+  PixelRatio,
+  Image
 } from 'react-native';
+import ImagePicker from 'react-native-image-picker'
 
 import NavigationTabs from './../common/NavigationTabs'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+
 class Profile extends Component{
+
   constructor(props){
     super(props)
+    this.state = {
+      avatarSource: null,
+      videoSource: null
+    }
     console.log('Profile',props);
   }
   backbutton(){
@@ -22,15 +31,48 @@ class Profile extends Component{
   logOutUser(){
     this.props.dispatch(unauthUser())
   }
+
+  selectPhotoTapped(){
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true
+      }
+    }
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('showImagePicker', response);
+        if (response.didCancel) {
+          console.log('User cancelled photo picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        }
+        else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        }
+        else {
+          let source = { uri: response.uri };
+          // You can also display the image using data:
+          // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+          this.setState({
+            avatarSource: source
+          });
+        }
+
+      })
+  }
   render(){
     return (
       <View style={styles.container}>
         <NavigationTabs/>
         <View style={styles.infoProfile}>
           <View style={styles.contentProfile}>
-            <View style={styles.pictureProfile}>
-              <Icon name="face" size={60} color='white'/>
-            </View>
+            <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
+             { this.state.avatarSource === null ? <Icon name="face" size={60} color='white'/> :
+               <Image style={styles.avatar} source={this.state.avatarSource} />
+             }
+             </View>
             <View style={styles.informationProfile}>
               <View>
                 <Text style={styles.textName}>{this.props.user_id.name}</Text>
@@ -44,12 +86,12 @@ class Profile extends Component{
           </View>
           <View style={styles.configuration}>
             <TouchableOpacity onPress={this.backbutton.bind(this)}>
-              <Icon name="settings" size={40} color='white'/>
+              <Icon name="settings" size={40} color='white' style={{backgroundColor: 'transparent'}}/>
             </TouchableOpacity>
           </View>
           <View style={styles.updatePicture}>
-            <TouchableOpacity onPress={this.backbutton.bind(this)}>
-              <Icon name="camera" size={40} color='white'/>
+            <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
+              <Icon name="camera" size={40} color='white' style={{backgroundColor: 'transparent'}} />
             </TouchableOpacity>
           </View>
         </View>
@@ -57,6 +99,7 @@ class Profile extends Component{
         <TouchableOpacity onPress={this.logOutUser.bind(this)}>
           <Text>Log out</Text>
         </TouchableOpacity>
+
       </View>
     );
   }
@@ -88,15 +131,20 @@ const styles = StyleSheet.create({
   contentProfile:{
     flexDirection:'row',
   },
-  pictureProfile:{
-    padding:30,
-    borderColor: 'white',
-    borderWidth:2,
-    borderRadius:60
-  },
   informationProfile:{
     marginLeft:60,
     justifyContent:'space-between'
+  },
+  avatarContainer: {
+    borderColor: 'white',
+    borderWidth: 2 / PixelRatio.get(),
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  avatar: {
+    borderRadius: 60,
+    width: 120,
+    height: 120
   },
   infoProfileContent:{
     flexDirection:'row',

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {reduxForm, change} from 'redux-form'
 import {unauthUser, getQuestion, getQuestionByCategory, removeAlert, setCategorySelected, selectActiveQuestion, removeActiveQuestion} from '../../actions'
+import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 
 import {
   StyleSheet,
@@ -24,7 +25,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconIonic from 'react-native-vector-icons/Ionicons';
 import FloatingBtn from './../common/FloatingBtn'
 
+// const s3 = new AWS.Config({
+//   accessKeyId: "AKIAJ3CKBLOQMUNPGXXQ", secretAccessKey: "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", region: "eu-west-2"
+// });
+AWS.config.loadFromPath('./configs3.json');
+const s3 = new AWS.S3({apiVersion: '2006-03-01'});
+
 class Main extends Component{
+
   constructor(props){
     super(props)
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
