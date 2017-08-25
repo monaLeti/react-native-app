@@ -7,12 +7,17 @@ import {
   View,
   TouchableOpacity,
   PixelRatio,
-  Image
+  Image,
+  FlatList
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker'
 
 import NavigationTabs from './../common/NavigationTabs'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import NavigatorProfile from '../Navigator/NavigatorProfile'
+import ProfileFavourites from './ProfileFavourites'
+import ProfileMyMessages from './ProfileMyMessages'
+import ProfileContact from './ProfileContact'
 
 
 class Profile extends Component{
@@ -21,7 +26,8 @@ class Profile extends Component{
     super(props)
     this.state = {
       avatarSource: null,
-      videoSource: null
+      videoSource: null,
+      selected:'favourite'
     }
     console.log('Profile',props);
   }
@@ -62,7 +68,45 @@ class Profile extends Component{
 
       })
   }
+  changeScreen(option){
+    console.log('changeScreen',option);
+    this.setState({
+      selected:option
+    })
+
+  }
+  setUnderlineColor(option){
+    if(option == this.state.selected){
+      return {
+        borderBottomWidth:3,
+        borderBottomColor:'#35D0C1'
+      }
+    }else{
+      return{}
+    }
+  }
+  setSelectedTitle(option){
+    if(option == this.state.selected){
+      return {
+        color:'#35D0C1'
+      }
+    }else{
+      return{}
+    }
+  }
   render(){
+    var renderSelectedView = ()=>{
+      console.log('renderSelectedView', this.state.selected);
+      switch (this.state.selected) {
+        case 'favourite':
+          return <ProfileFavourites navigator={this.props.navigator}/>
+        case 'myMessages':
+          return <ProfileMyMessages/>
+        case 'contact':
+            return <ProfileContact/>
+      }
+    }
+
     return (
       <View style={styles.container}>
         <NavigationTabs/>
@@ -95,11 +139,20 @@ class Profile extends Component{
             </TouchableOpacity>
           </View>
         </View>
-
-        <TouchableOpacity onPress={this.logOutUser.bind(this)}>
-          <Text>Log out</Text>
-        </TouchableOpacity>
-
+        <View style={styles.profileOptions}>
+          <View style={styles.profileOptionsHeader}>
+            <TouchableOpacity style={this.setUnderlineColor('favourite')} onPress={this.changeScreen.bind(this, 'favourite')}>
+              <Text style={[styles.profileOptionsHeaderItem, this.setSelectedTitle('favourite')]}>Favoritos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={this.setUnderlineColor('myMessages')} onPress={this.changeScreen.bind(this, 'myMessages')}>
+              <Text style={[styles.profileOptionsHeaderItem, this.setSelectedTitle('myMessages')]}>Mis Mensajes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={this.setUnderlineColor('contact')} onPress={this.changeScreen.bind(this, 'contact')}>
+              <Text style={[styles.profileOptionsHeaderItem, this.setSelectedTitle('contact')]}>Contacta</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {renderSelectedView()}
       </View>
     );
   }
@@ -110,7 +163,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    backgroundColor:'white',
+    backgroundColor:'rgb(231,235,238)',
   },
   infoProfile:{
     backgroundColor:'#42e5d5',
@@ -172,6 +225,24 @@ const styles = StyleSheet.create({
     position:'absolute',
     left:100,
     top:100,
+  },
+  profileOptions:{
+    marginTop:10,
+    backgroundColor:'white',
+    borderBottomWidth:1,
+    borderBottomColor:'rgb(231,235,238)'
+  },
+  profileOptionsHeader:{
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
+  selected:{
+    borderBottomWidth:3,
+    borderBottomColor:'red'
+  },
+  profileOptionsHeaderItem:{
+    padding:10,
+    fontSize:18,
   },
 });
 

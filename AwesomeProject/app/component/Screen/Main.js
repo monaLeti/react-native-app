@@ -28,8 +28,8 @@ import FloatingBtn from './../common/FloatingBtn'
 // const s3 = new AWS.Config({
 //   accessKeyId: "AKIAJ3CKBLOQMUNPGXXQ", secretAccessKey: "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", region: "eu-west-2"
 // });
-AWS.config.loadFromPath('./configs3.json');
-const s3 = new AWS.S3({apiVersion: '2006-03-01'});
+// AWS.config.loadFromPath('./configs3.json');
+// const s3 = new AWS.S3({apiVersion: '2006-03-01'});
 
 class Main extends Component{
 
@@ -102,7 +102,6 @@ class Main extends Component{
 
   openQuestion(rowData){
     this.props.dispatch(selectActiveQuestion(rowData, this.props.navigator))
-
   }
 
   removeAlerts(){

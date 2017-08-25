@@ -7,12 +7,16 @@ import {
 } from 'react-native';
 
 import Profile from '../Screen/Profile'
+import AnswersPage from '../Screen/AnswersPage'
 import NavigationExperimental from 'react-native-deprecated-custom-components';
+
 class NavigatorProfile extends Component {
   renderScene(route, nav){
     switch (route.id) {
       case 'Profile':
         return <Profile navigator={nav}/>
+      case 'AnswersPage':
+        return <AnswersPage navigator={nav}/>
     }
   }
   render(){
