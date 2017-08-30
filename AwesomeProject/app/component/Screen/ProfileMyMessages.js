@@ -19,13 +19,13 @@ class ProfileMyMessages extends Component{
   constructor(props){
     super(props)
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    console.log('props.user_id',props.user_id._id);
     this.state = {
       dataSource: ds.cloneWithRows([]),
       refreshing:false,
     };
 
   }
+  
   componentDidMount() {
     axios.get(GET_QUESTION_BY_USER + this.props.user_id._id)
     .then(response => {
