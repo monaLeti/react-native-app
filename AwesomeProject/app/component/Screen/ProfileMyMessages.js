@@ -15,7 +15,7 @@ import {
 
 import Question from './../Question'
 
-class ProfileFavourites extends Component{
+class ProfileMyMessages extends Component{
   constructor(props){
     super(props)
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -29,10 +29,12 @@ class ProfileFavourites extends Component{
   componentDidMount() {
     axios.get(GET_QUESTION_BY_USER + this.props.user_id._id)
     .then(response => {
-      console.log('response',response.data.questions);
-      if(response.data.questions){
+      let questionsArray = response.data.user.questions
+      let answerArray = response.data.user.answers
+      let myMessages = questionsArray.concat(answerArray)
+      if(myMessages){
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(response.data.questions)
+          dataSource: this.state.dataSource.cloneWithRows(myMessages)
         })
       }
     })
@@ -48,7 +50,7 @@ class ProfileFavourites extends Component{
     console.log('openQuestion');
   }
   render(){
-    console.log('profile favourte',this.state.dataSource);
+    console.log('profile message',this.state.dataSource);
     return (
       <View style={styles.container}>
         <ListView
@@ -69,6 +71,9 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     paddingTop:10
   },
+  containerQuestion:{
+    backgroundColor:'red'
+  }
 });
 
 var mapStateToProps = (state) => {
@@ -78,4 +83,4 @@ var mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ProfileFavourites)
+export default connect(mapStateToProps)(ProfileMyMessages)

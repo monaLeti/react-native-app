@@ -41,6 +41,7 @@ authUser = (user_id) =>{
 }
 
 exports.unauthUser = ()=>{
+  console.log('unauthUser');
   return {
     type:'UNAUTH_USER'
   }

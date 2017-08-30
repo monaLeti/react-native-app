@@ -65,10 +65,6 @@ class Main extends Component{
     }
   }
 
-  onLogout(){
-    this.props.dispatch(unauthUser)
-  }
-
   addNewQuestion(){
     this.setState({modalVisible:true})
   }

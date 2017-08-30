@@ -44,6 +44,7 @@ class ViewModal extends Component{
     } else {
       this.props.closeModal()
       dispatch(createQuestion(this.state.content, this.state.category, user_id))
+
       // Clean the form values
       // this.props.dispatch(change('addQuestion', 'content', ''))
       // this.props.dispatch(change('addQuestion', 'category', ''))

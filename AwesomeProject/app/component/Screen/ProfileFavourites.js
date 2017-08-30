@@ -9,15 +9,21 @@ import {
 } from 'react-native';
 
 
-class ProfileMyMessages extends Component{
+class ProfileFavourites extends Component{
 
   constructor(props){
     super(props)
   }
+
+  onLogout(){
+    let {dispatch} = this.props
+    dispatch({type:'UNAUTH_USER'})
+  }
+
   render(){
     return (
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.onLogout.bind(this)}>
           <Text>lalalalalal favourites</Text>
         </TouchableOpacity>
       </View>
@@ -40,4 +46,4 @@ var mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ProfileMyMessages)
+export default connect(mapStateToProps)(ProfileFavourites)
