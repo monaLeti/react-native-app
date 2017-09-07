@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {unauthUser} from '../../actions'
+import {unauthUser, uploadImage} from '../../actions'
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,8 @@ import {
   FlatList
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker'
+import axios from 'axios'
+
 
 import NavigationTabs from './../common/NavigationTabs'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,11 +27,9 @@ class Profile extends Component{
   constructor(props){
     super(props)
     this.state = {
-      avatarSource: null,
       videoSource: null,
       selected:'favourite'
     }
-    console.log('Profile',props);
   }
   backbutton(){
     console.log('backbutton');
@@ -47,29 +47,23 @@ class Profile extends Component{
         skipBackup: true
       }
     }
-      ImagePicker.showImagePicker(options, (response) => {
-        console.log('showImagePicker', response);
-        if (response.didCancel) {
-          console.log('User cancelled photo picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        }
-        else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton);
-        }
-        else {
-          let source = { uri: response.uri };
-          // You can also display the image using data:
-          // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-          this.setState({
-            avatarSource: source
-          });
-        }
-
-      })
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('showImagePicker', response);
+      if (response.didCancel) {
+        console.log('User cancelled photo picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        let source = { uri: response.uri };
+        this.props.dispatch(uploadImage(response.uri, this.props.user_id))
+      }
+    })
   }
   changeScreen(option){
-    console.log('changeScreen',option);
     this.setState({
       selected:option
     })
@@ -96,12 +90,11 @@ class Profile extends Component{
   }
   render(){
     var renderSelectedView = ()=>{
-      console.log('renderSelectedView', this.state.selected);
       switch (this.state.selected) {
         case 'favourite':
           return <ProfileFavourites navigator={this.props.navigator}/>
         case 'myMessages':
-          return <ProfileMyMessages/>
+          return <ProfileMyMessages navigator={this.props.navigator}/>
         case 'contact':
             return <ProfileContact/>
       }
@@ -113,8 +106,8 @@ class Profile extends Component{
         <View style={styles.infoProfile}>
           <View style={styles.contentProfile}>
             <View style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>
-             { this.state.avatarSource === null ? <Icon name="face" size={60} color='white'/> :
-               <Image style={styles.avatar} source={this.state.avatarSource} />
+             { this.props.user_id.profile_picture === null ? <Icon name="face" size={60} color='white'/> :
+               <Image style={styles.avatar} source={{uri: this.props.user_id.profile_picture}}/>
              }
              </View>
             <View style={styles.informationProfile}>
@@ -153,6 +146,9 @@ class Profile extends Component{
           </View>
         </View>
         {renderSelectedView()}
+        <TouchableOpacity onPress={this.logOutUser.bind(this)}>
+          <Text>Contacta</Text>
+        </TouchableOpacity>
       </View>
     );
   }

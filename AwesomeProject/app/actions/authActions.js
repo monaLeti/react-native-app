@@ -8,7 +8,6 @@ exports.loginUser = (email, password) => {
   return function(dispatch){
     return axios.post(SIGNIN_URL, {email, password}).then((response)=>{
       var {user_id} = response.data
-
       // dispatch(addAlert(token))
       dispatch(authUser(user_id))
     }).catch((error)=>{

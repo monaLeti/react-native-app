@@ -1,4 +1,5 @@
-{
+module.export =
+  {
   "age":[
     {
       "title":"Embarazo",

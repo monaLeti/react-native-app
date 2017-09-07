@@ -6,3 +6,4 @@ export * from './questionAction';
 export * from './answerActions';
 export * from './filterAction';
 export * from './viewsAction';
+export * from './imageAction';

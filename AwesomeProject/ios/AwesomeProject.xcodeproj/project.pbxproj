@@ -52,6 +52,7 @@
 		3DC4568E1EFA3069001071CC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC456841EFA3069001071CC /* Octicons.ttf */; };
 		3DC4568F1EFA3069001071CC /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC456851EFA3069001071CC /* SimpleLineIcons.ttf */; };
 		3DC456901EFA3069001071CC /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC456861EFA3069001071CC /* Zocial.ttf */; };
+		3DE5F15E1F5D19CC004AD7B0 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DE5F15B1F5D199D004AD7B0 /* libRNFetchBlob.a */; };
 		549FD219AC2341B5A1F20550 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D40D7B6375524113BAF97C3F /* Ionicons.ttf */; };
 		59B647B21AF14278BCD73A45 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 440CB16972A2430A86AD7F29 /* Zocial.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -270,6 +271,13 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		3DE5F15A1F5D199D004AD7B0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3DE5F1391F5D199D004AD7B0 /* RNFetchBlob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A15C300E1CD25C330074CB35;
+			remoteInfo = RNFetchBlob;
+		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -340,6 +348,7 @@
 		3DC456841EFA3069001071CC /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		3DC456851EFA3069001071CC /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		3DC456861EFA3069001071CC /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		3DE5F1391F5D199D004AD7B0 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		40174224590D432383C1610A /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		41289318C95A46D792F8AE73 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		440CB16972A2430A86AD7F29 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
@@ -371,6 +380,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DE5F15E1F5D19CC004AD7B0 /* libRNFetchBlob.a in Frameworks */,
 				3D85DB111F4567A400715374 /* libRNImagePicker.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -586,6 +596,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3DE5F13A1F5D199D004AD7B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3DE5F15B1F5D199D004AD7B0 /* libRNFetchBlob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,6 +625,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3DE5F1391F5D199D004AD7B0 /* RNFetchBlob.xcodeproj */,
 				3D85DB0B1F45676300715374 /* RNImagePicker.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -768,6 +787,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 39BR9ARK97;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -843,6 +863,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 3DE5F13A1F5D199D004AD7B0 /* Products */;
+					ProjectRef = 3DE5F1391F5D199D004AD7B0 /* RNFetchBlob.xcodeproj */;
 				},
 				{
 					ProductGroup = 3D85DB0C1F45676300715374 /* Products */;
@@ -1051,6 +1075,13 @@
 			fileType = archive.ar;
 			path = libRNVectorIcons.a;
 			remoteRef = 3DD9437F1EFA346D00A45DED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3DE5F15B1F5D199D004AD7B0 /* libRNFetchBlob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFetchBlob.a;
+			remoteRef = 3DE5F15A1F5D199D004AD7B0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
@@ -1296,6 +1327,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 39BR9ARK97;
@@ -1319,6 +1351,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.AwesomeProject123;
 				PRODUCT_NAME = AwesomeProject;
+				PROVISIONING_PROFILE = "14d17bc7-ed74-47a5-923c-ca68d35e1a12";
+				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Distribution Provisioning Profile";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1327,6 +1361,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 39BR9ARK97;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1349,6 +1384,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.AwesomeProject123;
 				PRODUCT_NAME = AwesomeProject;
+				PROVISIONING_PROFILE = "14d17bc7-ed74-47a5-923c-ca68d35e1a12";
+				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Distribution Provisioning Profile";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

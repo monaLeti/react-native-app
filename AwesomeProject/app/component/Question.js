@@ -194,8 +194,16 @@ class Question extends Component {
         return <View></View>
       }
     }
+    var MarginElement = ()=>{
+      console.log('backgroundColorElement');
+      if(this.props.rowData.answers){
+        return 0
+      }else{
+        return 20
+      }
+    }
     return (
-      <ElevatedView elevation={2} style={styles.container}>
+      <ElevatedView elevation={2} style={[styles.container, {marginLeft:MarginElement()}]}>
         <View style={styles.iconView}>
           <Icon style={styles.icon} name="person" size={26} color="#35D0C1"/>
         </View>

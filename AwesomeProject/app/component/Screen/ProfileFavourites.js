@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {unauthUser, selectActiveQuestion} from '../../actions'
 
 import axios from 'axios';
-import {GET_FAV_QUESTION_BY_USER} from '../../api'
+import {GET_FAV_QUESTION_BY_USER, GET_FAV_ANSWER_BY_USER} from '../../api'
 
 import {
   StyleSheet,
@@ -51,7 +51,7 @@ class ProfileFavourites extends Component{
 
   openQuestion(rowData){
     this.props.dispatch(selectActiveQuestion(rowData, this.props.navigator))
-    console.log('openQuestion');
+    console.log('openQuestion', this.props.navigator);
   }
 
   render(){

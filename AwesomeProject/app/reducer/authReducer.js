@@ -5,6 +5,7 @@ var defaultState = {
 module.exports = (state=defaultState, action) => {
   switch (action.type) {
     case 'AUTH_USER':
+      console.log('AUTH_USER');
       return {
         user_id:action.user_id
       }
