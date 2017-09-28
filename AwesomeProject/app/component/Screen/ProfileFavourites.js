@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {unauthUser, selectActiveQuestion} from '../../actions'
 
 import axios from 'axios';
-import {GET_FAV_QUESTION_BY_USER, GET_FAV_ANSWER_BY_USER} from '../../api'
+import {GET_FAV_QUESTION_BY_USER, GET_QUESTION_BY_ANSWER} from '../../api'
 
 import {
   StyleSheet,
@@ -29,10 +29,12 @@ class ProfileFavourites extends Component{
   componentDidMount() {
     axios.get(GET_FAV_QUESTION_BY_USER + this.props.user_id._id)
     .then(response => {
-      console.log(response.data.questions);
-      if(response.data.questions){
+      let questionsArray = response.data.user.favQuestions
+      let answerArray = response.data.user.favAnswers
+      let myMessages = questionsArray.concat(answerArray)
+      if(myMessages){
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(response.data.questions)
+          dataSource: this.state.dataSource.cloneWithRows(myMessages)
         })
       }
     })
@@ -50,12 +52,21 @@ class ProfileFavourites extends Component{
   }
 
   openQuestion(rowData){
-    this.props.dispatch(selectActiveQuestion(rowData, this.props.navigator))
-    console.log('openQuestion', this.props.navigator);
+    if(rowData.answers){
+      // It is a question
+      this.props.dispatch(selectActiveQuestion(rowData, this.props.navigator))
+    } else {
+      // It is a answer
+      axios.get(GET_QUESTION_BY_ANSWER + rowData._id)
+        .then(questionParent =>{
+          this.props.dispatch(selectActiveQuestion(questionParent.data.questions, this.props.navigator))
+        }).catch(err=>{
+          console.log('openQuestion err',err);
+        })
+    }
   }
 
   render(){
-    console.log('profile message',this.state.dataSource);
     return (
       <View style={styles.container}>
         <ListView

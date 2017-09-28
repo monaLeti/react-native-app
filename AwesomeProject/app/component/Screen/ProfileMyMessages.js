@@ -60,7 +60,6 @@ class ProfileMyMessages extends Component{
     }
   }
   render(){
-    console.log('profile message',this.state.dataSource);
     return (
       <View style={styles.container}>
         <ListView

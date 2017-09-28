@@ -13,7 +13,6 @@ exports.GET_QUESTION_BY_ANSWER = `${API_URL}/findQuestionByAnswer/`
 exports.UPDATE_MODEL = `${API_URL}/updateReaction/`
 exports.UPDATE_FAVOURITE_MODE = `${API_URL}/updateFavourite/`
 exports.UPDATE_FAVOURITE_ANSWER_MODE = `${API_URL}/updateFavouriteAnswer/`
-exports.GET_FAV_ANSWER_BY_USER = `${API_URL}/findFavouritesAnswerByUser/`
 exports.ADD_ANSWER = `${API_URL}/createAnswer/`
 exports.GET_ANSWERS = `${API_URL}/findAnswers/`
 exports.SEARCH_QUESTION = `${API_URL}/searchByWord/`

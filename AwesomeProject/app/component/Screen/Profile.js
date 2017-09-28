@@ -146,9 +146,6 @@ class Profile extends Component{
           </View>
         </View>
         {renderSelectedView()}
-        <TouchableOpacity onPress={this.logOutUser.bind(this)}>
-          <Text>Contacta</Text>
-        </TouchableOpacity>
       </View>
     );
   }

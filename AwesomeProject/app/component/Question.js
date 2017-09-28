@@ -195,7 +195,6 @@ class Question extends Component {
       }
     }
     var MarginElement = ()=>{
-      console.log('backgroundColorElement');
       if(this.props.rowData.answers){
         return 0
       }else{
